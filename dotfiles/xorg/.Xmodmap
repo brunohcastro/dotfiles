@@ -1,0 +1,4 @@
+keycode 135 = Hyper_L
+keycode 191 = XF86TouchpadToggle
+keycode 192 = XF86MonBrightnessDown
+keycode 193 = XF86MonBrightnessUp

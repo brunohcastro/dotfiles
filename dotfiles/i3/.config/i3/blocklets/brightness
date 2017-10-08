@@ -1,0 +1,7 @@
+#!/bin/bash
+
+brightness=$(cat /sys/class/backlight/intel_backlight/brightness)
+max_bright=$(cat /sys/class/backlight/intel_backlight/max_brightness)
+
+echo $(awk "BEGIN { print int(sprintf(\"%3.0f\", ($brightness*20/$max_bright)))*5 }")%
+
