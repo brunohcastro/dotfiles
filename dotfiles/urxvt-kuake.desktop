@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=urxvt (kuake)
+Comment=Quake like terminal
+Exec=urxvt-kuake
+Terminal=false
+Categories=Utilities;System;Development

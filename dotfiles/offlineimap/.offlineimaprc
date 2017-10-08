@@ -1,0 +1,97 @@
+[general]
+ui=TTYUI
+accounts = Gmail, Dastro, Hotmail, iCloud
+mayxsyncaccounts = 5
+autorefresh = 5
+pythonfile = ~/.offlineimap.py
+
+[Account Gmail]
+localrepository = Gmail-Local
+remoterepository = Gmail-Remote
+synclabels = yes
+
+[Repository Gmail-Local]
+type = GmailMaildir
+localfolders = ~/Mail/brunohcastro.gmail.com
+
+[Repository Gmail-Remote]
+type = Gmail
+remoteuser = brunohcastro@gmail.com
+remotepasseval = get_password("imap.gmail.com", "brunohcastro@gmail.com", "993")
+folderfilter = lambda foldername: foldername not in ['[Gmail]/All Mail',
+                                                     '[Gmail]/Important',
+                                                     '[Gmail]/Starred',
+                                                     'Notes',
+                                                     'Personal',
+                                                     'Receipts',
+                                                     'Travel',
+                                                     'Sent Messages',
+                                                     'Work']
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+maxconnections = 2
+realdelete = yes
+
+[Account Dastro]
+localrepository = Dastro-Local
+remoterepository = Dastro-Remote
+synclabels = yes
+
+[Repository Dastro-Local]
+type = GmailMaildir
+localfolders = ~/Mail/bruno.dastro.com.br
+
+[Repository Dastro-Remote]
+type = Gmail
+remoteuser = bruno@dastro.com.br
+remotepasseval = get_password("imap.gmail.com", "bruno@dastro.com.br", "993")
+folderfilter = lambda foldername: foldername not in ['[Gmail]/Todos os e-mails',
+                                                     '[Gmail]/Importante',
+                                                     '[Gmail]/Com estrela',
+                                                     '[Gmail]/Bate-papos']
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+maxconnections = 2
+realdelete = yes
+
+[Account Hotmail]
+localrepository = Hotmail-Local
+remoterepository = Hotmail-Remote
+synclabels = yes
+
+[Repository Hotmail-Local]
+type = Maildir
+localfolders = ~/Mail/brunohcastro.hotmail.com
+
+[Repository Hotmail-Remote]
+type = IMAP
+remotehost = imap-mail.outlook.com
+remoteuser = brunohcastro@hotmail.com
+remotepasseval = get_password("imap-mail.outlook.com", "brunohcastro@hotmail.com", "993")
+folderfilter = lambda foldername: foldername not in ['Notes',
+                                                     'Arquivo Morto',
+                                                     'Outbox']
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+maxconnections = 2
+realdelete = yes
+
+[Account iCloud]
+localrepository = iCloud-Local
+remoterepository = iCloud-Remote
+synclabels = yes
+
+[Repository iCloud-Local]
+type = Maildir
+localfolders = ~/Mail/brunohcastro.icloud.com
+
+[Repository iCloud-Remote]
+type = IMAP
+remotehost = imap.mail.me.com
+remoteuser = brunohcastro@me.com
+remotepasseval = get_password("imap.mail.me.com", "brunohcastro@icloud.com", "993")
+starttls = yes
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+maxconnections = 2
+realdelete = yes

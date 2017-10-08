@@ -1,0 +1,369 @@
+# i3 config file (v4)
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+#
+# Author: Bruno Castro <brunohcastro@hotmail.com>
+# Version: 1.0.0 - Dvorak
+
+# ############################
+#  Variables
+# ############################
+
+## Default modifier
+set $mod   Mod4
+
+## Moving
+set $left  h
+set $down  t
+set $up    n
+set $right s
+
+## Modes
+set $defaultMode "default"
+set $controlMode "  "
+set $resizeMode  "  "
+set $deadMode    "  "
+set $powerMode   " L    ·  O    ·  S    ·  H    ·  R    ·  P   "
+
+## Workspaces
+set $WS1 "01 "
+set $WS2 "02 "
+set $WS3 "03 "
+set $WS4 "04 "
+set $WS5 "05 "
+set $WS6 "06 "
+set $WS7 "07 "
+set $WS8 "08 "
+set $WS9 "09 "
+set $WS0 "10 "
+
+## Theming
+set $color00 #1d2021
+set $color01 #cc241d
+set $color02 #98971a
+set $color03 #d79921
+set $color04 #458588
+set $color05 #b16286
+set $color06 #689d6a
+set $color07 #a89984
+set $color08 #928374
+set $color09 #fb4934
+set $color0A #b8bb26
+set $color0B #fabd2f
+set $color0C #83a598
+set $color0D #d3869b
+set $color0E #8ec07c
+set $color0F #fbf1c7
+
+# ############################
+#  Options
+# ############################
+
+font       pango:DejaVu Sans Mono 8
+new_window pixel        0
+
+focus_follows_mouse     no
+floating_modifier       $mod
+hide_edge_borders       none
+popup_during_fullscreen smart
+
+# ############################
+#  General Bindings
+# ############################
+
+## Open terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+## Rofi menu
+bindsym $mod+e exec --no-startup-id "rofi -show drun -modi drun,window,run,ssh"
+
+## Split - hori(z)ontal, (v)ertical
+bindsym $mod+z split h
+bindsym $mod+v split v
+
+## Change container layout - stac(k)ed, ta(b)bed, to(g)gle split
+bindsym $mod+k layout stacking
+bindsym $mod+b layout tabbed
+bindsym $mod+g layout toggle split
+
+## Switch windows
+bindsym $mod+Tab exec --no-startup-id "rofi -show window -modi window"
+
+# ############################
+#  Focusing
+# ############################
+
+## Change focus
+bindsym $mod+$left  focus left
+bindsym $mod+$down  focus down
+bindsym $mod+$up    focus up
+bindsym $mod+$right focus right
+
+bindsym $mod+Left   focus left
+bindsym $mod+Down   focus down
+bindsym $mod+Up     focus up
+bindsym $mod+Right  focus right
+
+## Focus - p(a)rent, ch(i)ld, tiling/floating
+bindsym $mod+a     focus parent
+bindsym $mod+i     focus child
+bindsym $mod+space focus mode_toggle
+
+# ############################
+#  Workspaces
+# ############################
+
+bindsym $mod+1      workspace $WS1
+bindsym $mod+2      workspace $WS2
+bindsym $mod+3      workspace $WS3
+bindsym $mod+4      workspace $WS4
+bindsym $mod+5      workspace $WS5
+bindsym $mod+6      workspace $WS6
+bindsym $mod+7      workspace $WS7
+bindsym $mod+8      workspace $WS8
+bindsym $mod+9      workspace $WS9
+bindsym $mod+0      workspace $WS0
+
+bindsym $mod+comma  workspace prev
+bindsym $mod+period workspace next
+
+## Moving windows
+
+bindsym $mod+Shift+1 move container to workspace $WS1
+bindsym $mod+Shift+2 move container to workspace $WS2
+bindsym $mod+Shift+3 move container to workspace $WS3
+bindsym $mod+Shift+4 move container to workspace $WS4
+bindsym $mod+Shift+5 move container to workspace $WS5
+bindsym $mod+Shift+6 move container to workspace $WS6
+bindsym $mod+Shift+7 move container to workspace $WS7
+bindsym $mod+Shift+8 move container to workspace $WS8
+bindsym $mod+Shift+9 move container to workspace $WS9
+bindsym $mod+Shift+0 move container to workspace $WS0
+
+# ############################
+#  Hotkeys
+# ############################
+
+## Audio controls
+
+#bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q set Master 5%+    && pkill -SIGRTMIN+3 i3blocks
+#bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q set Master 5%-    && pkill -SIGRTMIN+3 i3blocks
+#bindsym XF86AudioMute        exec --no-startup-id amixer -q set Master toggle && pkill -SIGRTMIN+3 i3blocks
+
+## Media controls
+bindsym XF86AudioPlay         exec --no-startup-id player-control toggle && pkill -SIGRTMIN+3 i3blocks
+bindsym XF86AudioNext         exec --no-startup-id player-control next   && pkill -SIGRTMIN+3 i3blocks
+bindsym XF86AudioPrev         exec --no-startup-id player-control prev   && pkill -SIGRTMIN+3 i3blocks
+bindsym XF86AudioStop         exec --no-startup-id player-control stop   && pkill -SIGRTMIN+3 i3blocks
+
+## Sreen brightness controls
+bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 5 && pkill -SIGRTMIN+2 i3blocks
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5 && pkill -SIGRTMIN+2 i3blocks
+
+## Touchpad Toggle control
+bindsym XF86TouchpadToggle    exec --no-startup-id touchpad-toggle
+
+## Laptop Keyboard Toggle
+bindsym XF86Launch7           exec --no-startup-id [ -f /usr/share/keyboarder/keyboarder ] && /usr/share/keyboarder/keyboarder
+
+## PrintScreen - whole, selection, current
+
+bindsym --release Print       exec --no-startup-id scrot -e 'mv $f ~/Pictures/'
+bindsym --release Shift+Print exec --no-startup-id scrot -s -e 'mv $f ~/Pictures/'
+bindsym --release Mod1+Print  exec --no-startup-id scrot -u -e 'mv $f ~/Pictures/'
+
+# ############################
+#  Modes
+# ############################
+
+## Changing modes
+bindsym $mod+d       mode $defaultMode
+bindsym $mod+x       mode $controlMode
+bindsym $mod+r       mode $resizeMode
+bindsym $mod+p       exec logout.py
+bindsym $mod+Shift+d mode $deadMode
+
+## Control Mode
+mode $controlMode {
+     bindsym $mod+c reload
+     bindsym $mod+r restart
+     bindsym $mod+e exec "i3-nagbar -t warning -m 'Do you really want to exit i3?' -b 'Yes, exit i3' 'i3-msg exit'"; mode $defaultMode
+
+     bindsym u exec --no-startup-id setxkbmap us -variant dvorak-intl && pkill -SIGRTMIN+5 i3blocks; mode $defaultMode
+     bindsym b exec --no-startup-id setxkbmap br                      && pkill -SIGRTMIN+5 i3blocks; mode $defaultMode
+
+     bindsym Return mode $defaultMode
+     bindsym Escape mode $defaultMode
+}
+
+## Resize Mode
+mode $resizeMode {
+     # These bindings trigger as soon as you enter the resize mode
+     bindsym $left  resize shrink width  10 px or 10 ppt
+     bindsym $down  resize grow   height 10 px or 10 ppt
+     bindsym $up    resize shrink height 10 px or 10 ppt
+     bindsym $right resize grow   width  10 px or 10 ppt
+
+     # same bindings, but for the arrow keys
+     bindsym Left  resize shrink width  10 px or 10 ppt
+     bindsym Down  resize grow   height 10 px or 10 ppt
+     bindsym Up    resize shrink height 10 px or 10 ppt
+     bindsym Right resize grow   width  10 px or 10 ppt
+
+     # fullscreen toggle
+     bindsym f fullscreen toggle; mode $defaultMode
+
+     # shortcut to change window border
+     bindsym b border normal 0; mode $defaultMode
+     bindsym p border pixel  1; mode $defaultMode
+
+     bindsym z border none; mode $defaultMode
+
+     # back to normal: Enter or Escape
+     bindsym Return mode $defaultMode
+     bindsym Escape mode $defaultMode
+}
+
+## Power Mode
+mode $powerMode {
+    bindsym l exec --no-startup-id screen-lock; mode $defaultMode
+
+    bindsym o exec --no-startup-id i3-msg    exit;      mode $defaultMode
+    bindsym s exec --no-startup-id systemctl suspend;   mode $defaultMode
+    bindsym h exec --no-startup-id systemctl hibernate; mode $defaultMode
+    bindsym r exec --no-startup-id systemctl reboot;    mode $defaultMode
+    bindsym p exec --no-startup-id systemctl poweroff;  mode $defaultMode
+
+    bindsym Return mode $defaultMode
+    bindsym Escape mode $defaultMode
+}
+
+## Dead Mode
+mode $deadMode {
+    bindsym $mod+Escape mode $defaultMode
+}
+
+# ############################
+#  System Bar
+# ############################
+
+bar {
+    status_command    i3blocks -c ~/.config/i3/i3blocks.conf
+    font              pango:Hack 10
+    workspace_buttons yes
+    height            25
+    separator_symbol  ""
+    tray_output       primary
+
+   colors {
+        # bar background color
+        background $color00
+        # text color used for blocks that do not have a color specified.
+        statusline $color0F
+        separator  $color08
+        # workspaces section
+        #                    border   backgr.  text
+        focused_workspace    $color04 $color04 $color0F
+        inactive_workspace   $color00 $color00 $color08
+        active_workspace     $color00 $color00 $color03
+        urgent_workspace     $color01 $color01 $color0F
+        binding_mode         $color01 $color01 $color00
+    }
+}
+
+# #############################
+#  Window manipulation
+# #############################
+
+## Kill container
+bindsym $mod+Shift+q kill
+
+## Move focused window
+bindsym $mod+Shift+$left  move left
+bindsym $mod+Shift+$down  move down
+bindsym $mod+Shift+$up    move up
+bindsym $mod+Shift+$right move right
+
+bindsym $mod+Shift+Left   move left
+bindsym $mod+Shift+Down   move down
+bindsym $mod+Shift+Up     move up
+bindsym $mod+Shift+Right  move right
+
+## Scratchpad - move focused, switch/hide scratchpad windows
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus       scratchpad show
+
+## Toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+## Enter (f)ullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# ############################
+#  Styling
+# ############################
+
+# class                 border  backgr. text    indicator
+# client.focused          #2B83A6 #2B83A6 #FFFFFF #DDDDDD
+# client.focused_inactive #212121 #212121 #86888C #292D2E
+# client.unfocused        #212121 #212121 #86888C #292D2E
+# client.urgent           #2F343A #D64E4E #FFFFFF #D64E4E
+# client.placeholder      #212121 #0C0C0C #FFFFFF #212121
+# client.background       #212121
+
+# blue gruvbox
+# class                 border|backgr|text|indicator|child_border
+# client.focused          $blue $blue $darkgray $purple $darkgray
+# client.focused_inactive $darkgray $darkgray $yellow $purple $darkgray
+# client.unfocused        $darkgray $darkgray $yellow $purple $darkgray
+# client.urgent           $red $red $white $red $red
+
+# ############################
+#  Gaps - i3-gaps
+# ############################
+
+smart_gaps on
+gaps       inner 6
+
+# ############################
+#  Startup
+# ############################
+
+# This are the programs that are run when the wm is started.
+#
+# Althogh this is a recommended way of doing this on i3 guide,
+# maybe a better place for those to live is the ~/.xsession file,
+# so it will be more wm agnostic.
+#
+# But in the other hand, this will probably conflict if we need to
+# run a standard DE. So, maybe we should run a xdg-autostart tool like
+# `dev -a` and let the work be done in a xdg compatible way.
+
+exec --no-startup-id xautolock -time 10 -locker "screen-lock" -detectsleep
+exec --no-startup-id compton -b --config ~/.config/compton/compton.conf
+
+exec --no-startup-id redshift-gtk
+exec --no-startup-id nm-applet
+exec --no-startup-id cbatticon
+exec --no-startup-id volumeicon
+
+exec --no-startup-id urxvt-kuake
+
+exec --no-startup-id dropbox start
+exec --no-startup-id variety
+exec --no-startup-id copyq
+exec --no-startup-id unclutter
+
+# ############################
+#  Conditions
+# ############################
+
+for_window [class="^.*"]               border pixel 0
+for_window [window_role="pop-up"]      floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [title="Preferences$"]      floating enable
+for_window [instance="pavucontrol"]    floating enable
+for_window [class="vokoscreen"]        floating enable, border normal 0
+for_window [instance="pinentry"]       floating enable
+for_window [title="Netflix"]           floating disable
+for_window [instance="kuake"]          floating enable, move position 240px -1px
