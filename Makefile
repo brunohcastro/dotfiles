@@ -8,6 +8,9 @@ colorscheme = gruvbox-dark-hard
 
 # Userspace
 #
+user/home:
+	- xdg-user-dirs-update
+
 user/desktop: wm/i3 \
               applications
 	- pacaur -S --noconfirm --needed xorg-xsetroot
@@ -27,10 +30,14 @@ user/environments/rust: ~/.env-rust
 user/environments/node:
 	- echo NODE
 
+user/git-identity:
+	- git config --global user.name $(user-name)
+	- git config --global user.email $(user-email)
+
 # Window Manager
 #
 
-wm/i3: stow/dotfile/i3 wm/support wm/locker
+wm/i3: stow/dotfile/i3 wm/support
 	- sudo -v
 	- pacaur -S --noconfirm --noedit --needed \
 	    i3-gaps \
@@ -47,7 +54,8 @@ wm/support: applications/scrot applications/dunst
 	    playerctl \
 	    network-manager-applet \
 	    pavucontrol \
-	    xautolock
+	    xautolock \
+	    feh
 
 wm/locker: ~/.bin/my-favorite-things-locker /etc/systemd/system/my-favorite-things-locker.service applications/scrot
 	- sudo systemctl enable my-favorite-things-locker.service
@@ -57,7 +65,6 @@ wm/locker: ~/.bin/my-favorite-things-locker /etc/systemd/system/my-favorite-thin
 	- sudo pacman -S --noconfirm --needed \
 	    i3lock \
 	    imagemagick
-
 
 # Applications
 #
@@ -91,7 +98,7 @@ applications/documents:
 	    evince-no-gnome
 
 applications/browsers:
-	- pacaur -S --noconfirm --needed \
+	- pacaur -S --noconfirm --noedit --needed \
 	    chromium \
 	    firefox \
 	    google-chrome
@@ -99,16 +106,15 @@ applications/browsers:
 applications/graphics:
 	- sudo pacman -S --noconfirm --needed \
 	    inkscape \
-	    gimp \
-	    feh
+	    gimp
 
 applications/filesystem: stow/dotfile/ranger
-	- sudo pacaur -S --noconfirm --needed \
+	- pacaur -S --noconfirm --noedit --needed \
 	    pcmanfm \
 	    simple-mtpfs \
 	    xarchiver \
 	    dropbox \
-			ranger
+	    ranger
 
 applications/development: applications/emacs applications/docker
 	- pacaur -S --noconfirm --noedit --needed \
@@ -125,7 +131,7 @@ applications/chating:
 applications/utils: applications/password-store applications/redshift
 	- pacaur -S --noconfirm --needed \
 	    qbittorrent \
-	    copyq \ #parcelite
+	    copyq \
 	    tmux \
 	    variety \
 	    youtube-dl \
@@ -175,7 +181,7 @@ applications/taskwarrior: ~/.taskrc
 	    task
 
 applications/terminal: stow/dotfile/xresources
-	- sudo pacaur -S --noconfirm --noedit --needed \
+	- pacaur -S --noconfirm --noedit --needed \
 	    rxvt-unicode-patched \
 	    urxvt-perls \
 	    oh-my-zsh-git
@@ -199,35 +205,30 @@ applications/password-store: git/password-store
 
 core: core/utils \
       core/aur-helper \
-      core/fonts \
-      core/xorg
+      core/xorg \
+      core/fonts
 
 core/utils:
 	sudo pacman -S --noconfirm \
-		zsh \
-		ctags \
-		git \
-		openssh \
-		unzip \
-		unrar \
+	  zsh \
+	  ctags \
+	  git \
+	  openssh \
+	  unzip \
+	  unrar \
 	  xdg-user-dirs \
-	  xdg-user-dirs-update \
 	  stow \
-		xsel
+	  xsel
 
 core/fonts:
-	pacaur -S --noconfirm --needed \
+	pacaur -S --noconfirm --noedit --needed \
 	  libxft \
-		tamzen-font-git \
-		ttf-bitstream-vera \
-		ttf-dejavu \
-		ttf-fira-mono \
-		ttf-fira-sans \
-		ttf-ms-fonts \
-		ttf-roboto \
-		ttf-ubuntu-font-family \
-		nerd-fonts-complete
-
+	  ttf-dejavu \
+	  noto-fonts \
+	  ttf-ms-fonts \
+	  ttf-roboto \
+	  ttf-ubuntu-font-family \
+	  nerd-fonts-complete
 
 core/aur-helper: core/aur-helper/cower
 	cd tmp \
@@ -245,18 +246,19 @@ core/aur-helper/cower: clean/tmp
 			&& cd cower \
 			&& makepkg -sri --noconfirm
 
-core/xorg: /etc/X11/xorg.conf.d/20-intel.conf /etc/X11/xorg.conf.d/00-keyboard.conf ~/.drirc
+core/xorg: # /etc/X11/xorg.conf.d/20-intel.conf /etc/X11/xorg.conf.d/00-keyboard.conf ~/.drirc
 	sudo pacman -S --noconfirm --needed \
-		xf86-input-libinput \
-	  xf86-input-synaptics \
-		xorg-server \
-		xorg-xinit \
-		xorg-xrandr \
-		xorg-xrdb \
+	  xorg-server \
+	  xorg-xinit \
+	  xorg-xinput \
+	  xorg-xrandr \
+	  xorg-xrdb \
 	  xorg-xdm \
 	  xorg-xev \
 	  xorg-setxkbmap \
-		xterm
+	  xterm \
+	  xf86-input-libinput \
+	  xf86-input-synaptics
 	- sudo systemctl enable xdm.service
 
 # System
@@ -285,10 +287,9 @@ system/notebook: /etc/modprobe.d/i915.conf /etc/thinkfan.conf
 	- sudo systemctl enable thinkfan
 	- sudo systemctl start thinkfan
 
-system/sound: /etc/modprobe.d/blacklist.conf /etc/modprobe.d/snd_hda_intel.conf
-	- pacaur -S --noconfirm --needed \
+system/sound: stow/etc/modprobe.d
+	- pacaur -S --noconfirm --noedit --needed \
 	    pamixer \
-	    pulsemixer \
 	    pulseaudio \
 	    alsa-utils \
 	    pulseaudio-bluetooth
@@ -308,12 +309,12 @@ system/network:
 
 system/intel:
 	- sudo pacman -S --noconfirm --needed \
-		  xf86-video-intel \
-	    libva-intel-driver \ #libva-intel-driver-g45-h264
-      lib32-libva-intel-driver \
-		  libvdpau-va-gl \
-      libvdpau \
-      lib32-libvdpau
+	    xf86-video-intel \
+	    libva-intel-driver \
+	    lib32-libva-intel-driver \
+	    libvdpau-va-gl \
+	    libvdpau \
+	    lib32-libvdpau
 
 system/nvidia:
 	- sudo pacman -S --noconfirm --needed \
@@ -323,7 +324,7 @@ system/nvidia:
 	    libxnvctrl \
 	    lib32-nvidia-utils
 
-system/hybrid-graphics: system/intel system/nvidia
+system/hybrid-graphics: # system/intel system/nvidia
 	- sudo pacman -S --noconfirm --needed \
 	    bumblebee \
 	    primus \
@@ -348,7 +349,7 @@ device/imac: device/common
 	- echo "TODO"
 
 device/asus-k555: core \
-									system/common \
+                  system/common \
                   system/notebook \
                   system/hybrid-graphics \
                   user/desktop \
