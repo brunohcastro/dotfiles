@@ -37,11 +37,17 @@ user/git-identity:
 # Window Manager
 #
 
-wm/i3: stow/dotfile/i3 wm/support
+wm/i3: stow/dotfile/i3 wm/locker wm/support
 	- sudo -v
 	- pacaur -S --noconfirm --noedit --needed \
 	    i3-gaps \
 	    i3blocks
+
+wm/locker:
+	- pacaur -S --noconfirm --noedit --needed \
+	    i3lock \
+	    python-cairo \
+	    python-dbus
 
 wm/support: applications/scrot applications/dunst
 	- pacaur -S --noconfirm --noedit --needed \
@@ -55,16 +61,8 @@ wm/support: applications/scrot applications/dunst
 	    network-manager-applet \
 	    pavucontrol \
 	    xautolock \
+	    imagemagick \
 	    feh
-
-wm/locker: ~/.bin/my-favorite-things-locker /etc/systemd/system/my-favorite-things-locker.service applications/scrot
-	- sudo systemctl enable my-favorite-things-locker.service
-	- cp templates/dotfiles/my-favorite-things/lock-icon.png
-	~/.my-favorite-things/lock-icon.png
-	- chmod +x ~/.bin/my-favorite-things-locker
-	- sudo pacman -S --noconfirm --needed \
-	    i3lock \
-	    imagemagick
 
 # Applications
 #
@@ -79,8 +77,8 @@ applications: applications/appearance \
               applications/development \
               applications/utils
 
-applications/appearance: stow/dotfile/gtk
-	- sudo pacaur -S --noconfirm --needed \
+applications/appearance: stow/dotfile/qt
+	- pacaur -S --noconfirm --noedit --needed \
 	    arc-gtk-theme \
 	    qt5-styleplugins \
 	    qt5ct \
@@ -88,7 +86,7 @@ applications/appearance: stow/dotfile/gtk
 	    papirus-icon-theme-git
 
 applications/documents:
-	- sudo pacaur -S --noconfirm --needed \
+	- pacaur -S --noconfirm --noedit --needed \
 	    libreoffice \
 	    zathura \
 	    zathura-pdf-mupdf \
@@ -129,7 +127,7 @@ applications/chating:
 	    slack-desktop
 
 applications/utils: applications/password-store applications/redshift
-	- pacaur -S --noconfirm --needed \
+	- pacaur -S --noconfirm --noedit --needed \
 	    qbittorrent \
 	    copyq \
 	    tmux \
@@ -144,7 +142,7 @@ applications/dunst: stow/dotfile/dunst
 	- sudo pacman -S --noconfirm --needed dunst
 
 applications/redshift: stow/dotfile/redshift
-	- pacaur -S --noconfirm --needed redshift-gtk
+	- pacaur -S --noconfirm --noedit --needed redshift-gtk-git
 
 applications/emacs: git/emacs.d
 	- sudo pacman -S --noconfirm --needed \
@@ -224,6 +222,7 @@ core/fonts:
 	pacaur -S --noconfirm --noedit --needed \
 	  libxft \
 	  ttf-dejavu \
+	  ttf-font-awesome \
 	  noto-fonts \
 	  ttf-ms-fonts \
 	  ttf-roboto \
@@ -257,6 +256,7 @@ core/xorg: # /etc/X11/xorg.conf.d/20-intel.conf /etc/X11/xorg.conf.d/00-keyboard
 	  xorg-xev \
 	  xorg-setxkbmap \
 	  xterm \
+	  xclip \
 	  xf86-input-libinput \
 	  xf86-input-synaptics
 	- sudo systemctl enable xdm.service
@@ -267,16 +267,16 @@ core/xorg: # /etc/X11/xorg.conf.d/20-intel.conf /etc/X11/xorg.conf.d/00-keyboard
 system/common: system/network \
                system/sound
 
-system/notebook: /etc/modprobe.d/i915.conf /etc/thinkfan.conf
-	- sudo pacman -S --noconfirm \
-			acpi \
-			ethtool \
-			powertop \
-			rfkill \
-			tlp \
-			x86_energy_perf_policy \
+system/notebook: # /etc/modprobe.d/i915.conf /etc/thinkfan.conf
+	- pacaur -S --noconfirm --noedit --needed \
+	    acpi \
+	    ethtool \
+	    powertop \
+	    rfkill \
+	    tlp \
+	    x86_energy_perf_policy \
 	    xorg-xbacklight \
-	    xfce4-power-management \
+	    xfce4-power-manager \
 	    thinkfan \
 	    acpi_call \
 	    tp_smapi
@@ -291,6 +291,7 @@ system/sound: stow/etc/modprobe.d
 	- pacaur -S --noconfirm --noedit --needed \
 	    pamixer \
 	    pulseaudio \
+	    pulseaudio-alsa \
 	    alsa-utils \
 	    pulseaudio-bluetooth
 	- pulseaudio -D
@@ -330,6 +331,9 @@ system/hybrid-graphics: # system/intel system/nvidia
 	    primus \
 	    lib32-primus \
 	    bbswitch
+	- sudo systemctl enable bumblebeed.service
+	- sudo systemctl start bumblebeed.service
+	- sudo gpasswd -a $(USER) bumblebee
 
 # Device setups
 #
