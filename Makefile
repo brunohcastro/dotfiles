@@ -27,8 +27,25 @@ user/environments/rust: ~/.env-rust
 	- curl https://sh.rustup.rs -sSf \
 	    | sh -s -- --no-modify-path
 
-user/environments/node:
-	- echo NODE
+user/environments/asdf:
+	- git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.4.0
+	- source ~/.zshrc
+
+user/environments/node: user/environments/asdf
+	- asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+	- bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+	- asdf install nodejs 8.7.0
+	- asdf global nodejs 8.7.0
+
+user/environments/sdkman:
+	- curl -s "https://get.sdkman.io" | bash
+
+user/environments/jvm: user/environments/sdkman
+	- sdkman install java
+	- sdkman install kotlin
+	- sdkman install gradle
+	- sdkman install ant
+	- sdkman install maven
 
 user/git-identity:
 	- git config --global user.name $(user-name)
@@ -47,6 +64,7 @@ wm/locker:
 	- pacaur -S --noconfirm --noedit --needed \
 	    i3lock \
 	    python-cairo \
+	    python-gobject \
 	    python-dbus
 
 wm/support: applications/scrot applications/dunst
@@ -59,6 +77,7 @@ wm/support: applications/scrot applications/dunst
 	    volumeicon \
 	    playerctl \
 	    network-manager-applet \
+	    gpointing-device-settings \
 	    pavucontrol \
 	    xautolock \
 	    imagemagick \
@@ -83,7 +102,8 @@ applications/appearance: stow/dotfile/qt
 	    qt5-styleplugins \
 	    qt5ct \
 	    lxappearance \
-	    papirus-icon-theme-git
+	    papirus-icon-theme-git \
+	    gnome-themes-standard
 
 applications/documents:
 	- pacaur -S --noconfirm --noedit --needed \
@@ -112,6 +132,7 @@ applications/filesystem: stow/dotfile/ranger
 	    simple-mtpfs \
 	    xarchiver \
 	    dropbox \
+	    gvfs \
 	    ranger
 
 applications/development: applications/emacs applications/docker
@@ -130,10 +151,10 @@ applications/utils: applications/password-store applications/redshift
 	- pacaur -S --noconfirm --noedit --needed \
 	    qbittorrent \
 	    copyq \
-	    tmux \
 	    variety \
 	    youtube-dl \
 	    vokoscreen \
+	    multisystem \
 	    screenfetch
 
 # Specific
@@ -142,7 +163,7 @@ applications/dunst: stow/dotfile/dunst
 	- sudo pacman -S --noconfirm --needed dunst
 
 applications/redshift: stow/dotfile/redshift
-	- pacaur -S --noconfirm --noedit --needed redshift-gtk-git
+	- sudo pacman -S --noconfirm --needed redshift
 
 applications/emacs: git/emacs.d
 	- sudo pacman -S --noconfirm --needed \
@@ -181,8 +202,10 @@ applications/taskwarrior: ~/.taskrc
 applications/terminal: stow/dotfile/xresources
 	- pacaur -S --noconfirm --noedit --needed \
 	    rxvt-unicode-patched \
-	    urxvt-perls \
 	    oh-my-zsh-git
+	- sudo pacman -S --noconfirm --needed \
+	    urxvt-perls \
+	    tmux
 
 applications/scrot:
 	- sudo pacman -S --noconfirm --needed scrot
@@ -216,6 +239,8 @@ core/utils:
 	  unrar \
 	  xdg-user-dirs \
 	  stow \
+	  exfat-utils \
+	  cpio \
 	  xsel
 
 core/fonts:
@@ -277,15 +302,9 @@ system/notebook: # /etc/modprobe.d/i915.conf /etc/thinkfan.conf
 	    x86_energy_perf_policy \
 	    xorg-xbacklight \
 	    xfce4-power-manager \
-	    thinkfan \
-	    acpi_call \
-	    tp_smapi
+	    acpi_call
 	- sudo systemctl enable tlp.service tlp-sleep.service
 	- sudo systemctl start tlp.service tlp-sleep.service
-	- sudo rmmod thinkpad_acpi
-	- sudo modprobe thinkpad_acpi
-	- sudo systemctl enable thinkfan
-	- sudo systemctl start thinkfan
 
 system/sound: stow/etc/modprobe.d
 	- pacaur -S --noconfirm --noedit --needed \

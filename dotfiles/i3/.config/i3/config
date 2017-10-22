@@ -350,7 +350,7 @@ exec --no-startup-id volumeicon
 exec --no-startup-id urxvt-kuake
 
 exec --no-startup-id dropbox start
-exec --no-startup-id variety
+exec --no-startup-id variety > /dev/null 2>&1
 exec --no-startup-id copyq
 exec --no-startup-id unclutter
 
@@ -366,4 +366,4 @@ for_window [instance="pavucontrol"]    floating enable
 for_window [class="vokoscreen"]        floating enable, border normal 0
 for_window [instance="pinentry"]       floating enable
 for_window [title="Netflix"]           floating disable
-for_window [instance="kuake"]          floating enable, move position 240px -1px
+for_window [instance="kuake"]          floating enable, move position 0px -1px
