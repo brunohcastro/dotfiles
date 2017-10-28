@@ -147,6 +147,10 @@ applications/chating:
 	    telegram-desktop-bin \
 	    slack-desktop
 
+applications/multimedia:
+	- pacaur -S --noconfirm --noedit --needed \
+	    mellowplayer
+
 applications/utils: applications/password-store applications/redshift
 	- pacaur -S --noconfirm --noedit --needed \
 	    qbittorrent \
