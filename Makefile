@@ -122,9 +122,10 @@ applications/browsers:
 	    google-chrome
 
 applications/graphics:
-	- sudo pacman -S --noconfirm --needed \
+	- pacaur -S --noconfirm --needed --noedit \
 	    inkscape \
-	    gimp
+	    gimp \
+	    pencil
 
 applications/filesystem: stow/dotfile/ranger
 	- pacaur -S --noconfirm --noedit --needed \
@@ -140,7 +141,13 @@ applications/development: applications/emacs applications/docker
 	    android-studio \
 	    webstorm \
 	    visual-studio-code \
-	    the_silver_searcher
+	    aws-cli \
+	    chef-dk \
+	    the_silver_searcher \
+	    staruml \
+	    argouml \
+	    kubectl-bin \
+	    kube-aws
 
 applications/chating:
 	- pacaur -S --noconfirm --noedit --needed \
