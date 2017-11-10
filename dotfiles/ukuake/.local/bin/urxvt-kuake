@@ -1,3 +1,3 @@
 #!/bin/bash
 
-urxvt -kuake-hotkey F12 -name kuake -depth 32 -bg rgba:1d00/2000/2100/cc00 -g $(tput cols)x25+0+0 -bd rgb:fb/f1/c7 -b 0 -w 1
+urxvt -kuake-hotkey F12 -name kuake -pe tabbed -g $(tput cols)x40+0+0 -bd rgb:fb/f1/c7

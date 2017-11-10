@@ -89,10 +89,11 @@ wm/support: applications/scrot applications/dunst
 # Groups
 
 applications: applications/appearance \
-              applications/documents \
+              applications/productivity \
               applications/browsers \
               applications/graphics \
               applications/filesystem \
+              applications/social \
               applications/development \
               applications/utils
 
@@ -105,7 +106,7 @@ applications/appearance: stow/dotfile/qt
 	    papirus-icon-theme-git \
 	    gnome-themes-standard
 
-applications/documents:
+applications/productivity: applications/taskwarrior
 	- pacaur -S --noconfirm --noedit --needed \
 	    libreoffice \
 	    zathura \
@@ -139,7 +140,7 @@ applications/filesystem: stow/dotfile/ranger
 applications/development: applications/emacs applications/docker
 	- pacaur -S --noconfirm --noedit --needed \
 	    android-studio \
-	    webstorm \
+	    webstorm-jre \
 	    visual-studio-code \
 	    aws-cli \
 	    chef-dk \
@@ -149,23 +150,23 @@ applications/development: applications/emacs applications/docker
 	    kubectl-bin \
 	    kube-aws
 
-applications/chating:
+applications/social: applications/weechat
 	- pacaur -S --noconfirm --noedit --needed \
 	    telegram-desktop-bin \
 	    slack-desktop
 
 applications/multimedia:
 	- pacaur -S --noconfirm --noedit --needed \
-	    mellowplayer
+	    mellowplayer \
+	    youtube-dl \
+	    vokoscreen \
+	    mpv
 
 applications/utils: applications/password-store applications/redshift
 	- pacaur -S --noconfirm --noedit --needed \
 	    qbittorrent \
 	    copyq \
 	    variety \
-	    youtube-dl \
-	    vokoscreen \
-	    multisystem \
 	    screenfetch
 
 # Specific
@@ -193,20 +194,16 @@ applications/mpd: ~/.config/mpd/mpd.conf ~/.config/systemd/user/mpd.service
 applications/ncmpcpp: ~/.ncmpcpp/bindings ~/.ncmpcpp/config
 	- sudo pacman -S --noconfirm --needed ncmpcpp
 
-applications/mpv:
-	- sudo pacman -S --noconfirm --needed mpv
-
 applications/weechat:
 	- sudo pacman -S --noconfirm --needed \
 	    python2 \
 	    python2-pip \
 	    weechat
-	- pip2 install websocket-client
+	- sudo pip2 install websocket-client
 	- mkdir -p ~/.weechat/python/autoload
-	- curl -o ~/.weechat/python/autoload/wee_slack.py
-"https://raw.githubusercontent.com/rawdigits/wee-slack/master/wee_slack.py"
+	- curl -o ~/.weechat/python/autoload/wee_slack.py "https://raw.githubusercontent.com/rawdigits/wee-slack/master/wee_slack.py"
 
-applications/taskwarrior: ~/.taskrc
+applications/taskwarrior: stow/dotfile/taskwarrior
 	- sudo pacman -S --noconfirm --needed \
 	    task
 
@@ -228,6 +225,7 @@ applications/docker:
 	    docker-compose \
 	    lxc
 	- sudo gpasswd -a $(USER) docker
+	- sudo systemctl enable docker
 
 applications/password-store: git/password-store
 	- sudo pacman -S --noconfirm --needed pass
@@ -347,6 +345,11 @@ system/intel:
 	    libvdpau \
 	    lib32-libvdpau
 
+system/razer:
+	- gpg --recv-keys 5FB027474203454C
+	- pacaur -S --noconfirm --noedit --needed \
+	    razercfg
+
 system/nvidia:
 	- sudo pacman -S --noconfirm --needed \
 	    nvidia \
@@ -401,10 +404,29 @@ device/macbook-air: device/common/notebook
 device/surface: device/common/notebook
 	- echo "TODO"
 
-
-
 # Task utils
 #
+olkb/install:
+	- pacaur -S --noconfirm --noedit --needed \
+	    avr-gcc \
+	    avr-binutils \
+	    avr-libc \
+	    dfu-util \
+	    arm-none-eabi-gcc \
+	    arm-none-eabi-binutils \
+	    arm-none-eabi-newlib \
+	    dfu-programmer
+
+olkb/remove:
+	- sudo pacman -Rns \
+	    avr-gcc \
+	    avr-binutils \
+	    avr-libc \
+	    dfu-util \
+	    arm-none-eabi-gcc \
+	    arm-none-eabi-binutils \
+	    arm-none-eabi-newlib \
+	    dfu-programmer
 
 /etc/vconsole.conf: templates/etc/vconsole.conf
 	- sudo pacman -S --noconfirm terminus-font
@@ -437,10 +459,10 @@ clean/tmp:
 	- rm -rf tmp/*
 
 stow/etc/%:
-	- sudo stow -t /etc -d etc/ $*
+	- sudo --no-folding stow -t /etc -d etc/ $*
 
 stow/dotfile/%:
-	- stow -t $(HOME) -d dotfiles/ $*
+	- stow --no-folding -t $(HOME) -d dotfiles/ $*
 
 git/emacs.d:
 	[ -d ~/.emacs.d ] \
