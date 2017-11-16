@@ -18,6 +18,7 @@ Xft.rgba: rgb
 ! Clickable links
 URxvt.perl-ext-common: default,matcher,keyboard-select,clipboard
 !URxvt.perl-ext: tabbed
+URxvt.kuake.hotkey: F12
 URxvt.url-launcher: /usr/bin/firefox
 URxvt.matcher.button: 1
 URxvt.matcher.rend.0: Uline Bold fg5

@@ -81,6 +81,7 @@ wm/support: applications/scrot applications/dunst
 	    pavucontrol \
 	    xautolock \
 	    imagemagick \
+	    python2-i3-py \
 	    feh
 
 # Applications
@@ -114,7 +115,8 @@ applications/productivity: applications/taskwarrior
 	    texlive-most \
 	    xpdf \
 	    ghostscript \
-	    evince-no-gnome
+	    evince-no-gnome \
+	    rednotebook
 
 applications/browsers:
 	- pacaur -S --noconfirm --noedit --needed \
@@ -148,6 +150,7 @@ applications/development: applications/emacs applications/docker
 	    staruml \
 	    argouml \
 	    kubectl-bin \
+	    robo3t-bin \
 	    kube-aws
 
 applications/social: applications/weechat
@@ -228,7 +231,10 @@ applications/docker:
 	- sudo systemctl enable docker
 
 applications/password-store: git/password-store
-	- sudo pacman -S --noconfirm --needed pass
+	- gpg --recv-keys 011FDC52DA839335
+	- pacaur -S --noconfirm --needed --noedit \
+	    pass \
+	    browserpass
 
 # Core
 #

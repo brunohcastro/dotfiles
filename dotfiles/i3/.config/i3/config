@@ -140,6 +140,18 @@ bindsym $mod+Shift+8 move container to workspace $WS8
 bindsym $mod+Shift+9 move container to workspace $WS9
 bindsym $mod+Shift+0 move container to workspace $WS0
 
+# workspace screens
+workspace $WS1 output HDMI-0
+workspace $WS2 output HDMI-0
+workspace $WS3 output HDMI-0
+workspace $WS4 output HDMI-0
+workspace $WS5 output HDMI-0
+workspace $WS6 output DP-0
+workspace $WS7 output DP-0
+workspace $WS8 output DP-0
+workspace $WS9 output DP-0
+workspace $WS0 output DP-0
+
 # ############################
 #  Hotkeys
 # ############################
@@ -191,6 +203,8 @@ mode $controlMode {
 
      bindsym u exec --no-startup-id setxkbmap us -variant dvorak-intl && pkill -SIGRTMIN+5 i3blocks; mode $defaultMode
      bindsym b exec --no-startup-id setxkbmap br                      && pkill -SIGRTMIN+5 i3blocks; mode $defaultMode
+     
+     bindsym Shift+backslash exec --no-startup-id switch-workspaces; mode $defaultMode
 
      bindsym Return mode $defaultMode
      bindsym Escape mode $defaultMode
