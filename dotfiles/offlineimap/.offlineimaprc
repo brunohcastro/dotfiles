@@ -38,17 +38,14 @@ remoterepository = Dastro-Remote
 synclabels = yes
 
 [Repository Dastro-Local]
-type = GmailMaildir
+type = Maildir
 localfolders = ~/Mail/bruno.dastro.com.br
 
 [Repository Dastro-Remote]
-type = Gmail
+type = IMAP
+remotehost = imappro.zoho.com
 remoteuser = bruno@dastro.com.br
-remotepasseval = get_password("imap.gmail.com", "bruno@dastro.com.br", "993")
-folderfilter = lambda foldername: foldername not in ['[Gmail]/Todos os e-mails',
-                                                     '[Gmail]/Importante',
-                                                     '[Gmail]/Com estrela',
-                                                     '[Gmail]/Bate-papos']
+remotepasseval = get_password("imappro.zoho.com", "bruno@dastro.com.br", "993")
 ssl = yes
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 maxconnections = 2
