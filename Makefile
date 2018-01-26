@@ -54,11 +54,11 @@ user/git-identity:
 # Window Manager
 #
 
-wm/i3: stow/dotfile/i3 wm/locker wm/support
+wm/i3: stow/dotfile/i3 stow/dotfile/polybar wm/locker wm/support
 	- sudo -v
 	- pacaur -S --noconfirm --noedit --needed \
 	    i3-gaps \
-	    i3blocks
+	    polybar
 
 wm/locker:
 	- pacaur -S --noconfirm --noedit --needed \
@@ -139,7 +139,7 @@ applications/filesystem: stow/dotfile/ranger
 	    gvfs \
 	    ranger
 
-applications/development: applications/emacs applications/docker
+applications/development: applications/docker
 	- pacaur -S --noconfirm --noedit --needed \
 	    android-studio \
 	    webstorm-jre \
@@ -148,7 +148,6 @@ applications/development: applications/emacs applications/docker
 	    chef-dk \
 	    the_silver_searcher \
 	    staruml \
-	    argouml \
 	    kubectl-bin \
 	    robo3t-bin \
 	    kube-aws
@@ -229,6 +228,11 @@ applications/docker:
 	    lxc
 	- sudo gpasswd -a $(USER) docker
 	- sudo systemctl enable docker
+
+applications/gitkraken:
+	- gpg --recv-keys 5CC908FDB71E12C2
+	- pacaur -S --noconfirm --needed --noedit \
+	    gitkraken
 
 applications/password-store: git/password-store
 	- gpg --recv-keys 011FDC52DA839335
