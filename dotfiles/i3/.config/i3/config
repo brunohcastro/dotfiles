@@ -91,7 +91,7 @@ bindsym $mod+Tab exec --no-startup-id "rofi -show window -modi window"
 
 # ############################
 #  Focusing
-# ############################
+#############################
 
 ## Change focus
 bindsym $mod+$left  focus left
@@ -141,7 +141,7 @@ bindsym $mod+Shift+9 move container to workspace $WS9
 bindsym $mod+Shift+0 move container to workspace $WS0
 
 # workspace screens
-workspace $WS1 output HDMI-0
+#workspace $WS1 output HDMI-0
 workspace $WS2 output HDMI-0
 workspace $WS3 output HDMI-0
 workspace $WS4 output HDMI-0
@@ -361,7 +361,7 @@ exec_always --no-startup-id $HOME/.config/i3/polybar.sh
 exec --no-startup-id xautolock -time 10 -locker "screen-lock" -detectsleep
 exec --no-startup-id compton -b --config ~/.config/compton/compton.conf
 
-exec --no-startup-id redshift-gtk
+exec --no-startup-id redshift-gtk -c ~/.config/redshift.conf
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id volumeicon

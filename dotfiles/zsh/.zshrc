@@ -85,6 +85,7 @@ plugins=(asdf archlinux git tmux docker docker-compose emacs ng wd dircycle dirh
 alias netflix=google-chrome-stable --app=http://netflix.com
 alias pcmclean="sudo pacman -Sc"
 alias pcmpurge="sudo pacman -Rns $(pacman -Qtdq)"
+alias smtpfs="simple-mtpfs --device 1 /home/bruno/Mount"
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then

@@ -28,3 +28,9 @@ include /usr/share/doc/task/rc/dark-16.theme
 # include /usr/share/doc/task/rc/solarized-dark-256.theme
 #include /usr/share/doc/task/rc/solarized-light-256.theme
 #include /usr/share/doc/task/rc/no-color.theme
+taskd.certificate=~/Downloads/private.certificate.pem
+taskd.key=~/Downloads/private.key.pem
+taskd.ca=~/Downloads/ca.cert.pem
+taskd.server=taskwarrior.inthe.am:53589
+taskd.credentials=inthe_am/brunohcastro/6f18df1a-c6c3-4334-b3ad-d54746103f40
+taskd.trust=ignore hostname
