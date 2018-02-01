@@ -58,7 +58,8 @@ wm/i3: stow/dotfile/i3 stow/dotfile/polybar wm/locker wm/support
 	- sudo -v
 	- pacaur -S --noconfirm --noedit --needed \
 	    i3-gaps \
-	    polybar
+	    polybar \
+	    i3ipc-glib-git
 
 wm/locker:
 	- pacaur -S --noconfirm --noedit --needed \
@@ -91,6 +92,8 @@ wm/support: applications/scrot applications/dunst
 
 applications: applications/appearance \
               applications/productivity \
+              applications/mail \
+              applications/tex \
               applications/browsers \
               applications/graphics \
               applications/filesystem \
@@ -110,13 +113,21 @@ applications/appearance: stow/dotfile/qt
 applications/productivity: applications/taskwarrior
 	- pacaur -S --noconfirm --noedit --needed \
 	    libreoffice \
-	    zathura \
-	    zathura-pdf-mupdf \
-	    texlive-most \
-	    xpdf \
-	    ghostscript \
 	    evince-no-gnome \
+	    todoist-linux-bin \
 	    rednotebook
+
+applications/mail:
+	- pacaur -S --noconfirm --noedit --needed \
+	    mu \
+	    mutt \
+	    offlineimap \
+	    mailspring
+
+applications/tex:
+	- pacaur -S --noconfirm --noedit --needed \
+	    texlive-most \
+	    texstudio
 
 applications/browsers:
 	- pacaur -S --noconfirm --noedit --needed \
@@ -128,6 +139,7 @@ applications/graphics:
 	- pacaur -S --noconfirm --needed --noedit \
 	    inkscape \
 	    gimp \
+	    mirage \
 	    pencil
 
 applications/filesystem: stow/dotfile/ranger
@@ -139,7 +151,7 @@ applications/filesystem: stow/dotfile/ranger
 	    gvfs \
 	    ranger
 
-applications/development: applications/docker
+applications/development: applications/docker applications/gitkraken
 	- pacaur -S --noconfirm --noedit --needed \
 	    android-studio \
 	    webstorm-jre \
@@ -150,6 +162,7 @@ applications/development: applications/docker
 	    staruml \
 	    kubectl-bin \
 	    robo3t-bin \
+	    postman-bin \
 	    kube-aws
 
 applications/social: applications/weechat
@@ -180,21 +193,7 @@ applications/redshift: stow/dotfile/redshift
 	- sudo pacman -S --noconfirm --needed redshift
 
 applications/emacs: git/emacs.d
-	- sudo pacman -S --noconfirm --needed \
-	    emacs \
-	    mu \
-	    offlineimap \
-	    w3m
-
-applications/mpd: ~/.config/mpd/mpd.conf ~/.config/systemd/user/mpd.service
-	- sudo pacman -S --noconfirm --needed mpd mpc
-	- mkdir -p ~/.mpd/playlists
-	- systemctl --user daemon-reload
-	- systemctl --user enable mpd.service
-	- systemctl --user start mpd.service
-
-applications/ncmpcpp: ~/.ncmpcpp/bindings ~/.ncmpcpp/config
-	- sudo pacman -S --noconfirm --needed ncmpcpp
+	- sudo pacman -S --noconfirm --needed emacs
 
 applications/weechat:
 	- sudo pacman -S --noconfirm --needed \
@@ -212,8 +211,7 @@ applications/taskwarrior: stow/dotfile/taskwarrior
 applications/terminal: stow/dotfile/xresources
 	- pacaur -S --noconfirm --noedit --needed \
 	    rxvt-unicode-patched \
-	    oh-my-zsh-git
-	- sudo pacman -S --noconfirm --needed \
+	    oh-my-zsh-git \
 	    urxvt-perls \
 	    tmux
 
@@ -246,6 +244,7 @@ applications/password-store: git/password-store
 core: core/utils \
       core/aur-helper \
       core/xorg \
+      core/printer \
       core/fonts
 
 core/utils:
@@ -260,7 +259,16 @@ core/utils:
 	  stow \
 	  exfat-utils \
 	  cpio \
+	  ntfs-3g \
 	  xsel
+
+core/printer:
+	pacaur -S --noconfirm --noedit --needed \
+	  cups \
+	  system-config-printer \
+	  epson-inkjet-printer-201401w \
+	  gtk3-print-backends \
+	  xsane
 
 core/fonts:
 	pacaur -S --noconfirm --noedit --needed \
@@ -270,6 +278,8 @@ core/fonts:
 	  noto-fonts \
 	  ttf-ms-fonts \
 	  ttf-roboto \
+	  siji-git \
+	  ttf-unifont \
 	  ttf-ubuntu-font-family \
 	  nerd-fonts-complete
 
@@ -342,7 +352,9 @@ system/bluetooth:
 	- sudo systemctl start bluetooth.service
 
 system/network:
-	- sudo pacman -S --noconfirm --needed networkmanager
+	- sudo pacaur -S --noconfirm --needed --noedit \
+	    networkmanager \
+	    wireless_tools
 	- sudo systemctl enable NetworkManager.service
 	- sudo systemctl start NetworkManager.service
 
