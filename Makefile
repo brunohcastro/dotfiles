@@ -115,6 +115,7 @@ applications/productivity: applications/taskwarrior
 	    libreoffice \
 	    evince-no-gnome \
 	    todoist-linux-bin \
+	    tomatoapp-bzr \
 	    rednotebook
 
 applications/mail:
@@ -128,6 +129,17 @@ applications/tex:
 	- pacaur -S --noconfirm --noedit --needed \
 	    texlive-most \
 	    texstudio
+
+applications/science:
+	- pacaur -S --noconfirm --noedit --needed \
+	    scilab-bin \
+	    octave \
+	    octave-control \
+	    octave-signal \
+	    octave-general \
+	    octave-plot \
+	    galculator \
+	    qucs
 
 applications/browsers:
 	- pacaur -S --noconfirm --noedit --needed \
