@@ -59,6 +59,7 @@ wm/i3: stow/dotfile/i3 stow/dotfile/polybar wm/locker wm/support
 	- pacaur -S --noconfirm --noedit --needed \
 	    i3-gaps \
 	    polybar \
+	    jsoncpp \
 	    i3ipc-glib-git
 
 wm/locker:
