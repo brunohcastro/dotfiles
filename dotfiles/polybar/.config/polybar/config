@@ -34,7 +34,7 @@ width = 100%
 height = 27
 offset-x = 0
 offset-y = 0
-radius = 2.0
+radius = 0
 fixed-center = true
 
 background = ${colors.background}
@@ -43,47 +43,40 @@ foreground = ${colors.foreground}
 line-size = 3
 line-color = ${colors.color4}
 
-border-size = 4
+border-size =
 border-color = 
 
-padding-left = 0
-padding-right = 2
+padding-left = 1
+padding-right = 1
 
 module-margin-left = 1
 module-margin-right = 2
 
-;font-0 = fixed:pixelsize=10;1
-;font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-;font-2 = siji:pixelsize=10;1
-font-2 = FontAwesome:fontformat=truetype:size=10;1
-font-1 = FantasqueSansMono Nerd Font:fontformat=truetype:size=10;1
-font-0 = monofur:fontformat=truetype:size=10;1
+font-0 = Fira Mono:pixelsize=10;0
+font-1 = Fira Mono:fontformat=truetype:size=12:antialias=false;0
+font-2 = FontAwesome:pixelsize=10;0
 
 modules-left = i3
 modules-center = date
-modules-right = filesystem xbacklight volume xkeyboard memory cpu battery temperature powermenu
+modules-right = filesystem keyboarder xkeyboard memory cpu
 
-tray-position = right
+tray-position =
 tray-padding = 2
 tray-transparent = false
-tray-background = ${colors.background}
+;tray-background = ${colors.background}
 
 wm-restack = i3
-
+bottom = false
 ;override-redirect = true
 
 cursor-click = pointer
 cursor-scroll = ns-resize
 
-[module/xwindow]
-type = internal/xwindow
-label = %title:0:30:...%
-
 [module/xkeyboard]
 type = internal/xkeyboard
 blacklist-0 = num lock
 
-format-prefix = " "
+format-prefix = "⌨ "
 format-prefix-foreground = ${colors.foreground}
 format-prefix-underline = ${colors.color2}
 
@@ -99,9 +92,9 @@ label-indicator-underline = ${colors.color2}
 type = internal/fs
 interval = 25
 
-mount-0 = /
+mount-0 = /home
 
-label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-mounted = : %percentage_used%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground}
 
@@ -112,13 +105,13 @@ index-sort = true
 wrapping-scroll = false
 pin-workspaces = true
 
-label-mode = %name%
+label-mode = %mode%
 label-mode-padding = 2
 label-mode-background = ${colors.color4}
 
 label-focused = %name%
-label-focused-foreground = ${colors.foreground}
-label-focused-background = ${colors.background}
+label-focused-foreground =
+label-focused-background =
 label-focused-underline = ${colors.color4}
 label-focused-padding = 2
 
@@ -129,9 +122,9 @@ label-visible = %name%
 label-visible-underline = ${colors.foreground}
 label-visible-padding = 2
 
-label-urgent = %index%
-label-urgent-foreground = ${colors.foreground}
-label-urgent-background = ${colors.background}
+label-urgent = %name%
+label-urgent-foreground =
+label-urgent-background =
 label-urgent-underline = ${colors.color8}
 label-urgent-padding = 2
 
@@ -176,7 +169,7 @@ card = intel_backlight
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
+format-prefix = "CPU: "
 format-prefix-foreground = ${colors.foreground}
 format-underline = #f90000
 label = %percentage:2%%
@@ -184,119 +177,26 @@ label = %percentage:2%%
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = " "
+format-prefix = "RAM: "
 format-prefix-foreground = ${colors.foreground}
 format-underline = #4bffdc
 label = %percentage_used%%
-
-[module/wlan]
-type = internal/network
-interface = 
-interval = 3.0
-
-format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
-label-connected = %essid%
-
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground}
-
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
-ramp-signal-foreground = ${colors.foreground}
-
-[module/eth]
-type = internal/network
-interface = 
-interval = 3.0
-
-format-connected-underline = #55aa55
-format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.foreground}
-label-connected = %local_ip%
-
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground}
 
 [module/date]
 type = internal/date
 interval = 5
 
-date =
-date-alt = " %Y-%m-%d"
+date = " %d-%m-%Y"
+date-alt = 
 
-time = %H:%M
-time-alt = %H:%M:%S
+time = %H:%M:%S
+time-alt = %H:%M
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground}
 format-underline = #0a6cf5
 
 label = %date% %time%
-
-[module/volume]
-type = internal/volume
-
-format-volume = <label-volume> <bar-volume>
-label-volume = VOL
-label-volume-foreground = ${root.foreground}
-
-format-muted-prefix = " "
-format-muted-foreground = ${colors.foreground}
-label-muted = sound muted
-
-bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground}
-
-[module/battery]
-type = internal/battery
-battery = BAT0
-adapter = ADP1
-full-at = 98
-
-format-charging = <animation-charging> <label-charging>
-format-charging-underline = #ffb52a
-
-format-discharging = <ramp-capacity> <label-discharging>
-format-discharging-underline = ${self.format-charging-underline}
-
-format-full-prefix = " "
-format-full-prefix-foreground = ${colors.foreground}
-format-full-underline = ${self.format-charging-underline}
-
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-foreground = ${colors.foreground}
-
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-foreground = ${colors.foreground}
-animation-charging-framerate = 750
 
 [module/temperature]
 type = internal/temperature
@@ -316,6 +216,18 @@ ramp-0 = 
 ramp-1 = 
 ramp-2 = 
 ramp-foreground = ${colors.foreground}
+
+[module/keyboarder]
+type = custom/script
+
+exec = if [ `xinput list-props 13 | grep 'Device Enabled' | awk '{print $4}'` = "1" ]; then echo "on"; else echo "off"; fi
+
+interval = 1
+
+format = ⌨ <label>
+format-underline = ${colors.color4}
+
+click-left = /usr/share/keyboarder/keyboarder
 
 [module/powermenu]
 type = custom/menu
@@ -351,10 +263,10 @@ screenchange-reload = true
 ;compositing-background = xor
 ;compositing-background = screen
 ;compositing-foreground = source
-;compositing-border = over
+compositing-border = over
 
 [global/wm]
 margin-top = 0
 margin-bottom = 2
 
-; vim:ft=dosini
+;vim:ft=dosini

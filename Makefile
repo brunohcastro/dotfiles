@@ -39,26 +39,27 @@ user/environments/node: user/environments/asdf
 
 user/environments/sdkman:
 	- curl -s "https://get.sdkman.io" | bash
+	- source ~/.zshrc
 
 user/environments/jvm: user/environments/sdkman
-	- sdkman install java
-	- sdkman install kotlin
-	- sdkman install gradle
-	- sdkman install ant
-	- sdkman install maven
+	- sdk install java
+	- sdk install kotlin
+	- sdk install gradle
+	- sdk install ant
+	- sdk install maven
 
 user/git-identity:
 	- git config --global user.name $(user-name)
 	- git config --global user.email $(user-email)
 
-# Window Manager
+# Window Managers
 #
-
 wm/i3: stow/dotfile/i3 stow/dotfile/polybar wm/locker wm/support
 	- sudo -v
 	- pacaur -S --noconfirm --noedit --needed \
 	    i3-gaps \
 	    polybar \
+			lxpanel-git \
 	    jsoncpp \
 	    i3ipc-glib-git
 
@@ -85,6 +86,12 @@ wm/support: applications/scrot applications/dunst
 	    imagemagick \
 	    python2-i3-py \
 	    feh
+
+# Desktop Environment
+#
+
+de/xfce:
+	- pacman -S --noconfirm --needed xfce4
 
 # Applications
 #
@@ -295,7 +302,7 @@ core/fonts:
 	  ttf-unifont \
 	  ttf-ubuntu-font-family \
 	  nerd-fonts-complete
-
+		
 core/aur-helper: core/aur-helper/cower
 	cd tmp \
 		&& curl -L -O "https://aur.archlinux.org/cgit/aur.git/snapshot/pacaur.tar.gz" \

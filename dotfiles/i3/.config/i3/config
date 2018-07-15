@@ -9,6 +9,9 @@
 #  Variables
 # ############################
 
+set_from_resource $primaryMonitor i3.mon.primary HDMI-0
+set_from_resource $secondaryMonitor i3.mon.secondary $primaryMonitor
+
 ## Default modifier
 set $mod   Mod4
 
@@ -141,16 +144,16 @@ bindsym $mod+Shift+9 move container to workspace $WS9
 bindsym $mod+Shift+0 move container to workspace $WS0
 
 # workspace screens
-#workspace $WS1 output HDMI-0
-workspace $WS2 output HDMI-0
-workspace $WS3 output HDMI-0
-workspace $WS4 output HDMI-0
-workspace $WS5 output HDMI-0
-workspace $WS6 output DP-0
-workspace $WS7 output DP-0
-workspace $WS8 output DP-0
-workspace $WS9 output DP-0
-workspace $WS0 output DP-0
+workspace $WS1 output $primaryMonitor
+workspace $WS2 output $primaryMonitor
+workspace $WS3 output $primaryMonitor
+workspace $WS4 output $primaryMonitor
+workspace $WS5 output $primaryMonitor
+workspace $WS6 output $secondaryMonitor
+workspace $WS7 output $secondaryMonitor
+workspace $WS8 output $secondaryMonitor
+workspace $WS9 output $secondaryMonitor
+workspace $WS0 output $secondaryMonitor
 
 # ############################
 #  Hotkeys
@@ -189,30 +192,30 @@ bindsym --release Mod1+Print  exec --no-startup-id scrot -u -e 'mv $f ~/Pictures
 # ############################
 
 ## Changing modes
-bindsym $mod+d       mode $defaultMode
-bindsym $mod+x       mode $controlMode
-bindsym $mod+r       mode $resizeMode
-bindsym $mod+p       exec logout.py
-bindsym $mod+Shift+d mode $deadMode
+bindsym $mod+d       exec --no-startup-id dunstify -t 2000 -r 9999 -u n "Normal Mode"; mode $defaultMode
+bindsym $mod+p       exec lxsession-logout
 
 ## Control Mode
+
+bindsym $mod+x       exec --no-startup-id dunstify -t 0 -r 9999 -u l "Control Mode" "* [u] for us-dvorak<br>* [b] for br-abnt<br>* [shift + \] to switch ws<br>* [mod + c] to reload<br>* [mod + r] to restart"; mode $controlMode
+
 mode $controlMode {
+     bindsym $mod+c exec --no-startup-id dunstify -C 9999; reload; mode $defaultMode
+     bindsym $mod+r exec --no-startup-id dunstify -C 9999; restart; mode $defaultMode
 
-     bindsym $mod+m bar mode toggle
-     bindsym $mod+c reload
-     bindsym $mod+r restart
-     bindsym $mod+e exec "i3-nagbar -t warning -m 'Do you really want to exit i3?' -b 'Yes, exit i3' 'i3-msg exit'"; mode $defaultMode
-
-     bindsym u exec --no-startup-id setxkbmap us -variant dvorak-intl && pkill -SIGRTMIN+5 i3blocks; mode $defaultMode
-     bindsym b exec --no-startup-id setxkbmap br                      && pkill -SIGRTMIN+5 i3blocks; mode $defaultMode
+     bindsym u exec --no-startup-id setxkbmap us -variant dvorak-intl && pkill -SIGRTMIN+5 i3blocks; exec --no-startup-id dunstify -C 9999; mode $defaultMode
+     bindsym b exec --no-startup-id setxkbmap br                      && pkill -SIGRTMIN+5 i3blocks; exec --no-startup-id dunstify -C 9999; mode $defaultMode
      
-     bindsym Shift+backslash exec --no-startup-id switch-workspaces; mode $defaultMode
+     bindsym Shift+backslash exec --no-startup-id switch-workspaces; exec --no-startup-id dunstify -C 9999; mode $defaultMode
 
-     bindsym Return mode $defaultMode
-     bindsym Escape mode $defaultMode
+     bindsym Return exec --no-startup-id dunstify -C 9999; mode $defaultMode
+     bindsym Escape exec --no-startup-id dunstify -C 9999; mode $defaultMode
 }
 
 ## Resize Mode
+
+bindsym $mod+r exec --no-startup-id dunstify -t 0 -r 9999 -u l "Resize Mode" "* [htns or arrows] to resize<br>* [f] to fullscreen<br>* [b] to normal border<br>* [p] to pixel border<br>* [z] to no border"; mode $resizeMode
+
 mode $resizeMode {
      # These bindings trigger as soon as you enter the resize mode
      bindsym $left  resize shrink width  10 px or 10 ppt
@@ -227,36 +230,25 @@ mode $resizeMode {
      bindsym Right resize grow   width  10 px or 10 ppt
 
      # fullscreen toggle
-     bindsym f fullscreen toggle; mode $defaultMode
+     bindsym f fullscreen toggle; exec --no-startup-id dunstify -C 9999; mode $defaultMode
 
      # shortcut to change window border
-     bindsym b border normal 0; mode $defaultMode
-     bindsym p border pixel  1; mode $defaultMode
+     bindsym b border normal 0; exec --no-startup-id dunstify -C 9999; mode $defaultMode
+     bindsym p border pixel  1; exec --no-startup-id dunstify -C 9999; mode $defaultMode
 
-     bindsym z border none; mode $defaultMode
+     bindsym z border none; exec --no-startup-id dunstify -C 9999; mode $defaultMode
 
      # back to normal: Enter or Escape
-     bindsym Return mode $defaultMode
-     bindsym Escape mode $defaultMode
-}
-
-## Power Mode
-mode $powerMode {
-    bindsym l exec --no-startup-id screen-lock; mode $defaultMode
-
-    bindsym o exec --no-startup-id i3-msg    exit;      mode $defaultMode
-    bindsym s exec --no-startup-id systemctl suspend;   mode $defaultMode
-    bindsym h exec --no-startup-id systemctl hibernate; mode $defaultMode
-    bindsym r exec --no-startup-id systemctl reboot;    mode $defaultMode
-    bindsym p exec --no-startup-id systemctl poweroff;  mode $defaultMode
-
-    bindsym Return mode $defaultMode
-    bindsym Escape mode $defaultMode
+     bindsym Return exec --no-startup-id dunstify -C 9999; mode $defaultMode
+     bindsym Escape exec --no-startup-id dunstify -C 9999; mode $defaultMode
 }
 
 ## Dead Mode
+
+bindsym $mod+Shift+d exec --no-startup-id dunstify -t 0 -r 9999 -u l "Dead Mode" "* [mod + esc] to exit"; mode $deadMode
+
 mode $deadMode {
-    bindsym $mod+Escape mode $defaultMode
+    bindsym $mod+Escape exec --no-startup-id dunstify -C 9999; mode $defaultMode
 }
 
 # ############################
@@ -347,7 +339,7 @@ gaps       inner 6
 
 # This are the programs that are run when the wm is started.
 #
-# Althogh this is a recommended way of doing this on i3 guide,
+# Although this is a recommended way of doing this on i3 guide,
 # maybe a better place for those to live is the ~/.xsession file,
 # so it will be more wm agnostic.
 #
@@ -357,21 +349,22 @@ gaps       inner 6
 
 # Polybar launch script (located ~/.config/polybar/launch.sh) 
 exec_always --no-startup-id $HOME/.config/i3/polybar.sh
+#exec --no-startup-id lxpanel
 
-exec --no-startup-id xautolock -time 10 -locker "screen-lock" -detectsleep
+#exec --no-startup-id xautolock -time 10 -locker "screen-lock" -detectsleep
 exec --no-startup-id compton -b --config ~/.config/compton/compton.conf
-
 exec --no-startup-id redshift-gtk -c ~/.config/redshift.conf
-exec --no-startup-id nm-applet
-exec --no-startup-id xfce4-power-manager
-exec --no-startup-id volumeicon
 
-exec --no-startup-id urxvt-kuake
+#exec --no-startup-id nm-applet
+#exec --no-startup-id xfce4-power-manager
+#exec --no-startup-id volumeicon
 
-exec --no-startup-id dropbox start
-exec --no-startup-id variety > /dev/null 2>&1
-exec --no-startup-id copyq
-exec --no-startup-id unclutter
+#exec --no-startup-id urxvt-kuake
+
+#exec --no-startup-id dropbox start
+#exec --no-startup-id variety > /dev/null 2>&1
+#exec --no-startup-id copyq
+#exec --no-startup-id unclutter
 
 # ############################
 #  Conditions
