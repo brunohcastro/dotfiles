@@ -192,7 +192,7 @@ date-alt =
 time = %H:%M:%S
 time-alt = %H:%M
 
-format-prefix = 
+format-prefix =
 format-prefix-foreground = ${colors.foreground}
 format-underline = #0a6cf5
 
@@ -216,18 +216,6 @@ ramp-0 = 
 ramp-1 = 
 ramp-2 = 
 ramp-foreground = ${colors.foreground}
-
-[module/keyboarder]
-type = custom/script
-
-exec = if [ `xinput list-props 13 | grep 'Device Enabled' | awk '{print $4}'` = "1" ]; then echo "on"; else echo "off"; fi
-
-interval = 1
-
-format = ⌨ <label>
-format-underline = ${colors.color4}
-
-click-left = /usr/share/keyboarder/keyboarder
 
 [module/powermenu]
 type = custom/menu

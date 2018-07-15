@@ -1,3 +1,7 @@
 export QT_QPA_PLATFORMTHEME=qt5ct
 
+if [ -d "$HOME/.local/bin" ]; then
+    PATH="$PATH:$HOME/.local/bin"
+fi
+
 xmodmap $HOME/.Xmodmap

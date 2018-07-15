@@ -59,7 +59,8 @@ wm/i3: stow/dotfile/i3 stow/dotfile/polybar wm/locker wm/support
 	- pacaur -S --noconfirm --noedit --needed \
 	    i3-gaps \
 	    polybar \
-			lxpanel-git \
+			lxpanel \
+			lxsession \
 	    jsoncpp \
 	    i3ipc-glib-git
 
@@ -175,6 +176,7 @@ applications/development: applications/docker applications/gitkraken
 	- pacaur -S --noconfirm --noedit --needed \
 	    android-studio \
 	    webstorm-jre \
+		intellij-idea-ultimate-edition-jre \
 	    visual-studio-code \
 	    aws-cli \
 	    chef-dk \
@@ -202,6 +204,7 @@ applications/utils: applications/password-store applications/redshift
 	    qbittorrent \
 	    copyq \
 	    variety \
+		synergy \
 	    screenfetch
 
 # Specific
@@ -280,6 +283,7 @@ core/utils:
 	  exfat-utils \
 	  cpio \
 	  ntfs-3g \
+	  p7zip \
 	  xsel
 
 core/printer:
@@ -294,13 +298,13 @@ core/fonts:
 	pacaur -S --noconfirm --noedit --needed \
 	  libxft \
 	  ttf-dejavu \
-	  ttf-font-awesome \
 	  noto-fonts \
 	  ttf-ms-fonts \
 	  ttf-roboto \
 	  siji-git \
 	  ttf-unifont \
 	  ttf-ubuntu-font-family \
+		ttf-font-awesome-4 \
 	  nerd-fonts-complete
 		
 core/aur-helper: core/aur-helper/cower

@@ -1,3 +1,4 @@
+
 # i3 config file (v4)
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
@@ -183,9 +184,9 @@ bindsym XF86Launch7           exec --no-startup-id [ -f /usr/share/keyboarder/ke
 
 ## PrintScreen - whole, selection, current
 
-bindsym --release Print       exec --no-startup-id scrot -e 'mv $f ~/Pictures/'
-bindsym --release Shift+Print exec --no-startup-id scrot -s -e 'mv $f ~/Pictures/'
-bindsym --release Mod1+Print  exec --no-startup-id scrot -u -e 'mv $f ~/Pictures/'
+bindsym --release Print       exec --no-startup-id scrot -e 'mv $f ~/Imagens/screenshots'
+bindsym --release Shift+Print exec --no-startup-id scrot -s -e 'mv $f ~/Imagens/screenshots'
+bindsym --release Mod1+Print  exec --no-startup-id scrot -u -e 'mv $f ~/Imagens/screenshots'
 
 # ############################
 #  Modes
@@ -353,7 +354,7 @@ exec_always --no-startup-id $HOME/.config/i3/polybar.sh
 
 #exec --no-startup-id xautolock -time 10 -locker "screen-lock" -detectsleep
 exec --no-startup-id compton -b --config ~/.config/compton/compton.conf
-exec --no-startup-id redshift-gtk -c ~/.config/redshift.conf
+#exec --no-startup-id redshift-gtk -c ~/.config/redshift.conf
 
 #exec --no-startup-id nm-applet
 #exec --no-startup-id xfce4-power-manager

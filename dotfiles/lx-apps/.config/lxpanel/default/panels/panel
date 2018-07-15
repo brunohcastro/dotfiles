@@ -90,7 +90,7 @@ Plugin {
     UseUrgencyHint=1
     FlatButton=-1
     MaxTaskWidth=1000
-    spacing=8
+    spacing=2
     SameMonitorOnly=0
     GroupedTasks=1
     DisableUpscale=0
@@ -98,12 +98,29 @@ Plugin {
   }
 }
 Plugin {
-  type=pager
+  type=tray
   Config {
   }
 }
 Plugin {
-  type=tray
+  type=space
   Config {
+    Size=10
+  }
+}
+Plugin {
+  type=dclock
+  Config {
+    ClockFmt=%R
+    TooltipFmt=%A %x
+    BoldFont=1
+    IconOnly=0
+    CenterText=1
+  }
+}
+Plugin {
+  type=space
+  Config {
+    Size=10
   }
 }

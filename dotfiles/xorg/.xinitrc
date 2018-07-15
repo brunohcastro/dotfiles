@@ -22,6 +22,9 @@ fi
 [ -f $HOME/.Xresources ] && xrdb -merge $HOME/.Xresources
 [ -f $HOME/.xsession ] && . $HOME/.xsession
 
+eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+export SSH_AUTH_SOCK
+
 if [ "$XDG_VTNR" -eq 2 ]; then
   exec startxfce4
 else
