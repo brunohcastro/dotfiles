@@ -19,9 +19,9 @@ Global {
   fontsize=10
   background=0
   backgroundfile=/usr/share/lxpanel/images/background.png
-  autohide=1
+  autohide=0
   align=center
-  iconsize=24
+  iconsize=20
   monitor=0
   heightwhenhidden=2
 }
@@ -74,38 +74,13 @@ Plugin {
 Plugin {
   type=space
   Config {
+    Size=1586
   }
-}
-Plugin {
-  type=taskbar
   expand=1
-  Config {
-    tooltips=0
-    IconsOnly=0
-    AcceptSkipPager=1
-    ShowIconified=1
-    ShowMapped=1
-    ShowAllDesks=-1
-    UseMouseWheel=1
-    UseUrgencyHint=1
-    FlatButton=-1
-    MaxTaskWidth=1000
-    spacing=2
-    SameMonitorOnly=0
-    GroupedTasks=1
-    DisableUpscale=0
-    UseSmallerIcons=-1
-  }
 }
 Plugin {
   type=tray
   Config {
-  }
-}
-Plugin {
-  type=space
-  Config {
-    Size=10
   }
 }
 Plugin {
@@ -123,4 +98,5 @@ Plugin {
   Config {
     Size=10
   }
+  expand=0
 }

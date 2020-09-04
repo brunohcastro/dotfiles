@@ -86,6 +86,8 @@ alias netflix=google-chrome-stable --app=http://netflix.com
 alias pcmclean="sudo pacman -Sc"
 alias pcmpurge="sudo pacman -Rns $(pacman -Qtdq)"
 alias smtpfs="simple-mtpfs --device 1 /home/bruno/Mount"
+alias gcloud-ptec="gcloud config configurations activate ptec"
+alias gcloud-dastro="gcloud config configurations activate dastro"
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
@@ -94,6 +96,5 @@ fi
 
 source $ZSH/oh-my-zsh.sh
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/bruno/.sdkman"
-[[ -s "/home/bruno/.sdkman/bin/sdkman-init.sh" ]] && source "/home/bruno/.sdkman/bin/sdkman-init.sh"
+export PATH="$PATH:$(yarn global bin)"
+export PATH="$PATH":"$HOME/.pub-cache/bin"

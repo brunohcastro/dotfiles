@@ -28,9 +28,8 @@ include /usr/share/doc/task/rc/dark-16.theme
 # include /usr/share/doc/task/rc/solarized-dark-256.theme
 #include /usr/share/doc/task/rc/solarized-light-256.theme
 #include /usr/share/doc/task/rc/no-color.theme
-taskd.certificate=~/Downloads/private.certificate.pem
-taskd.key=~/Downloads/private.key.pem
-taskd.ca=~/Downloads/ca.cert.pem
-taskd.server=taskwarrior.inthe.am:53589
-taskd.credentials=inthe_am/brunohcastro/6f18df1a-c6c3-4334-b3ad-d54746103f40
-taskd.trust=ignore hostname
+taskd.ca=~/.task/ca.cert.pem
+taskd.certificate=~/.task\/bruno_castro.cert.pem
+taskd.key=~/.task/bruno_castro.key.pem
+taskd.server=taskd.dastro.com.br:53589
+taskd.credentials=Dastro\/Bruno Castro\/50c37e7b-55c1-4bdb-9669-e9625cba6c7d

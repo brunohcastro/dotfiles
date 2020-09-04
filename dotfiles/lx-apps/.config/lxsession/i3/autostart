@@ -1,6 +1,5 @@
 @lxpanel --profile default
 @xfce4-power-manager
-@lxpolkit
 @xscreensaver -no-splash
 @volumeicon
 @urxvt-kuake

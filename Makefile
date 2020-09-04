@@ -13,7 +13,7 @@ user/home:
 
 user/desktop: wm/i3 \
               applications
-	- pacaur -S --noconfirm --needed xorg-xsetroot
+	- yay -S --noconfirm --needed xorg-xsetroot
 
 user/environments/golang: ~/.env-golang
 	- sudo pacman -S --noconfirm --needed \
@@ -56,23 +56,21 @@ user/git-identity:
 #
 wm/i3: stow/dotfile/i3 stow/dotfile/polybar wm/locker wm/support
 	- sudo -v
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    i3-gaps \
 	    polybar \
-			lxpanel \
-			lxsession \
 	    jsoncpp \
 	    i3ipc-glib-git
 
 wm/locker:
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    i3lock \
 	    python-cairo \
 	    python-gobject \
 	    python-dbus
 
 wm/support: applications/scrot applications/dunst
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    compton \
 	    rofi \
 	    volumeicon \
@@ -111,7 +109,7 @@ applications: applications/appearance \
               applications/utils
 
 applications/appearance: stow/dotfile/qt
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    arc-gtk-theme \
 	    qt5-styleplugins \
 	    qt5ct \
@@ -120,7 +118,7 @@ applications/appearance: stow/dotfile/qt
 	    gnome-themes-standard
 
 applications/productivity: applications/taskwarrior
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    libreoffice \
 	    evince-no-gnome \
 	    todoist-linux-bin \
@@ -128,19 +126,19 @@ applications/productivity: applications/taskwarrior
 	    rednotebook
 
 applications/mail:
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    mu \
 	    mutt \
 	    offlineimap \
 	    mailspring
 
 applications/tex:
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    texlive-most \
 	    texstudio
 
 applications/science:
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    scilab-bin \
 	    octave \
 	    octave-control \
@@ -151,20 +149,20 @@ applications/science:
 	    qucs
 
 applications/browsers:
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    chromium \
 	    firefox \
 	    google-chrome
 
 applications/graphics:
-	- pacaur -S --noconfirm --needed --noedit \
+	- yay -S --noconfirm --needed --noedit \
 	    inkscape \
 	    gimp \
 	    mirage \
 	    pencil
 
 applications/filesystem: stow/dotfile/ranger
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    pcmanfm \
 	    simple-mtpfs \
 	    xarchiver \
@@ -173,7 +171,7 @@ applications/filesystem: stow/dotfile/ranger
 	    ranger
 
 applications/development: applications/docker applications/gitkraken
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    android-studio \
 	    webstorm-jre \
 		intellij-idea-ultimate-edition-jre \
@@ -188,19 +186,19 @@ applications/development: applications/docker applications/gitkraken
 	    kube-aws
 
 applications/social: applications/weechat
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    telegram-desktop-bin \
 	    slack-desktop
 
 applications/multimedia:
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    mellowplayer \
 	    youtube-dl \
 	    vokoscreen \
 	    mpv
 
 applications/utils: applications/password-store applications/redshift
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    qbittorrent \
 	    copyq \
 	    variety \
@@ -232,7 +230,7 @@ applications/taskwarrior: stow/dotfile/taskwarrior
 	    task
 
 applications/terminal: stow/dotfile/xresources
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    rxvt-unicode-patched \
 	    oh-my-zsh-git \
 	    urxvt-perls \
@@ -252,12 +250,12 @@ applications/docker:
 
 applications/gitkraken:
 	- gpg --recv-keys 5CC908FDB71E12C2
-	- pacaur -S --noconfirm --needed --noedit \
+	- yay -S --noconfirm --needed --noedit \
 	    gitkraken
 
 applications/password-store: git/password-store
 	- gpg --recv-keys 011FDC52DA839335
-	- pacaur -S --noconfirm --needed --noedit \
+	- yay -S --noconfirm --needed --noedit \
 	    pass \
 	    browserpass
 
@@ -287,7 +285,7 @@ core/utils:
 	  xsel
 
 core/printer:
-	pacaur -S --noconfirm --noedit --needed \
+	yay -S --noconfirm --noedit --needed \
 	  cups \
 	  system-config-printer \
 	  epson-inkjet-printer-201401w \
@@ -295,7 +293,7 @@ core/printer:
 	  xsane
 
 core/fonts:
-	pacaur -S --noconfirm --noedit --needed \
+	yay -S --noconfirm --noedit --needed \
 	  libxft \
 	  ttf-dejavu \
 	  noto-fonts \
@@ -309,9 +307,9 @@ core/fonts:
 		
 core/aur-helper: core/aur-helper/cower
 	cd tmp \
-		&& curl -L -O "https://aur.archlinux.org/cgit/aur.git/snapshot/pacaur.tar.gz" \
-		&& tar -xvf pacaur.tar.gz \
-		&& cd pacaur \
+		&& curl -L -O "https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz" \
+		&& tar -xvf yay.tar.gz \
+		&& cd yay \
 		&& makepkg -sri --noconfirm
 
 core/aur-helper/cower: clean/tmp
@@ -346,7 +344,7 @@ system/common: system/network \
                system/sound
 
 system/notebook: # /etc/modprobe.d/i915.conf /etc/thinkfan.conf
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    acpi \
 	    ethtool \
 	    powertop \
@@ -360,7 +358,7 @@ system/notebook: # /etc/modprobe.d/i915.conf /etc/thinkfan.conf
 	- sudo systemctl start tlp.service tlp-sleep.service
 
 system/sound: stow/etc/modprobe.d
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    pamixer \
 	    pulseaudio \
 	    pulseaudio-alsa \
@@ -376,7 +374,7 @@ system/bluetooth:
 	- sudo systemctl start bluetooth.service
 
 system/network:
-	- sudo pacaur -S --noconfirm --needed --noedit \
+	- sudo yay -S --noconfirm --needed --noedit \
 	    networkmanager \
 	    wireless_tools
 	- sudo systemctl enable NetworkManager.service
@@ -393,7 +391,7 @@ system/intel:
 
 system/razer:
 	- gpg --recv-keys 5FB027474203454C
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    razercfg
 
 system/nvidia:
@@ -425,7 +423,7 @@ device/common/notebook: device/common \
 
 
 device/desktop: device/common
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 
 
 device/imac: device/common
@@ -437,7 +435,7 @@ device/asus-k555: core \
                   system/hybrid-graphics \
                   user/desktop \
                   user/environments/nodejs
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    aic94xx-firmware \
 	    wd719x-firmware
 
@@ -453,7 +451,7 @@ device/surface: device/common/notebook
 # Task utils
 #
 olkb/install:
-	- pacaur -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --noedit --needed \
 	    avr-gcc \
 	    avr-binutils \
 	    avr-libc \
