@@ -1,3 +1,3 @@
 #!/bin/bash
 
-urxvt -pe tabbed -kuake-hotkey F12 -name kuake -g 240x40+0+0 -bd rgb:fb/f1/c7
+urxvt -pe tabbed -kuake-hotkey F12 -name kuake -g 240x40+1920+0 -bd rgb:fb/f1/c7

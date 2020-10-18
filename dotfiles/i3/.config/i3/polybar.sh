@@ -1,15 +1,11 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 # Terminate already running bar instances
 killall -q polybar
 
 # Wait until the processes have been shut down
-while pgrep -x polybar >/dev/null; do sleep 1; done
+while pidof polybar >/dev/null; do sleep 1; done
 
-if type "xrandr"; then
-  for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    MONITOR=$m polybar --reload top &
-  done
-else
-  polybar --reload top &
-fi
+TRAY_POS=right MONITOR=$(polybar -m | grep primary | awk -F: '{print $1}') polybar default &
+
+for i in $(polybar -m | grep -v primary | awk -F: '{print $1}'); do MONITOR=$i polybar default & done

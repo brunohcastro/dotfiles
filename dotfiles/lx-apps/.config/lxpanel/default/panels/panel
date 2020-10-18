@@ -79,11 +79,6 @@ Plugin {
   expand=1
 }
 Plugin {
-  type=tray
-  Config {
-  }
-}
-Plugin {
   type=dclock
   Config {
     ClockFmt=%R
@@ -99,4 +94,19 @@ Plugin {
     Size=10
   }
   expand=0
+}
+Plugin {
+  type=monitors
+  Config {
+  }
+}
+Plugin {
+  type=cpu
+  Config {
+  }
+}
+Plugin {
+  type=cpufreq
+  Config {
+  }
 }
