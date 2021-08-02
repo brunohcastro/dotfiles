@@ -1,5 +1,5 @@
 ! Font settings
-URxvt.font: xft:FantasqueSansMono Nerd Font Mono:style=Regular:size=11
+URxvt.font: xft:Fira Code:style=Regular:size=11
 ! URxvt.letterspace: -1
 Emacs.font: FantasqueSansMono Nerd Font-11
 
@@ -7,7 +7,7 @@ Emacs.font: FantasqueSansMono Nerd Font-11
 URxvt.scrollStyle: rxvt
 URxvt.scrollBar: false
 
-Xft.dpi: 96
+Xft.dpi: 120
 Xft.autohint: 0
 Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintslight
@@ -102,4 +102,4 @@ rofi.color-urgent: #cc241d, #1d2021, #cc241d, #fb4934, #1d2021
 
 ! Theming
 Xcursor.theme: capitaine
-Xcursor.size: 16
+Xcursor.size: 20

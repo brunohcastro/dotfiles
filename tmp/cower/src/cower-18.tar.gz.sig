@@ -1,1 +1,0 @@
-/home/bruno/.conf.d/tmp/cower/cower-18.tar.gz.sig

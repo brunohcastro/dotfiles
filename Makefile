@@ -56,21 +56,21 @@ user/git-identity:
 #
 wm/i3: stow/dotfile/i3 stow/dotfile/polybar wm/locker wm/support
 	- sudo -v
-	- yay -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --needed \
 	    i3-gaps \
 	    polybar \
 	    jsoncpp \
 	    i3ipc-glib-git
 
 wm/locker:
-	- yay -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --needed \
 	    i3lock \
 	    python-cairo \
 	    python-gobject \
 	    python-dbus
 
 wm/support: applications/scrot applications/dunst
-	- yay -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --needed \
 	    compton \
 	    rofi \
 	    volumeicon \
@@ -90,7 +90,7 @@ wm/support: applications/scrot applications/dunst
 #
 
 de/xfce:
-	- pacman -S --noconfirm --needed xfce4
+	- sudo pacman -S --noconfirm --needed xfce4
 
 # Applications
 #
@@ -109,7 +109,7 @@ applications: applications/appearance \
               applications/utils
 
 applications/appearance: stow/dotfile/qt
-	- yay -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --needed \
 	    arc-gtk-theme \
 	    qt5-styleplugins \
 	    qt5ct \
@@ -129,8 +129,7 @@ applications/mail:
 	- yay -S --noconfirm --noedit --needed \
 	    mu \
 	    mutt \
-	    offlineimap \
-	    mailspring
+	    offlineimap
 
 applications/tex:
 	- yay -S --noconfirm --noedit --needed \
@@ -149,29 +148,26 @@ applications/science:
 	    qucs
 
 applications/browsers:
-	- yay -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --needed \
 	    chromium \
 	    firefox \
 	    google-chrome
 
 applications/graphics:
-	- yay -S --noconfirm --needed --noedit \
+	- yay -S --noconfirm --needed \
 	    inkscape \
-	    gimp \
-	    mirage \
-	    pencil
+	    gimp
 
 applications/filesystem: stow/dotfile/ranger
-	- yay -S --noconfirm --noedit --needed \
-	    pcmanfm \
+	- yay -S --noconfirm --needed \
 	    simple-mtpfs \
 	    xarchiver \
 	    dropbox \
 	    gvfs \
 	    ranger
 
-applications/development: applications/docker applications/gitkraken
-	- yay -S --noconfirm --noedit --needed \
+applications/development: applications/docker
+	- yay -S --noconfirm --needed \
 	    android-studio \
 	    webstorm-jre \
 		intellij-idea-ultimate-edition-jre \
@@ -185,10 +181,11 @@ applications/development: applications/docker applications/gitkraken
 	    postman-bin \
 	    kube-aws
 
-applications/social: applications/weechat
-	- yay -S --noconfirm --noedit --needed \
+applications/social:
+	- yay -S --noconfirm --needed \
 	    telegram-desktop-bin \
-	    slack-desktop
+	    slack-desktop \
+	    discord
 
 applications/multimedia:
 	- yay -S --noconfirm --noedit --needed \
@@ -197,12 +194,12 @@ applications/multimedia:
 	    vokoscreen \
 	    mpv
 
-applications/utils: applications/password-store applications/redshift
-	- yay -S --noconfirm --noedit --needed \
+applications/utils:
+	- yay -S --noconfirm --needed \
 	    qbittorrent \
 	    copyq \
 	    variety \
-		synergy \
+	    synergy \
 	    screenfetch
 
 # Specific
@@ -230,9 +227,7 @@ applications/taskwarrior: stow/dotfile/taskwarrior
 	    task
 
 applications/terminal: stow/dotfile/xresources
-	- yay -S --noconfirm --noedit --needed \
-	    rxvt-unicode-patched \
-	    oh-my-zsh-git \
+	- yay -S --noconfirm --needed \
 	    urxvt-perls \
 	    tmux
 
@@ -263,13 +258,11 @@ applications/password-store: git/password-store
 #
 
 core: core/utils \
-      core/aur-helper \
-      core/xorg \
       core/printer \
       core/fonts
 
 core/utils:
-	sudo pacman -S --noconfirm \
+	sudo pacman -S --noconfirm --needed \
 	  zsh \
 	  ctags \
 	  git \
@@ -285,7 +278,7 @@ core/utils:
 	  xsel
 
 core/printer:
-	yay -S --noconfirm --noedit --needed \
+	yay -S --noconfirm --needed \
 	  cups \
 	  system-config-printer \
 	  epson-inkjet-printer-201401w \
@@ -293,7 +286,7 @@ core/printer:
 	  xsane
 
 core/fonts:
-	yay -S --noconfirm --noedit --needed \
+	yay -S --noconfirm --needed \
 	  libxft \
 	  ttf-dejavu \
 	  noto-fonts \
@@ -321,21 +314,17 @@ core/aur-helper/cower: clean/tmp
 			&& cd cower \
 			&& makepkg -sri --noconfirm
 
-core/xorg: # /etc/X11/xorg.conf.d/20-intel.conf /etc/X11/xorg.conf.d/00-keyboard.conf ~/.drirc
+core/xorg: #
 	sudo pacman -S --noconfirm --needed \
 	  xorg-server \
-	  xorg-xinit \
 	  xorg-xinput \
 	  xorg-xrandr \
 	  xorg-xrdb \
-	  xorg-xdm \
 	  xorg-xev \
 	  xorg-setxkbmap \
-	  xterm \
 	  xclip \
 	  xf86-input-libinput \
 	  xf86-input-synaptics
-	- sudo systemctl enable xdm.service
 
 # System
 #

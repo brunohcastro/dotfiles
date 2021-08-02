@@ -10,9 +10,9 @@
 #  Variables
 # ############################
 
-set $primaryMonitor HDMI-0
-set $secondaryMonitor DVI-D-0
-set $terciaryMonitor DP-0
+set $primaryMonitor DisplayPort-1
+set $secondaryMonitor DisplayPort-0
+set $terciaryMonitor DisplayPort-2
 
 ## Default modifier
 set $mod   Mod4
@@ -82,10 +82,16 @@ popup_during_fullscreen smart
 # ############################
 
 ## Open terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec alacritty
 
 ## Rofi menu
 bindsym $mod+e exec --no-startup-id "rofi -show drun -modi drun,window,run,ssh"
+
+## Emacs
+bindsym $mod+u exec --no-startup-id "emacsclient -nc"
+
+## Dropdown term
+bindsym $mod+F12 exec i3_quickterm shell
 
 ## Split - hori(z)ontal, (v)ertical
 bindsym $mod+z split h
@@ -166,16 +172,11 @@ workspace $WS2 output $primaryMonitor
 workspace $WS3 output $primaryMonitor
 workspace $WS4 output $primaryMonitor
 workspace $WS5 output $primaryMonitor
-workspace $WS6 output $secondaryMonitor
-workspace $WS7 output $secondaryMonitor
-workspace $WS8 output $secondaryMonitor
+workspace $WS6 output $primaryMonitor
+workspace $WS7 output $primaryMonitor
+workspace $WS8 output $primaryMonitor
 workspace $WS9 output $secondaryMonitor
-workspace $WS0 output $secondaryMonitor
-workspace $WSA output $terciaryMonitor
-workspace $WSB output $terciaryMonitor
-workspace $WSC output $terciaryMonitor
-workspace $WSD output $terciaryMonitor
-workspace $WSE output $terciaryMonitor
+workspace $WS0 output $terciaryMonitor
 
 # ############################
 #  Hotkeys
@@ -208,7 +209,7 @@ bindsym XF86Launch7           exec --no-startup-id [ -f /usr/share/keyboarder/ke
 bindsym --release Print       exec --no-startup-id flameshot full
 bindsym --release Shift+Print exec --no-startup-id flameshot gui
 bindsym --release Mod1+Print  exec --no-startup-id flameshot screen
-
+bindsym $mod+l exec xclip -selection clipboard -o | qrencode -o ~/.qr.png; exec feh -FZ ~/.qr.png
 # ############################
 #  Modes
 # ############################
@@ -228,7 +229,7 @@ mode $controlMode {
      bindsym u exec --no-startup-id setxkbmap us -variant dvorak-intl && pkill -SIGRTMIN+5 i3blocks; exec --no-startup-id dunstify -C 9999; mode $defaultMode
      bindsym i exec --no-startup-id setxkbmap us -variant intl && pkill -SIGRTMIN+5 i3blocks; exec --no-startup-id dunstify -C 9999; mode $defaultMode
      bindsym b exec --no-startup-id setxkbmap br                      && pkill -SIGRTMIN+5 i3blocks; exec --no-startup-id dunstify -C 9999; mode $defaultMode
-     
+
      bindsym Shift+backslash exec --no-startup-id switch-workspaces; exec --no-startup-id dunstify -C 9999; mode $defaultMode
 
      bindsym Return exec --no-startup-id dunstify -C 9999; mode $defaultMode
@@ -342,16 +343,16 @@ gaps       inner 6
 # run a standard DE. So, maybe we should run a xdg-autostart tool like
 # `dev -a` and let the work be done in a xdg compatible way.
 
-# Polybar launch script (located ~/.config/polybar/launch.sh) 
+# Polybar launch script (located ~/.config/polybar/launch.sh)
 exec_always --no-startup-id $HOME/.config/i3/polybar.sh
 exec --no-startup-id xidlehook --not-when-audio --not-when-fullscreen --timer 600 "screen-lock" "" &
-exec --no-startup-id compton -b --config ~/.config/compton/compton.conf
+exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id volumeicon
-exec --no-startup-id urxvt-kuake
 exec --no-startup-id dunst
 exec --no-startup-id unclutter
+exec --no-startup-id nitrogen --restore
 exec dex -ae i3
 
 # ############################
@@ -374,3 +375,5 @@ for_window [instance="jetbrains-toolbox"] floating enable
 for_window [instance="qjackctl"]       floating enable
 for_window [instance="copyq"]          floating enable
 for_window [instance="blueman-manager"] floating enable
+for_window [instance="PanGPUI"] floating enable
+for_window [title="win0"] 		floating enable

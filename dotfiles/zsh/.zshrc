@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-ZSH=/usr/share/oh-my-zsh/
+ZSH=~/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -51,7 +51,7 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(asdf archlinux git tmux docker docker-compose emacs ng wd dircycle dirhistory)
+plugins=(asdf archlinux git tmux docker docker-compose ng wd dircycle dirhistory)
 
 
 # User configuration
@@ -62,11 +62,11 @@ plugins=(asdf archlinux git tmux docker docker-compose emacs ng wd dircycle dirh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -88,6 +88,10 @@ alias pcmpurge="sudo pacman -Rns $(pacman -Qtdq)"
 alias smtpfs="simple-mtpfs --device 1 /home/bruno/Mount"
 alias gcloud-ptec="gcloud config configurations activate ptec"
 alias gcloud-dastro="gcloud config configurations activate dastro"
+alias pgsql-trws="ssh root@162.214.98.149 -p 22022 -L 5433:localhost:5432 -N"
+alias rabbit-trws="ssh root@162.214.98.149 -p 22022 -L 15672:localhost:15672 -N"
+alias mysql-trws="ssh root@162.214.98.149 -p 22022 -L 3307:localhost:3306 -N"
+alias trws="ssh root@162.214.98.149 -p 22022 -L 3307:localhost:3306 -L 5433:localhost:5432 -L 15672:localhost:15672 -N"
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
@@ -98,3 +102,13 @@ source $ZSH/oh-my-zsh.sh
 
 export PATH="$PATH:$(yarn global bin)"
 export PATH="$PATH":"$HOME/.pub-cache/bin"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/bruno/google-cloud-sdk/path.zsh.inc' ]; then . '/home/bruno/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/bruno/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/bruno/google-cloud-sdk/completion.zsh.inc'; fi
+
+if [ -f '/usr/bin/ledger' ]; then
+  export LEDGER_FILE="~/org/ledger/ledger.dat";
+fi
