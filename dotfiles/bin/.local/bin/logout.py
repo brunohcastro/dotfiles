@@ -3,8 +3,12 @@
 import sys,os,tempfile
 import cairo
 import getpass
-from gi.repository import Gtk, Gdk
+import gi
 import dbus,subprocess
+
+gi.require_version('Gtk', '4.0')
+from gi.repository import Gtk, Gdk
+
 
 class SingleInstance:
     """

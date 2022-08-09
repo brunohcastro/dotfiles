@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -7,7 +14,8 @@ ZSH=~/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="ys"
+#ZSH_THEME="ys"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -91,7 +99,7 @@ alias gcloud-dastro="gcloud config configurations activate dastro"
 alias pgsql-trws="ssh root@162.214.98.149 -p 22022 -L 5433:localhost:5432 -N"
 alias rabbit-trws="ssh root@162.214.98.149 -p 22022 -L 15672:localhost:15672 -N"
 alias mysql-trws="ssh root@162.214.98.149 -p 22022 -L 3307:localhost:3306 -N"
-alias trws="ssh root@162.214.98.149 -p 22022 -L 3307:localhost:3306 -L 5433:localhost:5432 -L 15672:localhost:15672 -N"
+alias trws="ssh -i ~/Dropbox/keychain/dastro root@162.214.98.149 -p 22022 -L 3307:localhost:3306 -L 5433:localhost:5432 -L 15672:localhost:15672 -N"
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
@@ -110,5 +118,23 @@ if [ -f '/home/bruno/google-cloud-sdk/path.zsh.inc' ]; then . '/home/bruno/googl
 if [ -f '/home/bruno/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/bruno/google-cloud-sdk/completion.zsh.inc'; fi
 
 if [ -f '/usr/bin/ledger' ]; then
-  export LEDGER_FILE="~/org/ledger/ledger.dat";
+  export LEDGER_FILE="$HOME/org/ledger/$(date +'%Y').journal";
 fi
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /home/bruno/Development/projects/9count/appsync-serverless-emulator-example/node_modules/tabtab/.completions/serverless.zsh ]] && . /home/bruno/Development/projects/9count/appsync-serverless-emulator-example/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /home/bruno/Development/projects/9count/appsync-serverless-emulator-example/node_modules/tabtab/.completions/sls.zsh ]] && . /home/bruno/Development/projects/9count/appsync-serverless-emulator-example/node_modules/tabtab/.completions/sls.zsh
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[[ -f /home/bruno/Development/projects/9count/appsync-serverless-emulator-example/node_modules/tabtab/.completions/slss.zsh ]] && . /home/bruno/Development/projects/9count/appsync-serverless-emulator-example/node_modules/tabtab/.completions/slss.zsh
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+export GITHUB_OAUTH_TOKEN=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
+export GOPATH="$HOME/Development/go"
+export PATH="$PATH:$GOPATH/bin"
+eval "$(direnv hook zsh)"

@@ -10,6 +10,7 @@ Plug 'preservim/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ryanoasis/vim-devicons'
 Plug 'cohama/lexima.vim'
+Plug 'ledger/vim-ledger'
 call plug#end()
 
 set termguicolors
