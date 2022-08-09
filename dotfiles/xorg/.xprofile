@@ -1,3 +1,5 @@
 if [ -d "$HOME/.local/bin" ]; then
     PATH="$PATH:$HOME/.local/bin"
 fi
+XCURSOR_SIZE=16
+QT_QPA_PLATFORMTHEME=qt5ct

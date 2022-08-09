@@ -4,8 +4,8 @@ URxvt.font: xft:Fira Code:style=Regular:size=11
 Emacs.font: FantasqueSansMono Nerd Font-11
 
 ! Cursors
-Xcursor.theme: capinaine-cursors
-Xcursor.size: 24
+Xcursor.theme: capitaine-cursors
+Xcursor.size: 16
 
 ! Scrollbar
 URxvt.scrollStyle: rxvt

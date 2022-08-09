@@ -108,8 +108,10 @@ fi
 
 source $ZSH/oh-my-zsh.sh
 
+export GOPATH="$HOME/Development/go"
+
 export PATH="$PATH:$(yarn global bin)"
-export PATH="$PATH":"$HOME/.pub-cache/bin"
+export PATH="$PATH:$GOPATH/bin"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/bruno/google-cloud-sdk/path.zsh.inc' ]; then . '/home/bruno/google-cloud-sdk/path.zsh.inc'; fi
@@ -121,20 +123,8 @@ if [ -f '/usr/bin/ledger' ]; then
   export LEDGER_FILE="$HOME/org/ledger/$(date +'%Y').journal";
 fi
 
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f /home/bruno/Development/projects/9count/appsync-serverless-emulator-example/node_modules/tabtab/.completions/serverless.zsh ]] && . /home/bruno/Development/projects/9count/appsync-serverless-emulator-example/node_modules/tabtab/.completions/serverless.zsh
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f /home/bruno/Development/projects/9count/appsync-serverless-emulator-example/node_modules/tabtab/.completions/sls.zsh ]] && . /home/bruno/Development/projects/9count/appsync-serverless-emulator-example/node_modules/tabtab/.completions/sls.zsh
-# tabtab source for slss package
-# uninstall by removing these lines or running `tabtab uninstall slss`
-[[ -f /home/bruno/Development/projects/9count/appsync-serverless-emulator-example/node_modules/tabtab/.completions/slss.zsh ]] && . /home/bruno/Development/projects/9count/appsync-serverless-emulator-example/node_modules/tabtab/.completions/slss.zsh
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export GITHUB_OAUTH_TOKEN=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
-export GOPATH="$HOME/Development/go"
-export PATH="$PATH:$GOPATH/bin"
 eval "$(direnv hook zsh)"
