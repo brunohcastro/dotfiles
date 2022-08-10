@@ -255,6 +255,7 @@ myManageHook = composeAll
     , className =? "Gimp"           --> doFloat
     , className =? "confirm"        --> doFloat
     , className =? "dialog"         --> doFloat
+    , className =? "Galculator"     --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
     , isFullscreen  --> doFullFloat ]
@@ -354,7 +355,7 @@ main = do
         startupHook        = myStartupHook
     }
 
--- | Finally, a copy of the default bindings in simple textual tabular format.
+-- Finally, a copy of the default bindings in simple textual tabular format.
 help :: String
 help = unlines ["The default modifier key is 'alt'. Default keybindings:",
     "",
