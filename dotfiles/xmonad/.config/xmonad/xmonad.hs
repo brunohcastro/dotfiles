@@ -256,6 +256,7 @@ myManageHook = composeAll
     , className =? "confirm"        --> doFloat
     , className =? "dialog"         --> doFloat
     , className =? "Galculator"     --> doFloat
+    , className =? "copyq"          --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
     , isFullscreen  --> doFullFloat ]
