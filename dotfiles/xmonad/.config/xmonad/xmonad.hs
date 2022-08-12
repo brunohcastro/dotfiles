@@ -8,19 +8,22 @@
 --
 
 import qualified Data.Map as M
-import Data.Maybe (fromJust)
+import Data.Maybe (fromJust, isJust)
 import Data.Monoid
 import System.Directory
 import System.Exit (ExitCode (ExitSuccess), exitSuccess, exitWith)
 import System.IO (hPutStrLn)
 import XMonad
-import XMonad.Hooks.DynamicLog (PP (..), dynamicLogWithPP, shorten, wrap, xmobarColor, xmobarPP)
+import XMonad.Actions.CycleWS (WSType (WSIs))
+import XMonad.Hooks.DynamicLog (PP (..), dynamicLogWithPP, filterOutWsPP, shorten, wrap, xmobarColor, xmobarPP)
+import XMonad.Hooks.DynamicProperty (dynamicPropertyChange)
 import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen, fullscreenEventHook)
 import XMonad.Hooks.ManageDocks (avoidStruts, checkDock, docks, manageDocks)
 import XMonad.Hooks.ManageHelpers (doCenterFloat, doFullFloat, doLower, isDialog, isFullscreen)
 import XMonad.Hooks.RefocusLast (isFloat)
 import XMonad.Layout.NoBorders (smartBorders)
 import qualified XMonad.StackSet as W
+import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.SpawnOnce (spawnOnce)
 
@@ -192,6 +195,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
         | (key, sc) <- zip [xK_g, xK_c, xK_r] [0 ..],
           (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
       ]
+      ++
+      --
+      [ ((0, xK_F12), namedScratchpadAction myScratchPads "terminal"),
+        ((modm .|. shiftMask, xK_m), namedScratchpadAction myScratchPads "music"),
+        ((modm .|. shiftMask, xK_s), namedScratchpadAction myScratchPads "calculator")
+      ]
+  where
+    -- The following lines are needed for named scratchpads.
+    nonNSP = WSIs (return (\ws -> W.tag ws /= "NSP"))
+    nonEmptyNonNSP = WSIs (return (\ws -> isJust (W.stack ws) && W.tag ws /= "NSP"))
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
@@ -214,6 +227,38 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) =
       )
       -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
+
+myScratchPads :: [NamedScratchpad]
+myScratchPads =
+  [ NS "terminal" spawnTerm findTerm manageTerm,
+    NS "music" spawnSpotify findSpotify manageSpotify,
+    NS "calculator" spawnCalc findCalc manageCalc
+  ]
+  where
+    spawnTerm = myTerminal ++ " -t scratchpad"
+    findTerm = title =? "scratchpad"
+    manageTerm = customFloating $ W.RationalRect l t w h
+      where
+        h = 0.9
+        w = 0.9
+        t = 0.95 - h
+        l = 0.95 - w
+    spawnSpotify = "/home/bruno/.local/bin/spotify"
+    findSpotify = className =? "Spotify"
+    manageSpotify = customFloating $ W.RationalRect l t w h
+      where
+        h = 0.9
+        w = 0.9
+        t = 0.95 - h
+        l = 0.95 - w
+    spawnCalc = "qalculate-gtk"
+    findCalc = className =? "Qalculate-gtk"
+    manageCalc = customFloating $ W.RationalRect l t w h
+      where
+        h = 0.5
+        w = 0.4
+        t = 0.75 - h
+        l = 0.70 - w
 
 ------------------------------------------------------------------------
 -- Layouts:
@@ -265,6 +310,7 @@ myManageHook =
       className =? "Galculator" --> doFloat,
       className =? "copyq" --> doFloat,
       className =? "Yad" --> doFloat,
+      className =? "spotify" --> doFloat,
       appName =? "pavucontrol" --> doFloat,
       appName =? "blueman-manager" --> doFloat,
       resource =? "desktop_window" --> doIgnore,
@@ -275,6 +321,14 @@ myManageHook =
       className =? "discord" --> doShift (myWorkspaces !! 1),
       className =? "Slack" --> doShift (myWorkspaces !! 1),
       className =? "Google-chrome" --> doShift (myWorkspaces !! 2)
+    ]
+    <+> namedScratchpadManageHook myScratchPads
+
+--    <+> dynamicPropertyChange "WM_NAME" composeAll [(title =? "Spotify" --> customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
+
+myDynamicManageHook =
+  composeAll
+    [ className =? "Spotify" --> doCenterFloat
     ]
 
 ------------------------------------------------------------------------
@@ -345,40 +399,41 @@ main = do
               -- hooks, layouts
               layoutHook = smartBorders $ myLayout,
               manageHook = myManageHook,
-              handleEventHook = myEventHook,
+              handleEventHook = dynamicPropertyChange "WM_NAME" myDynamicManageHook <+> myEventHook,
               logHook =
                 dynamicLogWithPP $
-                  xmobarPP
-                    { ppOutput = \x -> hPutStrLn xmproc x, -- xmobar on monitor 1
-                    --                        >> hPutStrLn xmproc1 x   -- xmobar on monitor 2
-                    --                        >> hPutStrLn xmproc2 x   -- xmobar on monitor 3
-                      ppCurrent =
-                        xmobarColor color06 ""
-                          . wrap
-                            ("<box type=Bottom width=2 mb=2 color=" ++ color06 ++ ">")
-                            "</box>",
-                      -- Visible but not current workspace
-                      ppVisible = xmobarColor color06 "" . clickable,
-                      -- Hidden workspace
-                      ppHidden =
-                        xmobarColor color05 ""
-                          . wrap
-                            ("<box type=Top width=2 mt=2 color=" ++ color05 ++ ">")
-                            "</box>"
-                          . clickable,
-                      -- Hidden workspaces (no windows)
-                      ppHiddenNoWindows = xmobarColor color05 "" . clickable,
-                      -- Title of active window
-                      ppTitle = xmobarColor color16 "" . shorten 60,
-                      -- Separator character
-                      ppSep = "<fc=" ++ color09 ++ "> <fn=1>|</fn> </fc>",
-                      -- Urgent workspace
-                      ppUrgent = xmobarColor color02 "" . wrap "!" "!",
-                      -- Adding # of windows on current workspace to the bar
-                      ppExtras = [windowCount],
-                      -- order of things in xmobar
-                      ppOrder = \(ws : l : t : ex) -> [ws, l] ++ ex ++ [t]
-                    },
+                  filterOutWsPP [scratchpadWorkspaceTag] $
+                    xmobarPP
+                      { ppOutput = \x -> hPutStrLn xmproc x, -- xmobar on monitor 1
+                      --                        >> hPutStrLn xmproc1 x   -- xmobar on monitor 2
+                      --                        >> hPutStrLn xmproc2 x   -- xmobar on monitor 3
+                        ppCurrent =
+                          xmobarColor color06 ""
+                            . wrap
+                              ("<box type=Bottom width=2 mb=2 color=" ++ color06 ++ ">")
+                              "</box>",
+                        -- Visible but not current workspace
+                        ppVisible = xmobarColor color06 "" . clickable,
+                        -- Hidden workspace
+                        ppHidden =
+                          xmobarColor color05 ""
+                            . wrap
+                              ("<box type=Top width=2 mt=2 color=" ++ color05 ++ ">")
+                              "</box>"
+                            . clickable,
+                        -- Hidden workspaces (no windows)
+                        ppHiddenNoWindows = xmobarColor color05 "" . clickable,
+                        -- Title of active window
+                        ppTitle = xmobarColor color16 "" . shorten 60,
+                        -- Separator character
+                        ppSep = "<fc=" ++ color09 ++ "> <fn=1>|</fn> </fc>",
+                        -- Urgent workspace
+                        ppUrgent = xmobarColor color02 "" . wrap "!" "!",
+                        -- Adding # of windows on current workspace to the bar
+                        ppExtras = [windowCount],
+                        -- order of things in xmobar
+                        ppOrder = \(ws : l : t : ex) -> [ws, l] ++ ex ++ [t]
+                      },
               startupHook = myStartupHook
             }
 
