@@ -36,7 +36,7 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
-(setq doom-font (font-spec :family "FiraMono Nerd Font Mono" :size 18))
+(setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 14))
 
 (add-to-list 'auto-mode-alist '("\\.journal\\'" . ledger-mode))
 

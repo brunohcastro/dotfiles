@@ -1,37 +1,14 @@
-! Font settings
-URxvt.font: xft:Fira Code:style=Regular:size=11
-! URxvt.letterspace: -1
-Emacs.font: FantasqueSansMono Nerd Font-11
-
 ! Cursors
 Xcursor.theme: capitaine-cursors
 Xcursor.size: 16
 
-! Scrollbar
-URxvt.scrollStyle: rxvt
-URxvt.scrollBar: false
-
-Xft.dpi: 120
-! Xft.dpi: 96
+Xft.dpi: 96
 Xft.autohint: 0
 Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintslight
 Xft.hinting: true
 Xft.antialias: true
 Xft.rgba: rgb
-
-! Clickable links
-URxvt.perl-ext-common: default,matcher,keyboard-select,clipboard
-!URxvt.perl-ext: tabbed
-URxvt.kuake.hotkey: F12
-URxvt.url-launcher: /usr/bin/firefox
-URxvt.matcher.button: 1
-URxvt.matcher.rend.0: Uline Bold fg5
-URxvt.keysym.M-v: perl:clipboard:paste
-URxvt.keysym.M-c: perl:clipboard:copy
-URxvt.keysym.M-Escape: perl:keyboard-select:activate
-URxvt.keysym.M-s: perl:keyboard-select:search
-URxvt.clipboard.autocopy: true
 
 ! Base16 Material Darker
 ! Scheme: Nate Peterson
@@ -87,12 +64,6 @@ URxvt.clipboard.autocopy: true
 *color19:      base02
 *color20:      base04
 *color21:      base06
-! Tabbed extension configuration
-URxvt.tabbed.tabbar-fg: 8
-URxvt.tabbed.tabbar-bg: 0
-URxvt.tabbed.tab-fg:    15
-URxvt.tabbed.tab-bg:    8
-URxvt.tabbed.new-button: false
 
 ! Enable the extended coloring options
 rofi.color-enabled: true
