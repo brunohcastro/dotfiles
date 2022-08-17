@@ -18,8 +18,8 @@ import XMonad.Actions.CycleWS (WSType (WSIs))
 import XMonad.Hooks.DynamicLog (PP (..), dynamicLogWithPP, filterOutWsPP, shorten, wrap, xmobarColor, xmobarPP)
 import XMonad.Hooks.DynamicProperty (dynamicPropertyChange)
 import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen, fullscreenEventHook)
-import XMonad.Hooks.ManageDocks (avoidStruts, checkDock, docks, manageDocks)
-import XMonad.Hooks.ManageHelpers (doCenterFloat, doFullFloat, doLower, isDialog, isFullscreen)
+import XMonad.Hooks.ManageDocks (ToggleStruts (ToggleStruts), avoidStruts, checkDock, docks, manageDocks)
+import XMonad.Hooks.ManageHelpers (doCenterFloat, doFullFloat, doLower, doSink, isDialog, isFullscreen)
 import XMonad.Hooks.RefocusLast (isFloat)
 import XMonad.Layout.NoBorders (smartBorders)
 import qualified XMonad.StackSet as W
@@ -64,46 +64,46 @@ myWorkspaces = ["dev", "chat", "www", "4", "5", "6", "7", "8", "9"]
 
 myWorkspaceIndices = M.fromList $ zip myWorkspaces [1 ..]
 
-colorScheme = "doom-one"
+colorScheme = "gruvbox-dark"
 
-colorBack = "#282c34"
+colorBack = "#282828"
 
-colorFore = "#bbc2cf"
+colorFore = "#ebdbb2"
 
-color01 = "#1c1f24"
+color01 = "#282828"
 
-color02 = "#ff6c6b"
+color02 = "#cc241d"
 
-color03 = "#98be65"
+color03 = "#98971a"
 
-color04 = "#da8548"
+color04 = "#d79921"
 
-color05 = "#51afef"
+color05 = "#458588"
 
-color06 = "#c678dd"
+color06 = "#b16286"
 
-color07 = "#5699af"
+color07 = "#689d6a"
 
-color08 = "#202328"
+color08 = "#a89984"
 
-color09 = "#5b6268"
+color09 = "#928374"
 
-color10 = "#da8548"
+color10 = "#fb4934"
 
-color11 = "#4db5bd"
+color11 = "#b8bb26"
 
-color12 = "#ecbe7b"
+color12 = "#fabd2f"
 
-color13 = "#3071db"
+color13 = "#83a598"
 
-color14 = "#a9a1e1"
+color14 = "#d3869b"
 
-color15 = "#46d9ff"
+color15 = "#8ec07c"
 
-color16 = "#dfdfdf"
+color16 = "#ebdbb2"
 
 colorTrayer :: String
-colorTrayer = "--tint 0x282c34"
+colorTrayer = "--tint 0x282828"
 
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
@@ -168,8 +168,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       -- Use this binding with avoidStruts from Hooks.ManageDocks.
       -- See also the statusBar function from Hooks.DynamicLog.
       --
-      -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
-
+      -- ((modm, xK_b), sendMessage ToggleStruts),
       -- Quit xmonad
       ((modm .|. shiftMask, xK_l), io exitSuccess),
       -- Restart xmonad
@@ -184,7 +183,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       --
       [ ((m .|. modm, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9],
-          (f, m) <- [(lazyView, 0), (W.shift, shiftMask)]
+          (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
       ]
       ++
       --
@@ -199,7 +198,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       --
       [ ((0, xK_F12), namedScratchpadAction myScratchPads "terminal"),
         ((modm .|. shiftMask, xK_m), namedScratchpadAction myScratchPads "music"),
-        ((modm .|. shiftMask, xK_s), namedScratchpadAction myScratchPads "calculator")
+        ((modm .|. shiftMask, xK_s), namedScratchpadAction myScratchPads "calculator"),
+        ((modm .|. shiftMask, xK_t), namedScratchpadAction myScratchPads "tasks")
       ]
   where
     -- The following lines are needed for named scratchpads.
@@ -232,7 +232,8 @@ myScratchPads :: [NamedScratchpad]
 myScratchPads =
   [ NS "terminal" spawnTerm findTerm manageTerm,
     NS "music" spawnSpotify findSpotify manageSpotify,
-    NS "calculator" spawnCalc findCalc manageCalc
+    NS "calculator" spawnCalc findCalc manageCalc,
+    NS "tasks" spawnTasks findTasks manageTasks
   ]
   where
     spawnTerm = myTerminal ++ " -t scratchpad"
@@ -259,6 +260,14 @@ myScratchPads =
         w = 0.4
         t = 0.75 - h
         l = 0.70 - w
+    spawnTasks = "todoist"
+    findTasks = className =? "Todoist"
+    manageTasks = customFloating $ W.RationalRect l t w h
+      where
+        h = 0.9
+        w = 0.9
+        t = 0.95 - h
+        l = 0.95 - w
 
 ------------------------------------------------------------------------
 -- Layouts:
@@ -320,7 +329,8 @@ myManageHook =
       isDialog --> doCenterFloat,
       className =? "discord" --> doShift (myWorkspaces !! 1),
       className =? "Slack" --> doShift (myWorkspaces !! 1),
-      className =? "Google-chrome" --> doShift (myWorkspaces !! 2)
+      className =? "Google-chrome" --> doShift (myWorkspaces !! 2),
+      className =? "zoom" --> doCenterFloat
     ]
     <+> namedScratchpadManageHook myScratchPads
 
@@ -361,6 +371,7 @@ myEventHook = mempty
 myStartupHook = do
   spawn "killall trayer"
   spawn "killall picom"
+  spawn "killall conky"
   spawnOnce "nm-applet"
   spawnOnce "xfce4-power-manager"
   spawnOnce "volumeicon"
@@ -369,7 +380,8 @@ myStartupHook = do
   spawnOnce "nitrogen --restore"
   spawnOnce "dex -ae i3"
   spawn "sleep 2 && picom"
-  spawn "sleep 2 && trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --expand true --monitor 1 --transparent true --alpha 0 --tint 0x000000 --height 22 --iconspacing 10"
+  spawn "sleep 2 && conky"
+  spawn ("sleep 2 && trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --expand true --monitor 1 --transparent true --alpha 0 " ++ colorTrayer ++ " --height 22 --iconspacing 10")
   spawn "xsetroot -xcf /usr/share/icons/capitaine-cursors/cursors/left_ptr 16"
 
 ------------------------------------------------------------------------
