@@ -7,6 +7,7 @@
 -- Normally, you'd only override those defaults you care about.
 --
 
+import Data.List (isPrefixOf)
 import qualified Data.Map as M
 import Data.Maybe (fromJust, isJust)
 import Data.Monoid
@@ -174,7 +175,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       -- Restart xmonad
       ((modm, xK_q), spawn "xmonad --recompile; xmonad --restart"),
       -- Run xmessage with a summary of the default keybindings (useful for beginners)
-      ((modm .|. shiftMask, xK_slash), spawn ("echo \"" ++ help ++ "\" | yad --text-info --fontname=\"SauceCodePro Nerd Font Mono 12\" --fore=#46d9ff back=#282c36 --center --geometry=1200x800 --title \"XMonad keybindings\" -"))
+      ((modm .|. shiftMask, xK_slash), spawn ("echo \"" ++ help ++ "\" | yad --text-info --fontname=\"SauceCodePro Nerd Font Mono 12\" --fore=#46d9ff back=#282c36 --center --geometry=1200x800 --title \"XMonad keybindings\" -")),
+      ((modm .|. shiftMask, xK_b), spawn "emacsclient --eval \"(emacs-everywhere)\"")
     ]
       ++
       --
@@ -309,6 +311,7 @@ myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
 --
+
 myManageHook =
   composeAll
     [ manageDocks,
@@ -334,11 +337,11 @@ myManageHook =
     ]
     <+> namedScratchpadManageHook myScratchPads
 
---    <+> dynamicPropertyChange "WM_NAME" composeAll [(title =? "Spotify" --> customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
-
 myDynamicManageHook =
   composeAll
-    [ className =? "Spotify" --> doCenterFloat
+    [ className =? "Spotify" --> doCenterFloat,
+      ("Emacs Everywhere" `isPrefixOf`) <$> title --> customFloating (W.RationalRect 0.25 0.25 0.5 0.5),
+      (className =? "zoom" <&&> title =? "Zoom Meeting") --> doSink
     ]
 
 ------------------------------------------------------------------------
