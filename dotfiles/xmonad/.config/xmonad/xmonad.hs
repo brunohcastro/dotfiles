@@ -131,6 +131,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf),
       -- launch rofi
       ((modm, xK_e), spawn "rofi -show drun -modi drun,window,run,ssh"),
+      -- launch emacs
+      ((modm .|. shiftMask, xK_e), spawn "emacsclient -c -a 'emacs'"),
       -- launch gmrun
       ((modm .|. shiftMask, xK_p), spawn "gmrun"),
       -- close focused window
