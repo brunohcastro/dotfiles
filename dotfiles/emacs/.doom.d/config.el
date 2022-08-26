@@ -40,6 +40,10 @@
 
 (add-to-list 'auto-mode-alist '("\\.journal\\'" . ledger-mode))
 
+;; (setq-hook! 'json-mode-hook +format-with "prettier")
+(setq-hook! 'json-mode-hook +format-with-lsp nil)
+(setq-default tide-user-preferences '(:importModuleSpecifierPreference "non-relative" :includeCompletionsForModuleExports t :includeCompletionsWithInsertText t :allowTextChangesInNewFiles t))
+
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one

@@ -178,7 +178,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((modm, xK_q), spawn "xmonad --recompile; xmonad --restart"),
       -- Run xmessage with a summary of the default keybindings (useful for beginners)
       ((modm .|. shiftMask, xK_slash), spawn ("echo \"" ++ help ++ "\" | yad --text-info --fontname=\"SauceCodePro Nerd Font Mono 12\" --fore=#46d9ff back=#282c36 --center --geometry=1200x800 --title \"XMonad keybindings\" -")),
-      ((modm .|. shiftMask, xK_b), spawn "emacsclient --eval \"(emacs-everywhere)\"")
+      ((modm .|. shiftMask, xK_b), spawn "emacsclient --eval \"(emacs-everywhere)\""),
+      ((shiftMask, xK_Print), spawn "flameshot gui")
     ]
       ++
       --
