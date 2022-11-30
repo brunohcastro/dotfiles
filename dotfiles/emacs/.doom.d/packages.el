@@ -50,3 +50,4 @@
 ;(unpin! t)
 
 (package! night-owl-theme)
+(package! autothemer)
