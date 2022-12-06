@@ -119,6 +119,7 @@ return packer.startup(function(use)
 	use("akinsho/toggleterm.nvim")
 	use("rcarriga/nvim-notify")
 	use("petertriho/nvim-scrollbar")
+	use("ledger/vim-ledger")
 
 	-- LSP
 	use("williamboman/mason.nvim")

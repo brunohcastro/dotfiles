@@ -32,7 +32,7 @@ nvim_tree.setup({
 	},
 	filters = {
 		custom = { ".git" },
-		exclude = { ".gitignore" },
+		exclude = { ".gitignore", ".gitlab-ci.yml", ".gitlab-ci.yaml" },
 	},
 	renderer = {
 		add_trailing = false,

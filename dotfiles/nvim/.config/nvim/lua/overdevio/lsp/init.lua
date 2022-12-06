@@ -37,6 +37,9 @@ m.setup({
 		"volar",
 		"angularls",
 		"gopls",
+		"svelte",
+		"rust_analyzer",
+		"solargraph",
 	},
 })
 
