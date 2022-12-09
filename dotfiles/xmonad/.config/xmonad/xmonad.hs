@@ -387,7 +387,7 @@ myStartupHook = do
   spawnOnce "dex -ae i3"
   spawn "sleep 2 && picom"
   spawn "sleep 2 && conky"
-  spawn ("sleep 2 && trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --expand true --monitor 1 --transparent true --alpha 0 " ++ colorTrayer ++ " --height 22 --iconspacing 10")
+  spawn ("sleep 2 && trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --expand true --monitor 0 --transparent true --alpha 0 " ++ colorTrayer ++ " --height 22 --iconspacing 10")
   spawn "xsetroot -xcf /usr/share/icons/capitaine-cursors/cursors/left_ptr 16"
 
 ------------------------------------------------------------------------

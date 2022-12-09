@@ -76,6 +76,7 @@ return packer.startup(function(use)
 	-- Comments
 	use("numToStr/Comment.nvim")
 	use("JoosepAlviste/nvim-ts-context-commentstring")
+	use("folke/todo-comments.nvim")
 
 	-- Git
 	use({
