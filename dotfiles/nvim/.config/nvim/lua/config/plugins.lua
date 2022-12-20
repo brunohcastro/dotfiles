@@ -90,8 +90,8 @@ return packer.startup(function(use)
 	use("L3MON4D3/LuaSnip")
 	use("rafamadriz/friendly-snippets")
 	use("onsails/lspkind.nvim")
-  use("zbirenbaum/copilot.lua")
-  use("zbirenbaum/copilot-cmp")
+	use("zbirenbaum/copilot.lua")
+	use("zbirenbaum/copilot-cmp")
 
 	-- LSP
 	use("williamboman/mason.nvim")

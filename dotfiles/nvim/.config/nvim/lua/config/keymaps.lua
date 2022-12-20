@@ -23,7 +23,7 @@ keymap("n", "<M-l>", ":vertical resize -2<CR>", opts)
 keymap("n", "<M-h>", ":vertical resize +2<CR>", opts)
 
 -- Navigate buffers
-keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", opts)
+--keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", opts)
 keymap("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", opts)
 keymap("n", "<S-h>", ":BufferLineMovePrev<CR>", opts)
 keymap("n", "<S-l>", ":BufferLineMoveNext<CR>", opts)
