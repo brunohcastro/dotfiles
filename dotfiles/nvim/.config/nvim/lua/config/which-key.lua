@@ -62,6 +62,15 @@ import("which-key", function(whichKey)
 			["c"] = { "<cmd>lua require('telescope.builtin').git_commits()<CR>", "Commits" },
 			["b"] = { "<cmd>lua require('telescope.builtin').git_branches()<CR>", "Branches" },
 		},
+		["d"] = {
+			name = "Diff view",
+			["o"] = { "<cmd>DiffviewOpen<CR>", "Open" },
+			["d"] = { "<cmd>DiffviewClose<CR>", "Close" },
+			["l"] = { "<cmd>DiffviewLog<CR>", "Log" },
+			["r"] = { "<cmd>DiffviewRefresh<CR>", "Refresh" },
+			["f"] = { "<cmd>DiffviewFocusFiles<CR>", "Focus files" },
+			["h"] = { "<cmd>DiffviewFileHistory<CR>", "File history" },
+		},
 		["l"] = {
 			name = "LSP",
 			["D"] = { "<cmd>lua vim.lsp.buf.declaration()<cr>", "Declaration" },
@@ -85,11 +94,11 @@ import("which-key", function(whichKey)
 				["g"] = { "<cmd>TypescriptGoToSourceDefinition<CR>", "Go to source definition" },
 				["r"] = { "<cmd>TypescriptRenameFile<CR>", "Rename file" },
 			},
-      ["r"] = {
-        name = "Rust",
-        ["r"] = { "<cmd>RustRun<cr>", "Run" },
-        ["a"] = { "<cmd>RustRunnables<cr>", "Runnables"}
-      },
+			["r"] = {
+				name = "Rust",
+				["r"] = { "<cmd>RustRun<cr>", "Run" },
+				["a"] = { "<cmd>RustRunnables<cr>", "Runnables" },
+			},
 			["u"] = {
 				name = "Trouble",
 				r = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
