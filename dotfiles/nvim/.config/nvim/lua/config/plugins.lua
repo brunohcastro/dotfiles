@@ -62,6 +62,10 @@ return packer.startup(function(use)
 	use("ThePrimeagen/harpoon")
 	use("akinsho/git-conflict.nvim")
 
+	-- Git
+	use("tpope/vim-fugitive")
+	use("sindrets/diffview.nvim")
+
 	-- Colorscheme
 	use({ "catppuccin/nvim", as = "catppuccin" })
 
@@ -135,7 +139,6 @@ return packer.startup(function(use)
 	use("rcarriga/nvim-notify")
 	use("ThePrimeagen/vim-be-good")
 	use("aserowy/tmux.nvim")
-	use("sindrets/diffview.nvim")
 
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
