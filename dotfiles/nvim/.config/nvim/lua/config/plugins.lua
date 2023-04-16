@@ -139,6 +139,7 @@ return packer.startup(function(use)
 	use("rcarriga/nvim-notify")
 	use("ThePrimeagen/vim-be-good")
 	use("aserowy/tmux.nvim")
+	use("sealemar/vtl")
 
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()

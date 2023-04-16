@@ -10,7 +10,7 @@ local options = {
 	mouse = "a",
 	pumheight = 10,
 	showmode = false,
-	showtabline = 2,
+	showtabline = 4,
 	smartcase = true,
 	smartindent = true,
 	splitbelow = true,
@@ -21,8 +21,8 @@ local options = {
 	updatetime = 300,
 	writebackup = false,
 	expandtab = true,
-	shiftwidth = 2,
-	tabstop = 2,
+	shiftwidth = 4,
+	tabstop = 4,
 	cursorline = true,
 	number = true,
 	relativenumber = true,
@@ -43,3 +43,12 @@ vim.cmd([[set iskeyword+=-]])
 vim.cmd([[set t_Co=256]])
 
 vim.opt.shortmess:append("c")
+
+local function set_filetype_and_syntax(extension, filetype, syntax)
+	vim.cmd(string.format("autocmd BufRead,BufNewFile *%s setlocal filetype=%s", extension, filetype))
+	if syntax then
+		vim.cmd(string.format("autocmd FileType %s setlocal syntax=%s", filetype, syntax))
+	end
+end
+
+set_filetype_and_syntax(".vtl", "vm", "vm")

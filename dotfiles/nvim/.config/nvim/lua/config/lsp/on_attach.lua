@@ -1,3 +1,9 @@
+local status, navic = pcall(require, "nvim-navic")
+
+if not status then
+	return
+end
+
 local M = {}
 
 M.on_attach = function(client, bufnr)
@@ -8,7 +14,7 @@ M.on_attach = function(client, bufnr)
 		client.server_capabilities.document_formatting = false
 	end
 
-	if client.name == "sumneko_lua" then
+	if client.name == "lua_ls" then
 		client.server_capabilities.document_formatting = false
 	end
 
@@ -16,6 +22,10 @@ M.on_attach = function(client, bufnr)
 		keymap(bufnr, "n", "gd", "<cmd>TypescriptGoToSourceDefinition<CR>", opts)
 	else
 		keymap(bufnr, "n", "gd", "<cmd>Trouble lsp_definitions<CR>", opts)
+	end
+
+	if client.server_capabilities.documentSymbolProvider then
+		navic.attach(client, bufnr)
 	end
 
 	keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)

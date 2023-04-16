@@ -23,7 +23,7 @@ import({ "cmp", "luasnip", "lspkind", "luasnip/loaders/from_vscode" }, function(
 				i = modules.cmp.mapping.abort(),
 				c = modules.cmp.mapping.close(),
 			}),
-			["<CR>"] = modules.cmp.mapping.confirm({ select = true }),
+			["<CR>"] = modules.cmp.mapping.confirm({ select = false }),
 			["<Tab>"] = modules.cmp.mapping(function(fallback)
 				if modules.cmp.visible() then
 					modules.cmp.select_next_item()
@@ -57,9 +57,9 @@ import({ "cmp", "luasnip", "lspkind", "luasnip/loaders/from_vscode" }, function(
 			fields = { "abbr", "kind", "menu" },
 			format = modules.lspkind.cmp_format({
 				mode = "symbol_text",
-        symbol_map = {
-          Copilot = "",
-        },
+				symbol_map = {
+					Copilot = "",
+				},
 				before = function(entry, vim_item)
 					vim_item.menu = ({
 						nvim_lsp = "[LSP]",
@@ -73,7 +73,7 @@ import({ "cmp", "luasnip", "lspkind", "luasnip/loaders/from_vscode" }, function(
 		},
 		sources = {
 			{ name = "nvim_lsp" },
-      { name = "copilot" },
+			{ name = "copilot" },
 			{ name = "luasnip" },
 			{ name = "buffer" },
 			{ name = "path" },
@@ -89,6 +89,9 @@ import({ "cmp", "luasnip", "lspkind", "luasnip/loaders/from_vscode" }, function(
 		experimental = {
 			ghost_text = false,
 			native_menu = false,
+		},
+		performance = {
+			debounce = 150,
 		},
 	})
 
