@@ -88,7 +88,7 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+e exec --no-startup-id "rofi -show drun -modi drun,window,run,ssh"
 
 ## Emacs
-bindsym $mod+u exec --no-startup-id "emacsclient -nc"
+bindsym $mod+u exec --no-startup-id "nvim"
 
 ## Dropdown term
 bindsym $mod+F12 exec i3_quickterm shell
@@ -353,6 +353,7 @@ exec --no-startup-id volumeicon
 exec --no-startup-id dunst
 exec --no-startup-id unclutter
 exec --no-startup-id nitrogen --restore
+exec --no-startup-id copyq
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec dex -ae i3
 

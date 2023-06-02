@@ -73,6 +73,7 @@ return packer.startup(function(use)
 	use("nvim-treesitter/nvim-treesitter")
 	use("windwp/nvim-ts-autotag")
 	use("nvim-treesitter/nvim-treesitter-textobjects")
+	use("nvim-treesitter/nvim-treesitter-context")
 	use("p00f/nvim-ts-rainbow")
 	use("windwp/nvim-autopairs")
 
@@ -119,6 +120,7 @@ return packer.startup(function(use)
 	use("smiteshp/nvim-navic")
 	use("utilyre/barbecue.nvim")
 	use("simrat39/rust-tools.nvim")
+    use('MunifTanjim/prettier.nvim')
 
 	-- Editing
 	use("max397574/better-escape.nvim")
