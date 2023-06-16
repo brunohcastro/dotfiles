@@ -52,7 +52,7 @@ return packer.startup(function(use)
 	-- Buffers & navigation
 	use("lewis6991/gitsigns.nvim")
 	use("nvim-lualine/lualine.nvim")
-	use({ "akinsho/bufferline.nvim", tag = "v3.*" })
+	use({ "akinsho/bufferline.nvim", tag = "v4.*" })
 	use("famiu/bufdelete.nvim")
 	use("lukas-reineke/indent-blankline.nvim")
 	use("kevinhwang91/nvim-hlslens")
@@ -74,7 +74,6 @@ return packer.startup(function(use)
 	use("windwp/nvim-ts-autotag")
 	use("nvim-treesitter/nvim-treesitter-textobjects")
 	use("nvim-treesitter/nvim-treesitter-context")
-	use("p00f/nvim-ts-rainbow")
 	use("windwp/nvim-autopairs")
 
 	-- Telescope
@@ -120,7 +119,6 @@ return packer.startup(function(use)
 	use("smiteshp/nvim-navic")
 	use("utilyre/barbecue.nvim")
 	use("simrat39/rust-tools.nvim")
-    use('MunifTanjim/prettier.nvim')
 
 	-- Editing
 	use("max397574/better-escape.nvim")
@@ -142,6 +140,10 @@ return packer.startup(function(use)
 	use("ThePrimeagen/vim-be-good")
 	use("aserowy/tmux.nvim")
 	use("sealemar/vtl")
+	use({
+		"styled-components/vim-styled-components",
+		branch = "main",
+	})
 
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()

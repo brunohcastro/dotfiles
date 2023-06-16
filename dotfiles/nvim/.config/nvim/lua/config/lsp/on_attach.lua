@@ -10,15 +10,12 @@ M.on_attach = function(client, bufnr)
 	local opts = { noremap = true, silent = true }
 	local keymap = vim.api.nvim_buf_set_keymap
 
-	if client.name == "tsserver" then
-		client.server_capabilities.document_formatting = false
-	end
-
 	if client.name == "lua_ls" then
 		client.server_capabilities.document_formatting = false
 	end
 
 	if client.name == "tsserver" then
+		client.server_capabilities.document_formatting = false
 		keymap(bufnr, "n", "gd", "<cmd>TypescriptGoToSourceDefinition<CR>", opts)
 	else
 		keymap(bufnr, "n", "gd", "<cmd>Trouble lsp_definitions<CR>", opts)

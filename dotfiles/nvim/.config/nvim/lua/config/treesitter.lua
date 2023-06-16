@@ -28,6 +28,7 @@ import("nvim-treesitter.configs", function(treesitter)
 		},
 		highlight = {
 			enable = true,
+			additional_vim_regex_highlighting = false,
 		},
 		rainbow = {
 			enable = true,
