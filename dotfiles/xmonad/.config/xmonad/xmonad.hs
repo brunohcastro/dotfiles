@@ -22,11 +22,16 @@ import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen, fullscreenEventHook)
 import XMonad.Hooks.ManageDocks (ToggleStruts (ToggleStruts), avoidStruts, checkDock, docks, manageDocks)
 import XMonad.Hooks.ManageHelpers (doCenterFloat, doFullFloat, doLower, doSink, isDialog, isFullscreen)
 import XMonad.Hooks.RefocusLast (isFloat)
-import XMonad.Layout.NoBorders (smartBorders)
+import XMonad.Layout.NoBorders
 import qualified XMonad.StackSet as W
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.SpawnOnce (spawnOnce)
+
+data AllFloats = AllFloats deriving (Read, Show)
+
+instance SetsAmbiguous AllFloats where
+    hiddens _ wset _ _ _ = M.keys $ W.floating wset
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -249,7 +254,7 @@ myScratchPads =
         w = 0.9
         t = 0.95 - h
         l = 0.95 - w
-    spawnSpotify = "/home/bruno/.local/bin/spotify"
+    spawnSpotify = "/usr/bin/spotify"
     findSpotify = className =? "Spotify"
     manageSpotify = customFloating $ W.RationalRect l t w h
       where
@@ -315,6 +320,9 @@ myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
 -- 'className' and 'resource' are used below.
 --
 
+hasBorder :: Bool -> ManageHook
+hasBorder b = ask >>= \w -> liftX $ withDisplay $ \d -> io $ setWindowBorderWidth d w (if b then 1 else 0) >> return idHook
+
 myManageHook =
   composeAll
     [ manageDocks,
@@ -325,6 +333,7 @@ myManageHook =
       className =? "Galculator" --> doFloat,
       className =? "copyq" --> doFloat,
       className =? "Yad" --> doFloat,
+      className =? "Ulauncher" --> doFloat,
       className =? "spotify" --> doFloat,
       appName =? "pavucontrol" --> doCenterFloat,
       appName =? "blueman-manager" --> doFloat,
@@ -392,6 +401,7 @@ myStartupHook = do
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
+--
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
@@ -415,7 +425,7 @@ main = do
               keys = myKeys,
               mouseBindings = myMouseBindings,
               -- hooks, layouts
-              layoutHook = smartBorders $ myLayout,
+              layoutHook = lessBorders AllFloats $ smartBorders $ myLayout,
               manageHook = myManageHook,
               handleEventHook = dynamicPropertyChange "WM_NAME" myDynamicManageHook <+> myEventHook,
               logHook =

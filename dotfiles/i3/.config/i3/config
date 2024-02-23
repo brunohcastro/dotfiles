@@ -10,9 +10,7 @@
 #  Variables
 # ############################
 
-set $primaryMonitor DisplayPort-1
-set $secondaryMonitor DisplayPort-0
-set $terciaryMonitor DisplayPort-2
+set $primaryMonitor DisplayPort-2
 
 ## Default modifier
 set $mod   Mod4
@@ -175,8 +173,8 @@ workspace $WS5 output $primaryMonitor
 workspace $WS6 output $primaryMonitor
 workspace $WS7 output $primaryMonitor
 workspace $WS8 output $primaryMonitor
-workspace $WS9 output $secondaryMonitor
-workspace $WS0 output $terciaryMonitor
+workspace $WS9 output $primaryMonitor
+workspace $WS0 output $primaryMonitor
 
 # ############################
 #  Hotkeys
@@ -299,6 +297,7 @@ bindsym $mod+minus       scratchpad show
 
 ## Toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
+bindsym $mod+Mod1+space sticky toggle
 
 ## Enter (f)ullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle

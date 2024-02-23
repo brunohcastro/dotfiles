@@ -7,7 +7,7 @@ require("config.keymaps")
 require("config.colorschemes")
 require("config.better-escape")
 require("config.treesitter")
-require("config.autopairs")
+--[[ require("config.autopairs") ]]
 require("config.copilot")
 require("config.cmp")
 require("config.lsp")

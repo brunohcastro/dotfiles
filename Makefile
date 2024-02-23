@@ -440,7 +440,7 @@ device/surface: device/common/notebook
 # Task utils
 #
 olkb/install:
-	- yay -S --noconfirm --noedit --needed \
+	- yay -S --noconfirm --needed \
 	    avr-gcc \
 	    avr-binutils \
 	    avr-libc \
