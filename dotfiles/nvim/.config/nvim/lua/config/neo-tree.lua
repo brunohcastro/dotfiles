@@ -19,6 +19,9 @@ import("neo-tree", function(neoTree)
 					".gitignore",
 					".gitlab-ci.yaml",
 					".gitlab-ci.yml",
+					".github",
+					".eslintrc*",
+					".prettierrc*",
 				},
 				never_show = {
 					".git",

@@ -25,6 +25,10 @@ import("nvim-treesitter.configs", function(treesitter)
 			"toml",
 			"go",
 			"rust",
+			"regex",
+			"bash",
+			"vim",
+			"markdown_inline",
 		},
 		highlight = {
 			enable = true,

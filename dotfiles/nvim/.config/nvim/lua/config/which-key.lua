@@ -87,7 +87,7 @@ import("which-key", function(whichKey)
 			["R"] = { "<cmd>lua vim.lsp.buf.references()<cr>", "References" },
 			["K"] = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Hover" },
 			["k"] = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "Signature help" },
-			["s"] = { "<cmd>SymbolsOutline<cr>", "Toggle symbols outline" },
+			["s"] = { "<cmd>Outline<cr>", "Toggle symbols outline" },
 			["n"] = { ":IncRename ", "Rename" },
 			["a"] = { "<cmd>CodeActionMenu<cr>", "Code actions" },
 			["f"] = { "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", "Format" },
@@ -116,6 +116,12 @@ import("which-key", function(whichKey)
 				w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Workspace Diagnostics" },
 			},
 		},
+		["u"] = {
+			name = "UndoTree",
+			["t"] = { "<cmd>lua require('undotree').toggle()<cr>", "Toggle" },
+			["o"] = { "<cmd>lua require('undotree').open()<cr>", "Open" },
+			["c"] = { "<cmd>lua require('undotree').close()<cr>", "Close" },
+		},
 		["h"] = {
 			name = "Hop",
 			["h"] = { "<cmd>HopChar2<cr>", "2 Chars" },
@@ -125,7 +131,7 @@ import("which-key", function(whichKey)
 			["v"] = { "<cmd>HopVertical<cr>", "Vertical" },
 			["w"] = { "<cmd>HopWord<cr>", "Word" },
 		},
-		["t"] = { "<cmd>ToggleTermToggleAll<cr>", "Toggle terminals" },
+		--[[ ["t"] = { "<cmd>ToggleTermToggleAll<cr>", "Toggle terminals" }, ]]
 		["m"] = { "<cmd>lua require('harpoon.mark').add_file()<cr>", "Mark file" },
 	}
 

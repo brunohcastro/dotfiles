@@ -39,20 +39,46 @@ return packer.startup(function(use)
 	use("wbthomason/packer.nvim")
 	use("nvim-lua/plenary.nvim")
 	use("miversen33/import.nvim")
-	use("kyazdani42/nvim-web-devicons")
+	use("nvim-tree/nvim-web-devicons")
 	use("MunifTanjim/nui.nvim")
+	use({
+		"folke/noice.nvim",
+		config = function()
+			require("noice").setup({
+				lsp = {
+					override = {
+						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+						["vim.lsp.util.stylize_markdown"] = true,
+						["cmp.entry.get_documentation"] = true,
+					},
+					progress = {
+						enabled = false,
+					},
+					hover = {
+						enabled = true,
+						silent = true,
+						view = "hover",
+					},
+				},
+				presets = {
+					bottom_search = true,
+					command_palette = true,
+					long_message_to_split = true,
+					inc_rename = false,
+					lsp_doc_border = false,
+				},
+			})
+		end,
+	})
 
 	-- Navigation
-	use({
-		"nvim-neo-tree/neo-tree.nvim",
-		branch = "v2.x",
-	})
+	use("nvim-neo-tree/neo-tree.nvim")
 	use("folke/which-key.nvim")
 
 	-- Buffers & navigation
 	use("lewis6991/gitsigns.nvim")
 	use("nvim-lualine/lualine.nvim")
-	use({ "akinsho/bufferline.nvim", tag = "v4.*" })
+	use({ "akinsho/bufferline.nvim", tag = "*" })
 	use("famiu/bufdelete.nvim")
 	use("lukas-reineke/indent-blankline.nvim")
 	use("kevinhwang91/nvim-hlslens")
@@ -61,6 +87,12 @@ return packer.startup(function(use)
 	use("brenoprata10/nvim-highlight-colors")
 	use("ThePrimeagen/harpoon")
 	use("akinsho/git-conflict.nvim")
+	use({
+		"jiaoshijie/undotree",
+		config = function()
+			require("undotree").setup()
+		end,
+	})
 
 	-- Git
 	use("tpope/vim-fugitive")
@@ -68,6 +100,7 @@ return packer.startup(function(use)
 
 	-- Colorscheme
 	use({ "catppuccin/nvim", as = "catppuccin" })
+	use("folke/tokyonight.nvim")
 
 	-- Treesitter
 	use("nvim-treesitter/nvim-treesitter")
@@ -102,9 +135,20 @@ return packer.startup(function(use)
 	use("williamboman/mason-lspconfig.nvim")
 	use("neovim/nvim-lspconfig")
 	use("b0o/SchemaStore.nvim")
-	use("jose-elias-alvarez/typescript.nvim")
-	use("simrat39/symbols-outline.nvim")
-	use({ "j-hui/fidget.nvim", tag = "legacy" })
+	use({
+		"hedyhli/outline.nvim",
+		config = function()
+			require("outline").setup({})
+		end,
+	})
+	use({
+		"pmizio/typescript-tools.nvim",
+		requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+		config = function()
+			require("typescript-tools").setup({})
+		end,
+	})
+	use("j-hui/fidget.nvim")
 	use("ray-x/lsp_signature.nvim")
 	use("smjonas/inc-rename.nvim")
 	use({
@@ -112,7 +156,8 @@ return packer.startup(function(use)
 		cmd = "CodeActionMenu",
 	})
 	use("kosayoda/nvim-lightbulb")
-	use("jose-elias-alvarez/null-ls.nvim")
+	use("nvimtools/none-ls.nvim")
+	use("nvimtools/none-ls-extras.nvim")
 	use("jayp0521/mason-null-ls.nvim")
 	use("gpanders/editorconfig.nvim")
 	use("folke/trouble.nvim")
@@ -121,25 +166,20 @@ return packer.startup(function(use)
 	use("simrat39/rust-tools.nvim")
 
 	-- Editing
-	use("max397574/better-escape.nvim")
-	use("ethanholz/nvim-lastplace")
 	use("numToStr/Comment.nvim")
 	use("JoosepAlviste/nvim-ts-context-commentstring")
-	use("abecodes/tabout.nvim")
-	use("phaazon/hop.nvim")
+	use("hadronized/hop.nvim")
 	use("kylechui/nvim-surround")
 
 	-- UI
 	use("goolord/alpha-nvim")
 	use("stevearc/dressing.nvim")
+	use("rcarriga/nvim-notify")
 
 	-- Misc
-	use("lewis6991/impatient.nvim")
 	use("akinsho/toggleterm.nvim")
-	use("rcarriga/nvim-notify")
 	use("ThePrimeagen/vim-be-good")
 	use("aserowy/tmux.nvim")
-	use("sealemar/vtl")
 	use({
 		"styled-components/vim-styled-components",
 		branch = "main",

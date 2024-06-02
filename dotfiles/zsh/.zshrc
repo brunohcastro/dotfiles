@@ -101,6 +101,7 @@ alias pgsql-trws="ssh root@162.214.98.149 -p 22022 -L 5433:localhost:5432 -N"
 alias rabbit-trws="ssh root@162.214.98.149 -p 22022 -L 15672:localhost:15672 -N"
 alias mysql-trws="ssh root@162.214.98.149 -p 22022 -L 3307:localhost:3306 -N"
 alias trws="ssh -i ~/Dropbox/keychain/dastro root@162.214.98.149 -p 22022 -L 3307:localhost:3306 -L 5433:localhost:5432 -L 15672:localhost:15672 -N"
+alias go-reshim='asdf reshim golang && export GOROOT="$(asdf where golang)/go/"'
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
@@ -110,6 +111,7 @@ fi
 source $ZSH/oh-my-zsh.sh
 
 export GOPATH="$HOME/Development/go"
+export GOROOT="/usr/lib/go"
 
 export PATH="$PATH:$(yarn global bin)"
 export PATH="$PATH:$GOPATH/bin"

@@ -10,7 +10,8 @@
 #  Variables
 # ############################
 
-set $primaryMonitor DisplayPort-2
+set $primaryMonitor DisplayPort-0
+set $secondaryMonitor DisplayPort-1
 
 ## Default modifier
 set $mod   Mod4
@@ -170,12 +171,12 @@ workspace $WS2 output $primaryMonitor
 workspace $WS3 output $primaryMonitor
 workspace $WS4 output $primaryMonitor
 workspace $WS5 output $primaryMonitor
-workspace $WS6 output $primaryMonitor
-workspace $WS7 output $primaryMonitor
-workspace $WS8 output $primaryMonitor
-workspace $WS9 output $primaryMonitor
-workspace $WS0 output $primaryMonitor
-
+workspace $WS6 output $secondaryMonitor
+workspace $WS7 output $secondaryMonitor
+workspace $WS8 output $secondaryMonitor
+workspace $WS9 output $secondaryMonitor
+workspace $WS0 output $secondaryMonitor
+ 
 # ############################
 #  Hotkeys
 # ############################

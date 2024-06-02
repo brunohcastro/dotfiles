@@ -21,8 +21,8 @@ local options = {
 	updatetime = 300,
 	writebackup = false,
 	expandtab = true,
-	shiftwidth = 4,
-	tabstop = 4,
+	shiftwidth = 2,
+	tabstop = 2,
 	cursorline = true,
 	number = true,
 	relativenumber = true,
@@ -52,3 +52,4 @@ local function set_filetype_and_syntax(extension, filetype, syntax)
 end
 
 set_filetype_and_syntax(".vtl", "vm", "vm")
+set_filetype_and_syntax(".hbs", "html", "html")

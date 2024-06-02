@@ -17,10 +17,13 @@ import("lualine", function(lualine)
 
 	lualine.setup({
 		options = {
+			icons_enabled = true,
 			globalstatus = true,
-			component_separators = { left = "", right = "" },
-			section_separators = { left = "", right = "" },
-			disabled_filetypes = { "neo-tree-popup", "alpha" },
+			component_separators = { left = "", right = "" },
+			section_separators = { left = "", right = "" },
+			disabled_filetypes = { "neo-tree-popup", "alpha", status_line = {}, winbar = {} },
+			theme = "tokyonight",
+			always_divide_middle = true,
 		},
 		sections = {
 			lualine_a = { "mode" },
@@ -39,6 +42,8 @@ import("lualine", function(lualine)
 			lualine_z = {},
 		},
 		inactive_winbar = {},
-		extensions = { "neo-tree", "toggleterm" },
+		extensions = { "neo-tree", "toggleterm", "fugitive" },
+		tabline = {},
+		winbar = {},
 	})
 end)
