@@ -77,12 +77,12 @@ import({ "mason-null-ls", "null-ls" }, function(modules)
 				null_ls.register(null_ls.builtins.formatting.gofumpt)
 			end,
 			goimports = function()
-				null_ls.register(null_ls.builtins.formatting.goimports)
-			end,
-			goimports_reviser = function()
 				null_ls.register(null_ls.builtins.formatting.goimports.with({
 					extra_args = { "-local", "github.com/reviz0r" },
 				}))
+			end,
+			golangci_lint = function()
+				null_ls.register(null_ls.builtins.diagnostics.golangci_lint)
 			end,
 		},
 	})

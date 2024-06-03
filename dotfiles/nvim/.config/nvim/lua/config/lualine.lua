@@ -15,6 +15,14 @@ import("lualine", function(lualine)
 		return msg
 	end
 
+	local function isRecording()
+		local reg = vim.fn.reg_recording()
+		if reg == "" then
+			return ""
+		end
+		return "REC @" .. reg
+	end
+
 	lualine.setup({
 		options = {
 			icons_enabled = true,
@@ -26,7 +34,7 @@ import("lualine", function(lualine)
 			always_divide_middle = true,
 		},
 		sections = {
-			lualine_a = { "mode" },
+			lualine_a = { "mode", isRecording },
 			lualine_b = { "branch", "diff" },
 			lualine_c = { "filename" },
 			lualine_x = { "diagnostics", getLsp, "encoding", "fileformat", "filetype" },
