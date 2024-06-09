@@ -1,3 +1,3 @@
 import("nvim-lightbulb", function(lightbulb)
-	lightbulb.setup({ autocmd = { enabled = true } })
+	lightbulb.setup({ priority = 90, autocmd = { enabled = true, updatetime = 50 } })
 end)

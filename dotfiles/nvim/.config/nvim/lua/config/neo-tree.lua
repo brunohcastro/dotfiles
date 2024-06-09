@@ -28,7 +28,7 @@ import("neo-tree", function(neoTree)
 					".DS_Store",
 				},
 			},
-			follow_current_file = true,
+			follow_current_file = { enabled = true },
 			use_libuv_file_watcher = true,
 		},
 		source_selector = {

@@ -13,6 +13,8 @@ import({ "mason-null-ls", "null-ls" }, function(modules)
 			"gofumpt",
 			"goimports",
 			"golangci_lint",
+			"impl",
+			"gomodifytags",
 		},
 		automatic_installation = true,
 		methods = {
@@ -23,9 +25,6 @@ import({ "mason-null-ls", "null-ls" }, function(modules)
 			hover = true,
 		},
 		handlers = {
-			stylua = function()
-				null_ls.register(null_ls.builtins.formatting.stylua)
-			end,
 			eslint_d = function()
 				null_ls.register(require("none-ls.diagnostics.eslint_d").with({
 					prefer_local = "node_modules/.bin",
@@ -45,15 +44,23 @@ import({ "mason-null-ls", "null-ls" }, function(modules)
 						})
 					end,
 				}))
-			end,
-			hadolint = function()
-				null_ls.register(null_ls.builtins.diagnostics.hadolint)
-			end,
-			dotenv_linter = function()
-				null_ls.register(null_ls.builtins.diagnostics.dotenv_linter)
-			end,
-			refactoring = function()
-				null_ls.register(null_ls.builtins.refactoring)
+
+				null_ls.register(require("none-ls.code_actions.eslint_d").with({
+					condition = function(utils)
+						return utils.root_has_file({
+							".eslintrc",
+							".eslintrc.json",
+							".eslintrc.yml",
+							".eslintrc.yaml",
+							".eslintrc.json5",
+							".eslintrc.js",
+							".eslintrc.cjs",
+							".eslintrc.toml",
+							"eslint.config.js",
+							"eslint.config.cjs",
+						})
+					end,
+				}))
 			end,
 			prettierd = function()
 				null_ls.register(null_ls.builtins.formatting.prettierd.with({
@@ -73,16 +80,10 @@ import({ "mason-null-ls", "null-ls" }, function(modules)
 					end,
 				}))
 			end,
-			gofumpt = function()
-				null_ls.register(null_ls.builtins.formatting.gofumpt)
-			end,
 			goimports = function()
 				null_ls.register(null_ls.builtins.formatting.goimports.with({
 					extra_args = { "-local", "github.com/reviz0r" },
 				}))
-			end,
-			golangci_lint = function()
-				null_ls.register(null_ls.builtins.diagnostics.golangci_lint)
 			end,
 		},
 	})

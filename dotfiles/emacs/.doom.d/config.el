@@ -27,7 +27,7 @@
 ;; `load-theme' function. This is the default:
 ;;(setq doom-theme 'doom-tomorrow-night)
 ;;(load-theme 'night-owl t)
-(setq doom-theme 'doom-gruvbox)
+(setq doom-theme 'doom-tokyo-night)
 (use-package autothemer
   :ensure t)
 ;;(load-theme 'catppuccin-mocha t)
@@ -43,7 +43,7 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
-(setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 16))
+(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 14))
 
 (add-to-list 'auto-mode-alist '("\\.journal\\'" . ledger-mode))
 

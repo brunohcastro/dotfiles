@@ -78,7 +78,6 @@ return packer.startup(function(use)
 	-- Buffers & navigation
 	use("lewis6991/gitsigns.nvim")
 	use("nvim-lualine/lualine.nvim")
-	use({ "akinsho/bufferline.nvim", tag = "*" })
 	use("famiu/bufdelete.nvim")
 	use("lukas-reineke/indent-blankline.nvim")
 	use("kevinhwang91/nvim-hlslens")
@@ -101,6 +100,7 @@ return packer.startup(function(use)
 	-- Colorscheme
 	use({ "catppuccin/nvim", as = "catppuccin" })
 	use("folke/tokyonight.nvim")
+	use("oxfist/night-owl.nvim")
 
 	-- Treesitter
 	use("nvim-treesitter/nvim-treesitter")
@@ -144,17 +144,11 @@ return packer.startup(function(use)
 	use({
 		"pmizio/typescript-tools.nvim",
 		requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-		config = function()
-			require("typescript-tools").setup({})
-		end,
 	})
 	use("j-hui/fidget.nvim")
 	use("ray-x/lsp_signature.nvim")
 	use("smjonas/inc-rename.nvim")
-	use({
-		"weilbith/nvim-code-action-menu",
-		cmd = "CodeActionMenu",
-	})
+	use("aznhe21/actions-preview.nvim")
 	use("kosayoda/nvim-lightbulb")
 	use("nvimtools/none-ls.nvim")
 	use("nvimtools/none-ls-extras.nvim")
@@ -164,6 +158,22 @@ return packer.startup(function(use)
 	use("smiteshp/nvim-navic")
 	use("utilyre/barbecue.nvim")
 	use("simrat39/rust-tools.nvim")
+	use({
+		"dmmulroy/ts-error-translator.nvim",
+		config = function()
+			require("ts-error-translator").setup()
+		end,
+	})
+	use({
+		"antosha417/nvim-lsp-file-operations",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-neo-tree/neo-tree.nvim",
+		},
+		config = function()
+			require("lsp-file-operations").setup()
+		end,
+	})
 
 	-- Editing
 	use("numToStr/Comment.nvim")
@@ -183,6 +193,13 @@ return packer.startup(function(use)
 	use({
 		"styled-components/vim-styled-components",
 		branch = "main",
+	})
+	use({
+		"rest-nvim/rest.nvim",
+		rocks = { "lua-curl", "nvim-nio", "mimetypes", "xml2lua" },
+		config = function()
+			require("rest-nvim").setup()
+		end,
 	})
 
 	if PACKER_BOOTSTRAP then

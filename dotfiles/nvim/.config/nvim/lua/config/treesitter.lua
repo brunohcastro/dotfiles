@@ -29,6 +29,9 @@ import("nvim-treesitter.configs", function(treesitter)
 			"bash",
 			"vim",
 			"markdown_inline",
+			"http",
+			"xml",
+			"ledger",
 		},
 		highlight = {
 			enable = true,

@@ -129,5 +129,5 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export GITHUB_OAUTH_TOKEN=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
-eval "$(direnv hook zsh)"
+# export GITHUB_OAUTH_TOKEN=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
+# eval "$(direnv hook zsh)"

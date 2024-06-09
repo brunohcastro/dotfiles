@@ -10,6 +10,8 @@
 --[[ 			which_key = true, ]]
 --[[ 		}, ]]
 --[[ 	}) ]]
+--[[]]
+--[[   vim.cmd.colorscheme("catpuccin-mocha") ]]
 --[[ end) ]]
 
 import("tokyonight", function(tokyonight)
@@ -26,6 +28,12 @@ import("tokyonight", function(tokyonight)
 		dim_inactive = true,
 		lualine_bold = true,
 	})
+
+	vim.cmd.colorscheme("tokyonight")
 end)
 
-vim.cmd.colorscheme("tokyonight")
+--[[ import("night-owl", function(night_owl) ]]
+--[[ 	night_owl.setup() ]]
+--[[]]
+--[[ 	vim.cmd.colorscheme("night-owl") ]]
+--[[ end) ]]

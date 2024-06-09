@@ -15,7 +15,6 @@ require("config.neo-tree")
 require("config.which-key")
 require("config.gitsigns")
 require("config.lualine")
-require("config.bufferline")
 require("config.harpoon")
 require("config.telescope")
 require("config.alpha")
@@ -32,3 +31,5 @@ require("config.tmux")
 require("config.git-conflict")
 require("config.diffview")
 require("config.indent_blankline")
+
+--[[ require("overdevio") ]]

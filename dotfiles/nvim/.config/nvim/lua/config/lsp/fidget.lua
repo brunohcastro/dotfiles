@@ -1,3 +1,9 @@
 import("fidget", function(fidget)
-	fidget.setup()
+	fidget.setup({
+		progress = {
+			ignore = {
+				"null-ls",
+			},
+		},
+	})
 end)
