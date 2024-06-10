@@ -25,9 +25,11 @@ import({ "mason-null-ls", "null-ls" }, function(modules)
 			hover = true,
 		},
 		handlers = {
+			stylua = function()
+				null_ls.register(null_ls.builtins.formatting.stylua)
+			end,
 			eslint_d = function()
 				null_ls.register(require("none-ls.diagnostics.eslint_d").with({
-					prefer_local = "node_modules/.bin",
 					method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
 					condition = function(utils)
 						return utils.root_has_file({
@@ -62,6 +64,12 @@ import({ "mason-null-ls", "null-ls" }, function(modules)
 					end,
 				}))
 			end,
+			hadolint = function()
+				null_ls.register(null_ls.builtins.diagnostics.hadolint)
+			end,
+			dotenv_linter = function()
+				null_ls.register(null_ls.builtins.diagnostics.dotenv_linter)
+			end,
 			prettierd = function()
 				null_ls.register(null_ls.builtins.formatting.prettierd.with({
 					condition = function(utils)
@@ -80,10 +88,16 @@ import({ "mason-null-ls", "null-ls" }, function(modules)
 					end,
 				}))
 			end,
+			gofumpt = function()
+				null_ls.register(null_ls.builtins.formatting.gofumpt)
+			end,
 			goimports = function()
 				null_ls.register(null_ls.builtins.formatting.goimports.with({
 					extra_args = { "-local", "github.com/reviz0r" },
 				}))
+			end,
+			golangci_lint = function()
+				null_ls.register(null_ls.builtins.diagnostics.golangci_lint)
 			end,
 		},
 	})

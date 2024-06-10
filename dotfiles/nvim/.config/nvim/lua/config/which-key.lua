@@ -41,7 +41,7 @@ import("which-key", function(whichKey)
 			["f"] = { "<cmd>lua require('telescope.builtin').live_grep()<CR>", "Text" },
 			["s"] = { "<cmd>lua require('telescope.builtin').find_files()<CR>", "Files" },
 			["h"] = { "<cmd>lua require('telescope.builtin').help_tags()<CR>", "Help tags" },
-			["b"] = { "<cmd>lua require('telescope.builtin').buffers()<CR>", "Buffers" },
+			["b"] = { "<cmd>OverdevioTelescopeBuffers<CR>", "Buffers" },
 			["p"] = {
 				"<cmd>lua require('telescope').extensions.project.project{ display_type = 'full' }<CR>",
 				"Project",
