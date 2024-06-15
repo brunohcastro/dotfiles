@@ -46,4 +46,4 @@ vim.lsp.handlers["textDocument/hover"] = function(_, result, ctx, conf)
 	})(_, result, ctx, conf)
 end
 
-vim.g.navic_silence = true
+vim.g.navic_silence = false

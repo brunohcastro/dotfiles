@@ -25,7 +25,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-DISABLE_AUTO_UPDATE="true"
+# DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
@@ -37,7 +37,7 @@ DISABLE_AUTO_UPDATE="true"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
@@ -59,8 +59,7 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(asdf archlinux git tmux docker docker-compose ng wd dircycle dirhistory)
-
+plugins=(aliases aws archlinux git tmux docker vi-mode mise wd dircycle dirhistory zsh-navigation-tools)
 
 # User configuration
 
@@ -89,19 +88,16 @@ fi
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias zshconfig="nvim ~/.zshrc"
+alias ohmyzsh="nvim ~/.oh-my-zsh"
+alias nvimconfig="nvim ~/.dotfiles/dotfiles/nvim/.config/nvim/init.lua"
 alias netflix=google-chrome-stable --app=http://netflix.com
 alias pcmclean="sudo pacman -Sc"
 alias pcmpurge="sudo pacman -Rns $(pacman -Qtdq)"
 alias smtpfs="simple-mtpfs --device 1 /home/bruno/Mount"
-alias gcloud-ptec="gcloud config configurations activate ptec"
-alias gcloud-dastro="gcloud config configurations activate dastro"
-alias pgsql-trws="ssh root@162.214.98.149 -p 22022 -L 5433:localhost:5432 -N"
-alias rabbit-trws="ssh root@162.214.98.149 -p 22022 -L 15672:localhost:15672 -N"
-alias mysql-trws="ssh root@162.214.98.149 -p 22022 -L 3307:localhost:3306 -N"
 alias trws="ssh -i ~/Dropbox/keychain/dastro root@162.214.98.149 -p 22022 -L 3307:localhost:3306 -L 5433:localhost:5432 -L 15672:localhost:15672 -N"
-alias go-reshim='asdf reshim golang && export GOROOT="$(asdf where golang)/go/"'
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
@@ -109,18 +105,13 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
 fi
 
 source $ZSH/oh-my-zsh.sh
+eval "$(/home/bruno/.local/bin/mise activate zsh)"
 
 export GOPATH="$HOME/Development/go"
 export GOROOT="/usr/lib/go"
 
 export PATH="$PATH:$(yarn global bin)"
 export PATH="$PATH:$GOPATH/bin"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/bruno/google-cloud-sdk/path.zsh.inc' ]; then . '/home/bruno/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/bruno/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/bruno/google-cloud-sdk/completion.zsh.inc'; fi
 
 if [ -f '/usr/bin/ledger' ]; then
   export LEDGER_FILE="$HOME/org/ledger/$(date +'%Y').journal";
@@ -129,5 +120,3 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# export GITHUB_OAUTH_TOKEN=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
-# eval "$(direnv hook zsh)"

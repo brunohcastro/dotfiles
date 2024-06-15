@@ -55,6 +55,8 @@ import("which-key", function(whichKey)
 			["c"] = { "<cmd>lua require('telescope.builtin').git_commits()<CR>", "Commits" },
 			["b"] = { "<cmd>lua require('telescope.builtin').git_branches()<CR>", "Branches" },
 			["g"] = { "<cmd>Git<CR>", "Fugitive" },
+			["f"] = { "<cmd>Git pull<CR>", "Pull" },
+			["p"] = { "<cmd>Git push<CR>", "Push" },
 			["r"] = { "<cmd>Gread<CR>", "Checkout File" },
 		},
 		["d"] = {

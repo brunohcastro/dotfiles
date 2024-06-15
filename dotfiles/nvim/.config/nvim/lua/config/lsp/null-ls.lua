@@ -4,17 +4,16 @@ import({ "mason-null-ls", "null-ls" }, function(modules)
 
 	mason_null_ls.setup({
 		ensure_installed = {
-			"stylua",
-			"eslint_d",
-			"hadolint",
 			"dotenv_linter",
-			"refactoring",
-			"prettierd",
 			"gofumpt",
 			"goimports",
 			"golangci_lint",
-			"impl",
 			"gomodifytags",
+			"hadolint",
+			"impl",
+			"prettier",
+			"refactoring",
+			"stylua",
 		},
 		automatic_installation = true,
 		methods = {
@@ -28,50 +27,14 @@ import({ "mason-null-ls", "null-ls" }, function(modules)
 			stylua = function()
 				null_ls.register(null_ls.builtins.formatting.stylua)
 			end,
-			eslint_d = function()
-				null_ls.register(require("none-ls.diagnostics.eslint_d").with({
-					method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
-					condition = function(utils)
-						return utils.root_has_file({
-							".eslintrc",
-							".eslintrc.json",
-							".eslintrc.yml",
-							".eslintrc.yaml",
-							".eslintrc.json5",
-							".eslintrc.js",
-							".eslintrc.cjs",
-							".eslintrc.toml",
-							"eslint.config.js",
-							"eslint.config.cjs",
-						})
-					end,
-				}))
-
-				null_ls.register(require("none-ls.code_actions.eslint_d").with({
-					condition = function(utils)
-						return utils.root_has_file({
-							".eslintrc",
-							".eslintrc.json",
-							".eslintrc.yml",
-							".eslintrc.yaml",
-							".eslintrc.json5",
-							".eslintrc.js",
-							".eslintrc.cjs",
-							".eslintrc.toml",
-							"eslint.config.js",
-							"eslint.config.cjs",
-						})
-					end,
-				}))
-			end,
 			hadolint = function()
 				null_ls.register(null_ls.builtins.diagnostics.hadolint)
 			end,
 			dotenv_linter = function()
 				null_ls.register(null_ls.builtins.diagnostics.dotenv_linter)
 			end,
-			prettierd = function()
-				null_ls.register(null_ls.builtins.formatting.prettierd.with({
+			prettier = function()
+				null_ls.register(null_ls.builtins.formatting.prettier.with({
 					condition = function(utils)
 						return utils.root_has_file({
 							".prettierrc",

@@ -5,5 +5,8 @@ if not status then
 end
 
 return {
-	root_dir = lspconfig_util.find_git_ancestor,
+	codeActionsOnSave = {
+		enable = false,
+	},
+	format = false,
 }

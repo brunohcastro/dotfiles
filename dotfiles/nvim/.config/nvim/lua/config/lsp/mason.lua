@@ -2,6 +2,7 @@ import({ "mason", "mason-lspconfig", "lspconfig", "cmp_nvim_lsp" }, function(mod
 	local mason = modules.mason
 	local masonLspConfig = modules["mason-lspconfig"]
 	local cmpLsp = modules["cmp_nvim_lsp"]
+	local lspconfig = modules.lspconfig
 
 	mason.setup({
 		ui = {
@@ -15,22 +16,23 @@ import({ "mason", "mason-lspconfig", "lspconfig", "cmp_nvim_lsp" }, function(mod
 
 	masonLspConfig.setup({
 		ensure_installed = {
-			"lua_ls",
-			"jsonls",
-			"tailwindcss",
-			"html",
-			"cssls",
-			"yamlls",
-			"taplo",
-			"marksman",
-			"dockerls",
-			"cssmodules_ls",
-			"volar",
 			"angularls",
-			"rust_analyzer",
+			"cssls",
+			"cssmodules_ls",
+			"dockerls",
+			"eslint",
 			"gopls",
-			"graphql",
+			"html",
+			"jsonls",
+			"lua_ls",
+			"marksman",
+			"rust_analyzer",
+			"tailwindcss",
+			"taplo",
+			"volar",
+			"yamlls",
 		},
+		automatic_installation = { exclude = { "graphql" } },
 	})
 
 	local opts = {
@@ -55,5 +57,19 @@ import({ "mason", "mason-lspconfig", "lspconfig", "cmp_nvim_lsp" }, function(mod
 				rustTools.setup({ server = opts })
 			end)
 		end,
+	})
+
+	lspconfig.graphql.setup({
+		--[[ cmd = { "sh", "-c", "graphql-lsp server -m stream 2>&1" }, ]]
+		capabilities = opts.capabilities,
+		on_attach = opts.on_attach,
+		filetypes = {
+			"go",
+			"graphql",
+			"javascript",
+			"javascriptreact",
+			"typescript",
+			"typescriptreact",
+		},
 	})
 end)

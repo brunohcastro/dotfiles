@@ -73,7 +73,6 @@ wm/support: applications/scrot applications/dunst
 	- yay -S --noconfirm --needed \
 	    compton \
 	    rofi \
-	    volumeicon \
 	    unclutter-xfixes-git \
 	    hsetroot \
 	    volumeicon \
@@ -407,9 +406,7 @@ device/common: core \
                system/common
 
 device/common/notebook: device/common \
-                        system/notebook \
-	- sudo pacman -S --noconfirm --needed \
-
+                        system/notebook 
 
 device/desktop: device/common
 	- yay -S --noconfirm --noedit --needed \
