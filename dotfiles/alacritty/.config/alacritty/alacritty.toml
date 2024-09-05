@@ -160,6 +160,7 @@ program = "/bin/zsh"
 dynamic_padding = false
 opacity = 1.0
 title = "Alacritty"
+option_as_alt = "OnlyLeft"
 
 [window.class]
 general = "Alacritty"

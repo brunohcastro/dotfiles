@@ -10,9 +10,9 @@ M.on_attach = function(client, bufnr)
 		client.server_capabilities.document_formatting = false
 	end
 
-	--[[ if status and client.server_capabilities.documentSymbolProvider then ]]
-	--[[ 	navic.attach(client, bufnr) ]]
-	--[[ end ]]
+	if status and client.server_capabilities.documentSymbolProvider then
+		navic.attach(client, bufnr)
+	end
 
 	keymap(bufnr, "n", "gd", "<cmd>Trouble lsp_definitions<CR>", opts)
 	keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)

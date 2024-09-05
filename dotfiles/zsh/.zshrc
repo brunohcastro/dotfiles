@@ -94,10 +94,12 @@ alias zshconfig="nvim ~/.zshrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias nvimconfig="nvim ~/.dotfiles/dotfiles/nvim/.config/nvim/init.lua"
 alias netflix=google-chrome-stable --app=http://netflix.com
-alias pcmclean="sudo pacman -Sc"
-alias pcmpurge="sudo pacman -Rns $(pacman -Qtdq)"
 alias smtpfs="simple-mtpfs --device 1 /home/bruno/Mount"
-alias trws="ssh -i ~/Dropbox/keychain/dastro root@162.214.98.149 -p 22022 -L 3307:localhost:3306 -L 5433:localhost:5432 -L 15672:localhost:15672 -N"
+
+if [[ $(uname) != "Darwin" ]]; then
+  alias pcmclean="sudo pacman -Sc"
+  alias pcmpurge="sudo pacman -Rns $(pacman -Qtdq)"
+fi
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
@@ -105,12 +107,14 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
 fi
 
 source $ZSH/oh-my-zsh.sh
-eval "$(/home/bruno/.local/bin/mise activate zsh)"
+eval "$($HOME/.local/bin/mise activate zsh)"
 
 export GOPATH="$HOME/Development/go"
-export GOROOT="/usr/lib/go"
 
-export PATH="$PATH:$(yarn global bin)"
+if command -v yarn --version &> /dev/null; then 
+  export PATH="$PATH:$(yarn global bin)"
+fi
+
 export PATH="$PATH:$GOPATH/bin"
 
 if [ -f '/usr/bin/ledger' ]; then

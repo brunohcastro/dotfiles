@@ -14,6 +14,7 @@ import({ "mason-null-ls", "null-ls" }, function(modules)
 			"prettier",
 			"refactoring",
 			"stylua",
+			"cfn_lint",
 		},
 		automatic_installation = true,
 		methods = {
@@ -61,6 +62,9 @@ import({ "mason-null-ls", "null-ls" }, function(modules)
 			end,
 			golangci_lint = function()
 				null_ls.register(null_ls.builtins.diagnostics.golangci_lint)
+			end,
+			cfn_lint = function()
+				null_ls.register(null_ls.builtins.diagnostics.cfn_lint)
 			end,
 		},
 	})

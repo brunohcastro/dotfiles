@@ -106,7 +106,7 @@ return packer.startup(function(use)
 	use("nvim-treesitter/nvim-treesitter")
 	use("windwp/nvim-ts-autotag")
 	use("nvim-treesitter/nvim-treesitter-textobjects")
-	use("nvim-treesitter/nvim-treesitter-context")
+	--[[ use("nvim-treesitter/nvim-treesitter-context") ]]
 	use("windwp/nvim-autopairs")
 
 	-- Telescope

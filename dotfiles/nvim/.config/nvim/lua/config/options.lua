@@ -55,3 +55,11 @@ end
 
 set_filetype_and_syntax(".vtl", "vm", "vm")
 set_filetype_and_syntax(".hbs", "html", "html")
+
+vim.filetype.add({
+	pattern = {
+		[".*%.cf%.json"] = "json.cloudformation",
+		[".*%.cf%.yaml"] = "yaml.cloudformation",
+		[".*%.cf%.yml"] = "yaml.cloudformation",
+	},
+})
