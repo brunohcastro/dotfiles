@@ -141,10 +141,11 @@ return packer.startup(function(use)
 			require("outline").setup({})
 		end,
 	})
-	use({
-		"pmizio/typescript-tools.nvim",
-		requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-	})
+	use("jose-elias-alvarez/typescript.nvim")
+	--[[ use({ ]]
+	--[[ 	"pmizio/typescript-tools.nvim", ]]
+	--[[ 	requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" }, ]]
+	--[[ }) ]]
 	use("j-hui/fidget.nvim")
 	use("ray-x/lsp_signature.nvim")
 	use("smjonas/inc-rename.nvim")

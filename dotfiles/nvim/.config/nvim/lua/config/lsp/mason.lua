@@ -28,6 +28,7 @@ import({ "mason", "mason-lspconfig", "lspconfig", "cmp_nvim_lsp" }, function(mod
 			"marksman",
 			"rust_analyzer",
 			"tailwindcss",
+			"vtsls",
 			"taplo",
 			"volar",
 			"yamlls",
@@ -57,6 +58,13 @@ import({ "mason", "mason-lspconfig", "lspconfig", "cmp_nvim_lsp" }, function(mod
 				rustTools.setup({ server = opts })
 			end)
 		end,
+		--[[ ["tsserver"] = function() ]]
+		--[[ 	import("typescript", function(typescript) ]]
+		--[[ 		typescript.setup({ ]]
+		--[[ 			server = opts, ]]
+		--[[ 		}) ]]
+		--[[ 	end) ]]
+		--[[ end, ]]
 	})
 
 	require("lspconfig.configs").cfn_lsp = {
