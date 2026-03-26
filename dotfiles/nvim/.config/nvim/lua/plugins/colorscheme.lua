@@ -1,6 +1,7 @@
 return {
 	{
 		"folke/tokyonight.nvim",
+		enabled = false,
 		lazy = false,
 		priority = 1000,
 		config = function()
@@ -22,12 +23,23 @@ return {
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
-		lazy = false,
+		priority = 1000,
 		config = function()
-			require("catppuccin").setup({ flavour = "mocha" })
+			require("catppuccin").setup({
+				flavour = "mocha",
+				lsp_styles = {
+					underlines = {
+						errors = { "undercurl" },
+						hints = { "undercurl" },
+						warnings = { "undercurl" },
+						information = { "undercurl" },
+					},
+				},
+				auto_integrations = true,
+			})
 
 			vim.cmd.colorscheme("catppuccin")
 		end,
 	},
-	{ "oxfist/night-owl.nvim", lazy = true },
+	{ "oxfist/night-owl.nvim", lazy = true, enabled = false },
 }

@@ -14,7 +14,6 @@ return {
 			-- LSP status & extras
 			"j-hui/fidget.nvim",
 			"smjonas/inc-rename.nvim",
-			{ "kosayoda/nvim-lightbulb" },
 			"folke/trouble.nvim",
 			"aznhe21/actions-preview.nvim",
 			{ "hedyhli/outline.nvim" },
@@ -44,16 +43,10 @@ return {
 				end,
 			})
 
-			-- Fidget (LSP progress spinner)
-			require("fidget").setup({
-				progress = { ignore = { "null-ls" } },
-			})
-
 			-- Incremental rename
 			require("inc_rename").setup()
 
-			-- Code action lightbulb
-			require("nvim-lightbulb").setup({ priority = 90, autocmd = { enabled = true, updatetime = 50 } })
+			--[[ require("nvim-lightbulb").setup({ priority = 90, autocmd = { enabled = true, updatetime = 50 } }) ]]
 
 			-- Trouble (diagnostics window)
 			require("trouble").setup()
@@ -67,8 +60,8 @@ return {
 			-- TypeScript error translator
 			require("ts-error-translator").setup()
 
-			-- LSP-aware file rename (neo-tree integration)
-			require("lsp-file-operations").setup()
+			--[[ -- LSP-aware file rename (neo-tree integration) ]]
+			--[[ require("lsp-file-operations").setup() ]]
 		end,
 	},
 
@@ -77,24 +70,23 @@ return {
 		version = "^5",
 		ft = { "rust" },
 	},
-
 	{
-		"mason-org/mason-lspconfig.nvim",
+		"mason-org/mason.nvim",
 		dependencies = {
-			{
-				"mason-org/mason.nvim",
-				opts = {
-					ui = {
-						icons = {
-							package_installed = "✓",
-							package_pending = "➜",
-							package_uninstalled = "✗",
-						},
-					},
-				},
-			},
 			"neovim/nvim-lspconfig",
 		},
+		opts = {
+			ui = {
+				icons = {
+					package_installed = "✓",
+					package_pending = "➜",
+					package_uninstalled = "✗",
+				},
+			},
+		},
+	},
+	{
+		"mason-org/mason-lspconfig.nvim",
 		opts = {
 			ensure_installed = {
 				"angularls",

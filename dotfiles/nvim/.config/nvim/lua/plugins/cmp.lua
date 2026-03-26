@@ -1,7 +1,6 @@
 return {
 	{
 		"hrsh7th/nvim-cmp",
-		event = { "InsertEnter", "CmdlineEnter" },
 		dependencies = {
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
@@ -18,9 +17,7 @@ return {
 			},
 			{
 				"windwp/nvim-autopairs",
-				config = function()
-					require("nvim-autopairs").setup({ check_ts = true })
-				end,
+				opts = { check_ts = true },
 			},
 		},
 		config = function()
@@ -28,7 +25,6 @@ return {
 			local luasnip = require("luasnip")
 			local lspkind = require("lspkind")
 
-			-- Wire autopairs into cmp
 			local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 			cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
 
@@ -37,15 +33,18 @@ return {
 				return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
 			end
 
+			vim.lsp.config("*", { capabilities = require("cmp_nvim_lsp").default_capabilities() })
+			vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
+
 			cmp.setup({
 				snippet = {
 					expand = function(args)
 						luasnip.lsp_expand(args.body)
 					end,
 				},
-				mapping = {
-					["<C-k>"] = cmp.mapping.select_prev_item(),
-					["<C-j>"] = cmp.mapping.select_next_item(),
+				mapping = cmp.mapping.preset.insert({
+					["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+					["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
 					["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
 					["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
 					["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
@@ -67,7 +66,10 @@ return {
 						else
 							fallback()
 						end
-					end, { "i", "s" }),
+					end, {
+						"i",
+						"s",
+					}),
 					["<S-Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_prev_item()
@@ -76,41 +78,59 @@ return {
 						else
 							fallback()
 						end
-					end, { "i", "s" }),
-				},
+					end, {
+						"i",
+						"s",
+					}),
+				}),
+
 				formatting = {
-					fields = { "abbr", "kind", "menu" },
+					fields = { "abbr", "icon", "menu" },
 					format = lspkind.cmp_format({
-						mode = "symbol_text",
-						symbol_map = { Copilot = "" },
-						before = function(entry, vim_item)
-							vim_item.menu = ({
-								nvim_lsp = "[LSP]",
-								luasnip = "[Snippet]",
-								buffer = "[Buffer]",
-								path = "[Path]",
-							})[entry.source.name]
-							return vim_item
-						end,
+						mode = "symbol",
+						symbol_map = {
+							Copilot = "",
+						},
+
+						maxwidth = {
+							menu = 30, -- leading text (labelDetails)
+							abbr = 30, -- actual suggestion item
+						},
+						ellipsis_char = "...",
+						show_labelDetails = true,
+
+						menu = {
+							nvim_lsp = "[LSP]",
+							luasnip = "[Snippet]",
+							buffer = "[Buffer]",
+							path = "[Path]",
+						},
 					}),
 				},
-				sources = {
+				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
 					{ name = "copilot" },
 					{ name = "luasnip" },
-					{ name = "buffer" },
 					{ name = "path" },
-				},
+				}, {
+					{ name = "buffer" },
+				}),
 				confirm_opts = {
 					behavior = cmp.ConfirmBehavior.Replace,
 					select = false,
 				},
 				window = {
-					completion = cmp.config.window.bordered(),
-					documentation = cmp.config.window.bordered(),
+					completion = {
+						border = "rounded",
+					},
+					documentation = {
+						border = "rounded",
+					},
 				},
 				experimental = {
-					ghost_text = false,
+					ghost_text = {
+						hl_group = "CmpGhostText",
+					},
 					native_menu = false,
 				},
 				performance = { debounce = 150 },
@@ -123,10 +143,12 @@ return {
 
 			cmp.setup.cmdline(":", {
 				mapping = cmp.mapping.preset.cmdline(),
-				sources = cmp.config.sources(
-					{ { name = "path" } },
-					{ { name = "cmdline" } }
-				),
+				sources = cmp.config.sources({
+					{ name = "path" },
+				}, {
+					{ name = "cmdline" },
+				}),
+				matching = { disallow_symbol_nonprefix_matching = false },
 			})
 		end,
 	},

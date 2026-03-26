@@ -1,7 +1,6 @@
 return {
 	{
 		"goolord/alpha-nvim",
-		-- Must not be lazy: it IS the first screen shown
 		lazy = false,
 		config = function()
 			local alpha = require("alpha")

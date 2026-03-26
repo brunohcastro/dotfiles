@@ -1,8 +1,7 @@
 -- Core UI: dependencies, notifications, command palette, input UI
 return {
-	{ "nvim-lua/plenary.nvim", lazy = true },
-	{ "nvim-tree/nvim-web-devicons", lazy = true },
-	{ "MunifTanjim/nui.nvim", lazy = true },
+	{ "nvim-lua/plenary.nvim" },
+	{ "nvim-tree/nvim-web-devicons" },
 
 	{
 		"folke/snacks.nvim",
@@ -22,12 +21,11 @@ return {
 			scroll = { enabled = true },
 			statuscolumn = { enabled = true },
 			words = { enabled = true },
+			lazygit = { enabled = true },
 		},
 	},
-
 	{
 		"folke/noice.nvim",
-		lazy = false,
 		dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
 		opts = {
 			lsp = {
@@ -36,11 +34,11 @@ return {
 					["vim.lsp.util.stylize_markdown"] = true,
 					["cmp.entry.get_documentation"] = true,
 				},
-				progress = { enabled = true },
+				progress = { enabled = false },
 				hover = { enabled = true, silent = true, view = "hover" },
 			},
 			presets = {
-				bottom_search = true,
+				bottom_search = false,
 				command_palette = true,
 				long_message_to_split = true,
 				inc_rename = true,
@@ -50,22 +48,25 @@ return {
 				{
 					filter = {
 						event = "msg_show",
-						kind = "",
-						find = "exit",
+						any = {
+							{ find = "%d+L, %d+B" },
+							{ find = "; after #%d+" },
+							{ find = "; before #%d+" },
+						},
 					},
-					opts = { skip = true },
+					view = "mini",
 				},
+
 				{
 					filter = {
 						event = "msg_show",
-						kind = "",
-						find = "written",
+						any = {
+							{ find = ":q" },
+							{ find = ":qa" },
+							{ find = "exit Nvim" },
+						},
 					},
 					opts = { skip = true },
-				},
-				{
-					view = "split",
-					filter = { event = "msg_show", min_height = 20 },
 				},
 			},
 		},

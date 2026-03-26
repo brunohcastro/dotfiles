@@ -94,8 +94,5 @@ return {
 			"nvim-treesitter/nvim-treesitter-textobjects",
 			"windwp/nvim-ts-autotag",
 		},
-		init = function()
-			vim.cmd([[hi rainbowcol1 guifg=#7f849c]])
-		end,
 	},
 }

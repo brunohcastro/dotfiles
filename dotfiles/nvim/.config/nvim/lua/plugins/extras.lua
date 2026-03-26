@@ -1,6 +1,5 @@
 -- Smaller UI/editing enhancements
 return {
-	-- Search match lens overlay
 	{
 		"kevinhwang91/nvim-hlslens",
 		event = "BufReadPost",
