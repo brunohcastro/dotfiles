@@ -115,7 +115,7 @@ if command -v yarn --version &> /dev/null; then
   export PATH="$PATH:$(yarn global bin)"
 fi
 
-export PATH="$PATH:$GOPATH/bin"
+export PATH="$PATH:$GOPATH/bin:/Applications/Docker.app/Contents/Resources/bin/"
 
 if [ -f '/usr/bin/ledger' ]; then
   export LEDGER_FILE="$HOME/org/ledger/$(date +'%Y').journal";
@@ -124,3 +124,24 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/bruno/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+# pnpm
+export PNPM_HOME="/Users/bruno/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+# 
+if [[ $(uname) == "Darwin" ]]; then
+  export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"
+  export JAVA_HOME="/opt/homebrew/opt/openjdk@21"
+  export ANDROID_HOME="/Users/bruno/Library/Android/sdk"
+  export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin"
+fi
+export ENABLE_LSP_TOOL=1

@@ -1,36 +1,24 @@
-require("config.plugins")
-require("import")
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable",
+		lazypath,
+	})
+end
+vim.opt.rtp:prepend(lazypath)
 
 vim.loader.enable()
 
+-- Set leader before lazy so mappings are correct
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 require("config.options")
 require("config.keymaps")
-require("config.colorschemes")
-require("config.treesitter")
-require("config.notify")
-require("config.copilot")
-require("config.cmp")
-require("config.lsp")
-require("config.neo-tree")
-require("config.lib")
-require("config.which-key")
-require("config.gitsigns")
-require("config.lualine")
-require("config.harpoon")
-require("config.telescope")
-require("config.alpha")
-require("config.dressing")
-require("config.comment")
-require("config.scrollbar")
-require("config.hlslens")
-require("config.hop")
-require("config.surround")
-require("config.toggleterm")
-require("config.cursorline")
-require("config.color-highlight")
-require("config.tmux")
-require("config.git-conflict")
-require("config.diffview")
-require("config.indent_blankline")
 
---[[ require("overdevio") ]]
+require("lazy").setup({ { import = "plugins" } })

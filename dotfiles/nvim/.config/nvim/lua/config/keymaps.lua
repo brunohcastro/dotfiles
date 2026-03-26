@@ -3,8 +3,6 @@ local keymap = vim.api.nvim_set_keymap
 
 -- Leader key
 keymap("", "<Space>", "<Nop>", opts)
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
 
 -- Window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
