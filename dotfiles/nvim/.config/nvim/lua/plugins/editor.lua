@@ -109,6 +109,15 @@ return {
 			require("orgmode").setup({
 				org_agenda_files = "~/Dropbox/org/**/*",
 				org_default_notes_file = "~/Dropbox/org/inbox.org",
+				org_todo_keywords = {
+					"TODO(t)",
+					"NEXT(n)",
+					"IN-PROGRESS(p)",
+					"WAITING(w)",
+					"|",
+					"DONE(d)",
+					"CANCELED(c)",
+				},
 			})
 
 			vim.lsp.enable("org")
