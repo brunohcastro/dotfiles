@@ -1,51 +1,38 @@
-return {
-	{
-		"nvim-neo-tree/neo-tree.nvim",
-		cmd = "Neotree",
-		keys = {
-			{ "<leader>e", "<cmd>Neotree toggle<cr>", desc = "Toggle Explorer" },
-		},
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-tree/nvim-web-devicons",
-			"MunifTanjim/nui.nvim",
-		},
-		enabled = false,
-		config = function()
-			vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+vim.pack.add({
+	{ src = "https://github.com/nvim-lua/plenary.nvim" },
+	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
+	{ src = "https://github.com/MunifTanjim/nui.nvim" },
+	{ src = "https://github.com/nvim-neo-tree/neo-tree.nvim" },
+})
 
-			require("neo-tree").setup({
-				close_if_last_window = true,
-				hide_root_node = true,
-				popup_border_style = "rounded",
-				enable_git_status = true,
-				enable_diagnostics = true,
-				window = {
-					mappings = {
-						["l"] = "open",
-						["o"] = "open",
-					},
-				},
-				filesystem = {
-					filtered_items = {
-						always_show = {
-							".gitignore",
-							".gitlab-ci.yaml",
-							".gitlab-ci.yml",
-							".github",
-							".eslintrc*",
-							".prettierrc*",
-						},
-						never_show = { ".git", ".DS_Store" },
-					},
-					follow_current_file = { enabled = true },
-					use_libuv_file_watcher = true,
-				},
-				source_selector = { winbar = true },
-			})
-		end,
+require("neo-tree").setup({
+	close_if_last_window = true,
+	hide_root_node = true,
+	popup_border_style = "rounded",
+	enable_git_status = true,
+	enable_diagnostics = true,
+	window = {
+		mappings = {
+			["l"] = "open",
+			["o"] = "open",
+		},
 	},
+	filesystem = {
+		filtered_items = {
+			always_show = {
+				".gitignore",
+				".gitlab-ci.yaml",
+				".gitlab-ci.yml",
+				".github",
+				".eslintrc*",
+				".prettierrc*",
+			},
+			never_show = { ".git", ".DS_Store" },
+		},
+		follow_current_file = { enabled = true },
+		use_libuv_file_watcher = true,
+	},
+	source_selector = { winbar = true },
+})
 
-	-- Buffer deletion used by <leader>bd and neo-tree
-	{ "famiu/bufdelete.nvim", cmd = "Bdelete" },
-}
+vim.keymap.set("n", "<leader>e", "<cmd>Neotree toggle<cr>", { desc = "Toggle Explorer" })

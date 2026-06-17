@@ -1,105 +1,68 @@
 -- Smaller UI/editing enhancements
-return {
-	{
-		"kevinhwang91/nvim-hlslens",
-		event = "BufReadPost",
-		config = function()
-			require("hlslens").setup()
-			local kopts = { noremap = true, silent = true }
-			vim.api.nvim_set_keymap(
-				"n",
-				"n",
-				[[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
-				kopts
-			)
-			vim.api.nvim_set_keymap(
-				"n",
-				"N",
-				[[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
-				kopts
-			)
-			vim.api.nvim_set_keymap("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-			vim.api.nvim_set_keymap("n", "#", [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-			vim.api.nvim_set_keymap("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-			vim.api.nvim_set_keymap("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-		end,
-	},
+vim.pack.add({
+	{ src = "https://github.com/kevinhwang91/nvim-hlslens" },
+	{ src = "https://github.com/petertriho/nvim-scrollbar" },
+	{ src = "https://github.com/yamatsum/nvim-cursorline" },
+	{ src = "https://github.com/brenoprata10/nvim-highlight-colors" },
+	{ src = "https://github.com/akinsho/toggleterm.nvim" },
+	{ src = "https://github.com/aserowy/tmux.nvim" },
+})
 
-	-- Scrollbar with diagnostic indicators
-	{
-		"petertriho/nvim-scrollbar",
-		event = "BufReadPost",
-		config = function()
-			require("scrollbar").setup({
-				handlers = { diagnostic = true, search = true },
-			})
-		end,
-	},
+-- Search lens (shows match count near the cursor)
+require("hlslens").setup()
+do
+	local kopts = { noremap = true, silent = true }
+	vim.api.nvim_set_keymap(
+		"n",
+		"n",
+		[[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+		kopts
+	)
+	vim.api.nvim_set_keymap(
+		"n",
+		"N",
+		[[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+		kopts
+	)
+	vim.api.nvim_set_keymap("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+	vim.api.nvim_set_keymap("n", "#", [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+	vim.api.nvim_set_keymap("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+	vim.api.nvim_set_keymap("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+end
 
-	-- Indent guides
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		enable = false,
-		event = "BufReadPost",
-		config = function()
-			require("ibl").setup()
-		end,
-	},
+-- Scrollbar with diagnostic indicators
+require("scrollbar").setup({
+	handlers = { diagnostic = true, search = true },
+})
 
-	-- Cursor word/line highlight
-	{
-		"yamatsum/nvim-cursorline",
-		event = "BufReadPost",
-		config = function()
-			require("nvim-cursorline").setup({
-				cursorline = { enable = true },
-				cursorword = { enable = true },
-			})
-		end,
-	},
+-- Cursor word/line highlight
+require("nvim-cursorline").setup({
+	cursorline = { enable = true },
+	cursorword = { enable = true },
+})
 
-	-- Inline color previews (#hex, rgb, tailwind)
-	{
-		"brenoprata10/nvim-highlight-colors",
-		event = "BufReadPost",
-		config = function()
-			require("nvim-highlight-colors").setup({
-				render = "background",
-				enable_tailwind = true,
-			})
-		end,
-	},
+-- Inline color previews (#hex, rgb, tailwind)
+require("nvim-highlight-colors").setup({
+	render = "background",
+	enable_tailwind = true,
+})
 
-	-- Floating terminal
-	{
-		"akinsho/toggleterm.nvim",
-		keys = { { [[<C-\>]], desc = "Toggle terminal" } },
-		config = function()
-			require("toggleterm").setup({
-				open_mapping = [[<c-\>]],
-				terminal_mappings = true,
-				insert_mappings = true,
-				shade_terminals = false,
-				start_in_insert = false,
-			})
+-- Floating terminal
+require("toggleterm").setup({
+	open_mapping = [[<c-\>]],
+	terminal_mappings = true,
+	insert_mappings = true,
+	shade_terminals = false,
+	start_in_insert = false,
+})
 
-			function _G.set_terminal_keymaps()
-				local opts = { buffer = 0 }
-				vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
-				vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
-			end
+function _G.set_terminal_keymaps()
+	local opts = { buffer = 0 }
+	vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
+	vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
+end
 
-			vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
-		end,
-	},
+vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 
-	-- Tmux pane navigation integration
-	-- Must not be lazy: replaces <C-hjkl> navigation globally
-	{
-		"aserowy/tmux.nvim",
-		lazy = false,
-		config = function()
-			require("tmux").setup()
-		end,
-	},
-}
+-- Tmux pane navigation integration (replaces <C-hjkl> navigation globally)
+require("tmux").setup()

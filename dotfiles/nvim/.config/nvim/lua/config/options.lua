@@ -44,6 +44,8 @@ vim.cmd([[set iskeyword+=-]])
 vim.cmd([[set t_Co=256]])
 vim.cmd("hi EndOfBuffer ctermbg=NONE ctermfg=200 cterm=NONE")
 vim.cmd("hi Normal ctermbg=NONE ctermfg=200 cterm=NONE")
+vim.cmd("set t_ZH=[3m")
+vim.cmd("set t_ZR=[23m")
 
 vim.opt.shortmess:append("c")
 
