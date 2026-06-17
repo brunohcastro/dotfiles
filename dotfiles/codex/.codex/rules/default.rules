@@ -1,0 +1,7 @@
+prefix_rule(pattern=["/bin/zsh", "-lc", "GOCACHE=/tmp/pincei-offers-agent-go-cache go mod tidy"], decision="allow")
+prefix_rule(pattern=["git", "add"], decision="allow")
+prefix_rule(pattern=["git", "commit"], decision="allow")
+prefix_rule(pattern=["ollama", "list"], decision="allow")
+prefix_rule(pattern=["/bin/zsh", "-lc", "GOCACHE=/tmp/pincei-offers-agent-go-cache go get github.com/playwright-community/playwright-go@latest"], decision="allow")
+prefix_rule(pattern=["/bin/zsh", "-lc", "GOCACHE=/tmp/pincei-offers-agent-browser-smoke-cache go run ./cmd/pin browser-listing-preview -url https://www.mercadolivre.com.br/ofertas -allowed-hosts mercadolivre.com.br,www.mercadolivre.com.br,produto.mercadolivre.com.br -settle-delay 2s"], decision="allow")
+prefix_rule(pattern=["/bin/zsh", "-lc", "GOCACHE=/tmp/pincei-offers-agent-playwright-install-cache go run github.com/playwright-community/playwright-go/cmd/playwright@v0.5700.1 install chromium"], decision="allow")

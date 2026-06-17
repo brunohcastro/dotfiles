@@ -39,9 +39,8 @@ for k, v in pairs(options) do
 	vim.opt[k] = v
 end
 
-vim.cmd("set whichwrap+=<,>,[,],h,l")
-vim.cmd([[set iskeyword+=-]])
-vim.cmd([[set t_Co=256]])
+vim.opt.whichwrap:append("<,>,[,],h,l")
+vim.opt.iskeyword:append("-")
 vim.cmd("hi EndOfBuffer ctermbg=NONE ctermfg=200 cterm=NONE")
 vim.cmd("hi Normal ctermbg=NONE ctermfg=200 cterm=NONE")
 vim.cmd("set t_ZH=[3m")
@@ -49,20 +48,21 @@ vim.cmd("set t_ZR=[23m")
 
 vim.opt.shortmess:append("c")
 
-local function set_filetype_and_syntax(extension, filetype, syntax)
-	vim.cmd(string.format("autocmd BufRead,BufNewFile *%s setlocal filetype=%s", extension, filetype))
-	if syntax then
-		vim.cmd(string.format("autocmd FileType %s setlocal syntax=%s", filetype, syntax))
-	end
-end
-
-set_filetype_and_syntax(".vtl", "vm", "vm")
-set_filetype_and_syntax(".hbs", "html", "html")
-
 vim.filetype.add({
+	extension = {
+		hbs = "html",
+		vtl = "vm",
+	},
 	pattern = {
 		[".*%.cf%.json"] = "json.cloudformation",
 		[".*%.cf%.yaml"] = "yaml.cloudformation",
 		[".*%.cf%.yml"] = "yaml.cloudformation",
 	},
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "vm",
+	callback = function()
+		vim.bo.syntax = "vm"
+	end,
 })

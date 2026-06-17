@@ -1,147 +1,93 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# Keep PATH unique while preserving order.
+typeset -U path PATH
 
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
-ZSH=~/.oh-my-zsh
-
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-#ZSH_THEME="ys"
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(aliases aws archlinux git tmux docker vi-mode mise wd dircycle dirhistory zsh-navigation-tools)
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='nvim'
-  alias vim=nvim
-fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-alias zshconfig="nvim ~/.zshrc"
-alias ohmyzsh="nvim ~/.oh-my-zsh"
-alias nvimconfig="nvim ~/.dotfiles/dotfiles/nvim/.config/nvim/init.lua"
-alias netflix=google-chrome-stable --app=http://netflix.com
-alias smtpfs="simple-mtpfs --device 1 /home/bruno/Mount"
-
-if [[ $(uname) != "Darwin" ]]; then
-  alias pcmclean="sudo pacman -Sc"
-  alias pcmpurge="sudo pacman -Rns $(pacman -Qtdq)"
-fi
-
-ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
-if [[ ! -d $ZSH_CACHE_DIR ]]; then
-  mkdir $ZSH_CACHE_DIR
-fi
-
-source $ZSH/oh-my-zsh.sh
-eval "$($HOME/.local/bin/mise activate zsh)"
+[[ -d "$HOME/.local/bin" ]] && path=("$HOME/.local/bin" $path)
+[[ -d "$HOME/bin" ]] && path=("$HOME/bin" $path)
 
 export GOPATH="$HOME/Development/go"
+[[ -d "$GOPATH/bin" ]] && path=($path "$GOPATH/bin")
 
-if command -v yarn --version &> /dev/null; then 
-  export PATH="$PATH:$(yarn global bin)"
-fi
-
-export PATH="$PATH:$GOPATH/bin:/Applications/Docker.app/Contents/Resources/bin/"
-
-if [ -f '/usr/bin/ledger' ]; then
-  export LEDGER_FILE="$HOME/org/ledger/$(date +'%Y').journal";
-fi
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/bruno/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions
-
-# pnpm
-export PNPM_HOME="/Users/bruno/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-# 
 if [[ $(uname) == "Darwin" ]]; then
-  export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"
+  [[ -d /opt/homebrew/opt/openjdk@21/bin ]] && path=(/opt/homebrew/opt/openjdk@21/bin $path)
+  [[ -d /Applications/Docker.app/Contents/Resources/bin ]] && path=(/Applications/Docker.app/Contents/Resources/bin $path)
+
   export JAVA_HOME="/opt/homebrew/opt/openjdk@21"
   export ANDROID_HOME="/Users/bruno/Library/Android/sdk"
-  export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin"
+  [[ -d "$ANDROID_HOME/platform-tools" ]] && path=($path "$ANDROID_HOME/platform-tools")
+  [[ -d "$ANDROID_HOME/tools" ]] && path=($path "$ANDROID_HOME/tools" "$ANDROID_HOME/tools/bin")
+
+  export PNPM_HOME="/Users/bruno/Library/pnpm"
+  [[ -d "$PNPM_HOME" ]] && path=($path "$PNPM_HOME")
+
+  [[ -d /Users/bruno/.docker/completions ]] && fpath=(/Users/bruno/.docker/completions $fpath)
 fi
+
+[[ -d /home/bruno/Development/flutter/bin ]] && path=(/home/bruno/Development/flutter/bin $path)
+[[ -d /home/bruno/.opencode/bin ]] && path=(/home/bruno/.opencode/bin $path)
+
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR="vim"
+else
+  export EDITOR="nvim"
+  alias vim="nvim"
+fi
+
+alias zshconfig="nvim ~/.zshrc"
+alias nvimconfig="nvim ~/.dotfiles/dotfiles/nvim/.config/nvim/init.lua"
+alias netflix="google-chrome-stable --app=http://netflix.com"
+alias smtpfs="simple-mtpfs --device 1 /home/bruno/Mount"
+
+if [[ $(uname) == "Darwin" ]]; then
+  alias ls="ls -G"
+else
+  alias ls="ls --color=auto"
+  alias grep="grep --color=auto"
+  alias pcmclean="sudo pacman -Sc"
+  alias pcmpurge='sudo pacman -Rns $(pacman -Qtdq)'
+fi
+
 export ENABLE_LSP_TOOL=1
+
+if command -v yarn >/dev/null 2>&1; then
+  path=($path "$(yarn global bin)")
+fi
+
+if [[ -x /usr/bin/ledger ]]; then
+  export LEDGER_FILE="$HOME/org/ledger/$(date +'%Y').journal"
+fi
+
+ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/oh-my-zsh"
+ZSH_DISABLE_COMPFIX=true
+mkdir -p "$ZSH_CACHE_DIR/completions"
+
+ANTIDOTE_HOME="${ANTIDOTE_HOME:-${ZDOTDIR:-$HOME}/.antidote}"
+if [[ -f "$ANTIDOTE_HOME/antidote.zsh" ]]; then
+  source "$ANTIDOTE_HOME/antidote.zsh"
+  antidote load "${ZDOTDIR:-$HOME}/.zsh_plugins.txt"
+elif [[ -o interactive ]]; then
+  print -P "%F{yellow}antidote not found. Run: make -C ~/.dotfiles user/shell%f"
+fi
+
+if [[ -r /usr/share/fzf/key-bindings.zsh ]]; then
+  source /usr/share/fzf/key-bindings.zsh
+elif [[ -n "$HOMEBREW_PREFIX" && -r "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh" ]]; then
+  source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
+fi
+
+if [[ -r /usr/share/fzf/completion.zsh ]]; then
+  source /usr/share/fzf/completion.zsh
+elif [[ -n "$HOMEBREW_PREFIX" && -r "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh" ]]; then
+  source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
+fi
+
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+fi
+
+if command -v direnv >/dev/null 2>&1; then
+  eval "$(direnv hook zsh)"
+fi
+
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+fi

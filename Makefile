@@ -11,6 +11,18 @@ colorscheme = gruvbox-dark-hard
 user/home:
 	- xdg-user-dirs-update
 
+user/shell: core/utils \
+            core/shell \
+            git/antidote \
+            stow/dotfile/zsh \
+            stow/dotfile/starship
+
+user/programming: user/shell \
+                  applications/terminal \
+                  stow/dotfile/nvim \
+                  stow/dotfile/tmux \
+                  stow/dotfile/kitty
+
 user/desktop: wm/i3 \
               applications
 	- yay -S --noconfirm --needed xorg-xsetroot
@@ -225,10 +237,19 @@ applications/taskwarrior: stow/dotfile/taskwarrior
 	- sudo pacman -S --noconfirm --needed \
 	    task
 
-applications/terminal: stow/dotfile/xresources
+applications/terminal:
 	- yay -S --noconfirm --needed \
-	    urxvt-perls \
-	    tmux
+	    kitty \
+	    tmux \
+	    neovim \
+	    ripgrep \
+	    fd \
+	    fzf \
+	    zoxide \
+	    direnv \
+	    lazygit \
+	    bat \
+	    eza
 
 applications/scrot:
 	- sudo pacman -S --noconfirm --needed scrot
@@ -275,6 +296,13 @@ core/utils:
 	  ntfs-3g \
 	  p7zip \
 	  xsel
+
+core/shell:
+	sudo pacman -S --noconfirm --needed \
+	  starship \
+	  fzf \
+	  zoxide \
+	  direnv
 
 core/printer:
 	yay -S --noconfirm --needed \
@@ -488,6 +516,35 @@ clean/tmp:
 	- mkdir -p tmp
 	- rm -rf tmp/*
 
+sync/agents:
+	mkdir -p dotfiles/agents dotfiles/codex/.codex/rules
+	rsync -a --delete \
+	  --exclude '.git/' \
+	  --exclude '.DS_Store' \
+	  $(HOME)/.agents/ dotfiles/agents/.agents/
+	rsync -a $(HOME)/.codex/config.toml dotfiles/codex/.codex/config.toml
+	rsync -a $(HOME)/.codex/rules/default.rules dotfiles/codex/.codex/rules/default.rules
+
+sync/git:
+	mkdir -p dotfiles/git/.config/git
+	rsync -a $(HOME)/.gitconfig dotfiles/git/.gitconfig
+	rsync -a $(HOME)/.config/git/ignore dotfiles/git/.config/git/ignore
+
+sync/nvim-lock:
+	mkdir -p dotfiles/nvim/.config/nvim
+	rsync -a $(HOME)/.config/nvim/nvim-pack-lock.json dotfiles/nvim/.config/nvim/nvim-pack-lock.json
+
+clean/nvim-live:
+	find $(HOME)/.config/nvim/lua -xtype l -delete
+	rm -f $(HOME)/.config/nvim/lazy-lock.json
+
+archive/stale-desktop:
+	- stow -D --no-folding -t $(HOME) -d dotfiles/ i3 polybar rofi picom conky xmonad xmobar p10k xresources
+	mkdir -p archive/dotfiles
+	for pkg in i3 polybar rofi picom conky xmonad xmobar p10k xresources; do \
+	  [ ! -e dotfiles/$$pkg ] || git mv dotfiles/$$pkg archive/dotfiles/; \
+	done
+
 stow/etc/%:
 	- sudo --no-folding stow -t /etc -d etc/ $*
 
@@ -498,6 +555,11 @@ git/emacs.d:
 	[ -d ~/.emacs.d ] \
 	  && git -C ~/.emacs.d pull \
 	  || git clone https://github.com/brunohcastro/emacs ~/.emacs.d
+
+git/antidote:
+	[ -d ~/.antidote/.git ] \
+	  && git -C ~/.antidote pull --ff-only \
+	  || git clone --depth=1 https://github.com/mattmc3/antidote.git ~/.antidote
 
 git/password-store:
 	[ -d ~/.password-store ] \

@@ -1,0 +1,22 @@
+model = "gpt-5.5"
+model_reasoning_effort = "xhigh"
+[projects."/home/bruno/Development/gamedev/federiks"]
+trust_level = "trusted"
+
+[projects."/home/bruno/Development/llm/personal-assistant"]
+trust_level = "trusted"
+
+[projects."/home/bruno/Development/work/pincei/pincei-scrapper"]
+trust_level = "trusted"
+
+[projects."/home/bruno/Development/work/pincei/pincei-offers-agent"]
+trust_level = "trusted"
+
+[projects."/home/bruno/Dropbox"]
+trust_level = "trusted"
+
+[projects."/home/bruno/Development/work/pincei/pincei-backend"]
+trust_level = "trusted"
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4
