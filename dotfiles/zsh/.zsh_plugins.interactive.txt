@@ -1,0 +1,5 @@
+ohmyzsh/ohmyzsh path:plugins/wd
+ohmyzsh/ohmyzsh path:plugins/dircycle
+ohmyzsh/ohmyzsh path:plugins/dirhistory
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-syntax-highlighting

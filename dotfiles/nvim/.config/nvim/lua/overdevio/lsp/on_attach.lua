@@ -6,7 +6,7 @@ M.on_attach = function(client, bufnr)
 	end
 
 	-- Disable formatting for servers that conflict with null-ls
-	if client.name == "lua_ls" or client.name == "ts_ls" then
+	if client.name == "lua_ls" or client.name == "vtsls" then
 		client.server_capabilities.documentFormattingProvider = false
 	end
 

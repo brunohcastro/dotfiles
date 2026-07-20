@@ -64,5 +64,10 @@ end
 
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 
--- Tmux pane navigation integration (replaces <C-hjkl> navigation globally)
-require("tmux").setup()
+-- Tmux pane navigation integration (replaces <C-hjkl> navigation globally).
+-- copy_sync is disabled: a bare setup() turns it on (init.lua's own defaults
+-- override the module default), and its register sync throws "Using a Blob as a
+-- String" on CmdlineEnter whenever a tmux buffer holds binary/NUL data.
+require("tmux").setup({
+	copy_sync = { enable = false },
+})

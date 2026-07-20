@@ -1,53 +1,68 @@
 # Configuration
 #
-# Variables used in m4 templates
+# Local setup defaults
 user-email = brunohcastro@gmail.com
 user-name = Bruno Castro
 user-nick = $(USER)
 colorscheme = gruvbox-dark-hard
+uname_s = $(shell uname -s)
+stale_desktop_packages = i3 polybar rofi picom conky xmonad xmobar p10k xresources lx-apps xdm xorg ukuake bin
 
 # Userspace
 #
 user/home:
 	- xdg-user-dirs-update
 
-user/shell: core/utils \
-            core/shell \
-            git/antidote \
-            stow/dotfile/zsh \
-            stow/dotfile/starship
+user/shell: user/shell/$(uname_s)
 
-user/programming: user/shell \
-                  applications/terminal \
-                  stow/dotfile/nvim \
-                  stow/dotfile/tmux \
-                  stow/dotfile/kitty
+user/shell/Linux: core/utils \
+                   core/shell/Linux \
+                   git/antidote \
+                   stow/dotfile/zsh \
+                   stow/dotfile/starship
 
-user/desktop: wm/i3 \
-              applications
-	- yay -S --noconfirm --needed xorg-xsetroot
+user/shell/Darwin: core/shell/Darwin \
+                    git/antidote \
+                    stow/dotfile/zsh \
+                    stow/dotfile/starship
 
-user/environments/golang: ~/.env-golang
+user/programming: user/programming/$(uname_s)
+
+user/programming/Linux: user/shell/Linux \
+                         applications/terminal/Linux \
+                         stow/dotfile/nvim \
+                         stow/dotfile/tmux \
+                         stow/dotfile/kitty
+
+user/programming/Darwin: user/shell/Darwin \
+                          applications/terminal/Darwin \
+                          stow/dotfile/nvim \
+                          stow/dotfile/tmux \
+                          stow/dotfile/kitty
+
+user/desktop:
+	@echo "user/desktop is archived. Stale desktop configs live under archive/dotfiles."
+	@false
+
+user/environments/golang:
 	- sudo pacman -S --noconfirm --needed \
 	    go \
 	    go-tools
-	- go get -u github.com/rogpeppe/godef
-	- go get -u github.com/nsf/gocode
-	- curl https://glide.sh/get | sh
+	- go install golang.org/x/tools/gopls@latest
+	- go install golang.org/x/tools/cmd/goimports@latest
+	- go install github.com/go-delve/delve/cmd/dlv@latest
+	- go install mvdan.cc/gofumpt@latest
 
 user/environments/rust: ~/.env-rust
 	- curl https://sh.rustup.rs -sSf \
 	    | sh -s -- --no-modify-path
 
-user/environments/asdf:
-	- git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.4.0
-	- source ~/.zshrc
+user/environments/mise:
+	- curl https://mise.run | sh
 
-user/environments/node: user/environments/asdf
-	- asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-	- bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
-	- asdf install nodejs 8.7.0
-	- asdf global nodejs 8.7.0
+user/environments/asdf user/environments/node user/environments/nodejs:
+	@echo "$@ is archived. Use user/environments/mise and a project-level mise config instead."
+	@false
 
 user/environments/sdkman:
 	- curl -s "https://get.sdkman.io" | bash
@@ -66,36 +81,9 @@ user/git-identity:
 
 # Window Managers
 #
-wm/i3: stow/dotfile/i3 stow/dotfile/polybar wm/locker wm/support
-	- sudo -v
-	- yay -S --noconfirm --needed \
-	    i3-gaps \
-	    polybar \
-	    jsoncpp \
-	    i3ipc-glib-git
-
-wm/locker:
-	- yay -S --noconfirm --needed \
-	    i3lock \
-	    python-cairo \
-	    python-gobject \
-	    python-dbus
-
-wm/support: applications/scrot applications/dunst
-	- yay -S --noconfirm --needed \
-	    compton \
-	    rofi \
-	    unclutter-xfixes-git \
-	    hsetroot \
-	    volumeicon \
-	    playerctl \
-	    network-manager-applet \
-	    gpointing-device-settings \
-	    pavucontrol \
-	    xautolock \
-	    imagemagick \
-	    python2-i3-py \
-	    feh
+wm/i3 wm/locker wm/support:
+	@echo "$@ is archived. Stale desktop configs live under archive/dotfiles."
+	@false
 
 # Desktop Environment
 #
@@ -184,13 +172,8 @@ applications/development: applications/docker
 		intellij-idea-ultimate-edition-jre \
 	    visual-studio-code \
 	    aws-cli \
-	    chef-dk \
-	    the_silver_searcher \
-	    staruml \
-	    kubectl-bin \
-	    robo3t-bin \
-	    postman-bin \
-	    kube-aws
+	    kubectl \
+	    postman-bin
 
 applications/social:
 	- yay -S --noconfirm --needed \
@@ -201,7 +184,7 @@ applications/social:
 applications/multimedia:
 	- yay -S --noconfirm --noedit --needed \
 	    mellowplayer \
-	    youtube-dl \
+	    yt-dlp \
 	    vokoscreen \
 	    mpv
 
@@ -211,7 +194,7 @@ applications/utils:
 	    copyq \
 	    variety \
 	    synergy \
-	    screenfetch
+	    fastfetch
 
 # Specific
 
@@ -221,23 +204,20 @@ applications/dunst: stow/dotfile/dunst
 applications/redshift: stow/dotfile/redshift
 	- sudo pacman -S --noconfirm --needed redshift
 
-applications/emacs: git/emacs.d
+applications/emacs: stow/dotfile/emacs
 	- sudo pacman -S --noconfirm --needed emacs
 
 applications/weechat:
-	- sudo pacman -S --noconfirm --needed \
-	    python2 \
-	    python2-pip \
-	    weechat
-	- sudo pip2 install websocket-client
-	- mkdir -p ~/.weechat/python/autoload
-	- curl -o ~/.weechat/python/autoload/wee_slack.py "https://raw.githubusercontent.com/rawdigits/wee-slack/master/wee_slack.py"
+	@echo "$@ is archived. The old setup depended on Python 2 and wee-slack."
+	@false
 
 applications/taskwarrior: stow/dotfile/taskwarrior
 	- sudo pacman -S --noconfirm --needed \
 	    task
 
-applications/terminal:
+applications/terminal: applications/terminal/$(uname_s)
+
+applications/terminal/Linux:
 	- yay -S --noconfirm --needed \
 	    kitty \
 	    tmux \
@@ -250,6 +230,20 @@ applications/terminal:
 	    lazygit \
 	    bat \
 	    eza
+
+applications/terminal/Darwin:
+	- brew install \
+	    tmux \
+	    neovim \
+	    ripgrep \
+	    fd \
+	    fzf \
+	    zoxide \
+	    direnv \
+	    lazygit \
+	    bat \
+	    eza
+	- brew install --cask kitty
 
 applications/scrot:
 	- sudo pacman -S --noconfirm --needed scrot
@@ -297,8 +291,19 @@ core/utils:
 	  p7zip \
 	  xsel
 
-core/shell:
+core/shell: core/shell/$(uname_s)
+
+core/shell/Linux:
 	sudo pacman -S --noconfirm --needed \
+	  starship \
+	  fzf \
+	  zoxide \
+	  direnv
+
+core/shell/Darwin:
+	- brew install \
+	  git \
+	  stow \
 	  starship \
 	  fzf \
 	  zoxide \
@@ -325,33 +330,20 @@ core/fonts:
 		ttf-font-awesome-4 \
 	  nerd-fonts-complete
 		
-core/aur-helper: core/aur-helper/cower
+core/aur-helper: clean/tmp
 	cd tmp \
 		&& curl -L -O "https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz" \
 		&& tar -xvf yay.tar.gz \
 		&& cd yay \
 		&& makepkg -sri --noconfirm
 
-core/aur-helper/cower: clean/tmp
-	- gpg --recv-keys 487EACC08557AD082088DABA1EB2638FF56C0C53 # Dave Reisner, cower maintainer
-	- mkdir -p tmp \
-			&& cd tmp \
-			&& curl -L -O "https://aur.archlinux.org/cgit/aur.git/snapshot/cower.tar.gz" \
-			&& tar -xvf cower.tar.gz \
-			&& cd cower \
-			&& makepkg -sri --noconfirm
+core/aur-helper/cower:
+	@echo "$@ is archived. Use core/aur-helper to install yay."
+	@false
 
-core/xorg: #
-	sudo pacman -S --noconfirm --needed \
-	  xorg-server \
-	  xorg-xinput \
-	  xorg-xrandr \
-	  xorg-xrdb \
-	  xorg-xev \
-	  xorg-setxkbmap \
-	  xclip \
-	  xf86-input-libinput \
-	  xf86-input-synaptics
+core/xorg:
+	@echo "$@ is archived. X11/window-manager configs live under archive/dotfiles."
+	@false
 
 # System
 #
@@ -443,15 +435,9 @@ device/desktop: device/common
 device/imac: device/common
 	- echo "TODO"
 
-device/asus-k555: core \
-                  system/common \
-                  system/notebook \
-                  system/hybrid-graphics \
-                  user/desktop \
-                  user/environments/nodejs
-	- yay -S --noconfirm --noedit --needed \
-	    aic94xx-firmware \
-	    wd719x-firmware
+device/asus-k555:
+	@echo "$@ is archived. Rebuild this hardware profile before using it again."
+	@false
 
 device/acer-vx5: device/common/notebook
 	- echo "TODO"
@@ -486,31 +472,26 @@ olkb/remove:
 	    arm-none-eabi-newlib \
 	    dfu-programmer
 
-/etc/vconsole.conf: templates/etc/vconsole.conf
-	- sudo pacman -S --noconfirm terminus-font
-	- sudo cp ./templates/vconsole.conf /etc/vconsole.conf
+/etc/vconsole.conf:
+	@echo "$@ has no tracked source in this repo."
+	@false
 
-/etc/modprobe.d/%: templates/etc/modprobe.d/*
-	- sudo cp templates/etc/modprobe.d/$* $@
+/etc/modprobe.d/%: etc/modprobe.d/%
+	- sudo cp etc/modprobe.d/$* $@
 
-/etc/%: templates/etc/*
-	- sudo cp templates/etc/$* $@
+/etc/%: etc/%
+	- sudo cp etc/$* $@
 
-/etc/X11/xorg.conf.d/%.conf: templates/etc/X11/xorg.conf.d/*
-	- sudo cp templates/etc/X11/xorg.conf.d/$*.conf $@
+/etc/X11/xorg.conf.d/%.conf: etc/X11/xorg.conf.d/%.conf
+	- sudo cp etc/X11/xorg.conf.d/$*.conf $@
 
-/etc/systemd/system/%: templates/etc/systemd/system/*
-	- sudo mkdir -p $(@D)
-	- $(macrocmd) \
-	    templates/etc/systemd/system/$* \
-	    | sudo dd of=$@
+/etc/systemd/system/%:
+	@echo "$@ has no tracked source in this repo."
+	@false
 
-~/.bin/%: templates/dotfiles/bin/*
-	- mkdir -p $(@D)
-	- $(macrocmd) \
-	    templates/dotfiles/bin/$* \
-	    > $@
-	- chmod +x $@
+~/.bin/%:
+	@echo "$@ is archived. Old generated scripts live under archive/dotfiles/bin."
+	@false
 
 clean/tmp:
 	- mkdir -p tmp
@@ -539,14 +520,16 @@ clean/nvim-live:
 	rm -f $(HOME)/.config/nvim/lazy-lock.json
 
 archive/stale-desktop:
-	- stow -D --no-folding -t $(HOME) -d dotfiles/ i3 polybar rofi picom conky xmonad xmobar p10k xresources
+	for pkg in $(stale_desktop_packages); do \
+	  [ ! -e dotfiles/$$pkg ] || stow -D --no-folding -t $(HOME) -d dotfiles/ $$pkg; \
+	done
 	mkdir -p archive/dotfiles
-	for pkg in i3 polybar rofi picom conky xmonad xmobar p10k xresources; do \
+	for pkg in $(stale_desktop_packages); do \
 	  [ ! -e dotfiles/$$pkg ] || git mv dotfiles/$$pkg archive/dotfiles/; \
 	done
 
 stow/etc/%:
-	- sudo --no-folding stow -t /etc -d etc/ $*
+	- sudo stow --no-folding -t /etc -d etc/ $*
 
 stow/dotfile/%:
 	- stow --no-folding -t $(HOME) -d dotfiles/ $*

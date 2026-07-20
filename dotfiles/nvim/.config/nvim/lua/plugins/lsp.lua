@@ -57,6 +57,44 @@ for _, name in ipairs({ "lua_ls", "jsonls", "yamlls", "tailwindcss", "graphql", 
 	end
 end
 
+local vue_language_server_root = vim.fn.stdpath("data") .. "/mason/packages/vue-language-server/node_modules"
+
+configure("vue_ls", {
+	init_options = {
+		typescript = {
+			tsdk = vue_language_server_root .. "/typescript/lib",
+			disableAutoImportCache = false,
+		},
+		vue = {
+			hybridMode = true,
+		},
+	},
+})
+
+configure("vtsls", {
+	filetypes = {
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+		"vue",
+	},
+	settings = {
+		vtsls = {
+			tsserver = {
+				globalPlugins = {
+					{
+						name = "@vue/typescript-plugin",
+						location = vue_language_server_root .. "/@vue/language-server",
+						languages = { "vue" },
+						configNamespace = "typescript",
+					},
+				},
+			},
+		},
+	},
+})
+
 -- eslint exposes language-server settings rather than a full config table.
 do
 	local ok, settings = pcall(require, "overdevio.lsp.settings.eslint")
@@ -81,6 +119,7 @@ require("mason-lspconfig").setup({
 		"cssls",
 		"cssmodules_ls",
 		"dockerls",
+		"emmet_language_server",
 		"eslint",
 		"gopls",
 		"html",
@@ -89,8 +128,9 @@ require("mason-lspconfig").setup({
 		"marksman",
 		"rust_analyzer",
 		"tailwindcss",
-		"ts_ls",
 		"taplo",
+		"vtsls",
+		"vue_ls",
 		"yamlls",
 	},
 	-- rust_analyzer is owned by rustaceanvim; graphql is enabled manually only.

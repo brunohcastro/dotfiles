@@ -34,7 +34,7 @@ local modules = {
 	"plugins.colorscheme",
 	"plugins.treesitter",
 	"plugins.cmp",
-	"plugins.copilot", -- registers the copilot source in cmp
+	"plugins.minuet", -- local-LLM inline completion (llama.cpp FIM)
 	"plugins.lsp",
 	"plugins.null-ls", -- needs mason (set up by lsp)
 	"plugins.ai",
